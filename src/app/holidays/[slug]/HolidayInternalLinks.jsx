@@ -26,9 +26,9 @@ const GULF_PAY_DATES_SLUGS = new Set([
 const CALCULATOR_LINKS = {
   // Islamic religious events
   'ramadan':             { href: '/tools/health/fasting',           title: 'حاسبة الصيام',           desc: 'ساعات الصيام وأوقات الإفطار في مدينتك طوال الشهر.' },
-  'eid-al-adha':         { href: '/tools/gulf-finance/aqiqah',    title: 'حاسبة العقيقة',          desc: 'احسب عدد الذبائح وتكلفتها التقديرية قبل العيد.' },
+  'eid-al-adha':         { href: '/tools/islamic/aqiqah',    title: 'حاسبة العقيقة',          desc: 'احسب عدد الذبائح وتكلفتها التقديرية قبل العيد.' },
   'day-of-arafa':        { href: '/tools/health/fasting',          title: 'حاسبة الصيام',           desc: 'ساعات صيام يوم عرفة وأوقاته في أي مدينة.' },
-  'first-dhul-hijjah':   { href: '/tools/gulf-finance/wasiyya',   title: 'حاسبة الوصية الشرعية',    desc: 'كم يجوز أن توصي من تركتك قبل موسم الحج.' },
+  'first-dhul-hijjah':   { href: '/tools/islamic/wasiyya',   title: 'حاسبة الوصية الشرعية',    desc: 'كم يجوز أن توصي من تركتك قبل موسم الحج.' },
   'ashura':              { href: '/tools/health/fasting',          title: 'حاسبة الصيام',           desc: 'ساعات صيام عاشوراء وأوقاته في مدينتك.' },
   // Salary / support payment events
   'salary-day-saudi':    { href: '/tools/gulf-finance',           title: 'حاسبات الرواتب الخليجية', desc: 'استكشف حاسبات الرواتب والمزايا في السعودية.' },
@@ -102,7 +102,7 @@ function buildLinks({ event, displayTitle, currentYear, hijriYearNum }) {
     });
   } else if (isIslamic) {
     links.push({
-      href: '/tools/gulf-finance/wasiyya',
+      href: '/tools/islamic/wasiyya',
       title: 'حاسبة الوصية الشرعية',
       desc: 'كم يجوز أن توصي من تركتك وفق الشريعة.',
       cta: 'ابدأ الحاسبة',

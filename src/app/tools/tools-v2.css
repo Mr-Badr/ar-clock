@@ -432,6 +432,92 @@ html {
   color: var(--green-text);
   outline: none;
 }
+
+/* Inline text-link toggle (e.g. "راتبي شهري وليس بالساعة؟") — reveals an optional inline helper
+   below a field without the weight of a full button. No border/background, just a colored link. */
+.tool-v2-inline-link-btn {
+  display: inline-block;
+  margin-top: 6px;
+  padding: 0;
+  border: none;
+  background: none;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--blue-text);
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.tool-v2-inline-link-btn:hover,
+.tool-v2-inline-link-btn:focus-visible {
+  color: var(--blue);
+  outline: none;
+}
+
+/* Short explanatory note directly under a field's chip/choice row (e.g. what the selected
+   standard/preset actually means) — smaller and quieter than a full .tool-v2-note-strip, which is
+   reserved for a result-level caveat, not per-field context. */
+.tool-v2-field-note {
+  margin: 6px 0 0;
+  font-size: 0.82rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+/* Globally-shared equivalent of guide-v2.css's `.guide-v2-checker-chip`/`-options` (a rounded
+   pill toggle group — country/currency pickers, short preset selectors) — that pair only exists
+   per-category inside each guide-v2.css copy, so any tool-v2-lanes page in a category WITHOUT a
+   guide-v2.css (electronics, real-estate, ...) rendered it as unstyled text (a real bug caught via
+   screenshot on the TV-size calculator, 2026-08-25). This lives in the globally-shared stylesheet
+   instead, so it's always safe regardless of which category a future tool lands in. */
+.tool-v2-chip-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2-5);
+}
+.tool-v2-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1-5, 6px);
+  padding: var(--space-2-5) var(--space-4);
+  border-radius: var(--radius-full, 999px);
+  border: 1px solid var(--border-default);
+  background: var(--bg-surface-1);
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  min-height: 44px;
+  transition: border-color .15s ease, color .15s ease, background .15s ease;
+}
+.tool-v2-chip:hover { border-color: var(--blue-border, var(--border-strong)); color: var(--text-primary); }
+.tool-v2-chip.is-active {
+  background: var(--blue-muted, var(--blue-subtle));
+  border-color: var(--blue);
+  color: var(--blue-text);
+}
+
+/* Small secondary action button — for a one-off "apply this helper value" action inside a field
+   group, distinct from the main calculator's own (implicit, live) result — never the primary CTA
+   size/weight. */
+.tool-v2-mini-btn {
+  align-self: flex-end;
+  padding: 8px 14px;
+  border-radius: var(--radius-md, 10px);
+  border: 1px solid var(--border-default);
+  background: var(--bg-surface-2);
+  color: var(--text-primary);
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  min-height: 40px;
+}
+.tool-v2-mini-btn:hover,
+.tool-v2-mini-btn:focus-visible {
+  border-color: var(--blue-border, var(--border-strong));
+  color: var(--blue-text);
+  outline: none;
+}
 .tool-v2-field > input[type="number"],
 .tool-v2-field > input[type="text"],
 .tool-v2-field > input[type="date"],
@@ -981,6 +1067,14 @@ input[type="number"]::-webkit-outer-spin-button {
   font-weight: 600;
   color: var(--text-secondary);
 }
+
+/* Tone variants for a result that genuinely has a good/borderline/bad reading (e.g. a
+   rent-to-income ratio) — icon-chip-style color carried on the result panel itself, not a
+   border stripe, per calculator-ui-standards.md §1b. Apply the modifier class to
+   `.tool-v2-result-hero` itself; it recolors the stat value inside it. */
+.tool-v2-result-hero.is-good .tool-v2-result-stat-value { color: var(--green-text); }
+.tool-v2-result-hero.is-warn .tool-v2-result-stat-value { color: var(--amber-text); }
+.tool-v2-result-hero.is-bad .tool-v2-result-stat-value { color: var(--red-text); }
 .tool-v2-result-stat-sep {
   font-size: 1.3rem;
   font-weight: 700;
@@ -2059,12 +2153,13 @@ input[type="number"]::-webkit-outer-spin-button {
     gap: var(--space-5);
   }
 }
+
 .tool-v2-type-group h2 {
   font-size: 1.05rem;
   display: flex;
   align-items: center;
   gap: 9px;
-  margin: 0 0 var(--space-3);
+  margin: var(--space-3) 0;
   font-weight: 800;
 }
 .tool-v2-type-group h2 .fi {
@@ -2156,6 +2251,19 @@ input[type="number"]::-webkit-outer-spin-button {
   border-top: none;
   padding-top: 0;
   margin-top: var(--space-8, 32px);
+}
+
+/* Every hub-index FAQ section (id="hub-faq", ~20 category hub pages) — owner correction,
+   2026-08-25: still read as too close to the dot-list nav above it even with the 2026-08-19 gap
+   fix, and the title needed to read as a real section heading, not a small in-line label. Scoped
+   to #hub-faq specifically (not every .tool-v2-hub-guide — the plain guide-paragraph instances,
+   e.g. the /tools index's "أدوات تنجز المهمة", keep their smaller start-aligned heading). */
+#hub-faq {
+  margin-top: var(--space-16, 64px);
+}
+#hub-faq > h2 {
+  font-size: clamp(1.5rem, 1.15rem + 1.2vw, 1.9rem);
+  text-align: center;
 }
 
 /* ── Addon checklist rows (cleaning/landscaping/pest-control cost calculators) — a toggle

@@ -102,6 +102,18 @@
   justify-content: center;
 }
 
+/* Restored 2026-08-27 (see header.jsx's file header — the "logo center" experiment earlier the
+   same day was reverted). Groups ThemeToggle + MobileMenu's trigger together at one edge of the
+   pill; on mobile/tablet this is the edge OPPOSITE the logo (see the width/space-between rule
+   in the burger breakpoint below), giving "theme switcher then burger menu" in that order. */
+.header-actions {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
 .header-nav-list {
   display: flex;
   align-items: center;
@@ -115,14 +127,6 @@
 .header-nav-item {
   position: relative;
   display: flex;
-}
-
-.header-actions {
-  display: inline-flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: var(--space-2);
-  min-width: 0;
 }
 
 .header-nav-link {
@@ -940,63 +944,48 @@
   transform: translateY(0);
 }
 
-.header-mobile-menu-head {
-  position: sticky;
-  inset-block-start: 0;
-  z-index: 1;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-3);
-  padding: var(--space-2) var(--space-2) var(--space-3);
-  border-block-end: 1px solid var(--border-subtle);
-  background: var(--elevated);
+/* Backdrop behind the open mobile menu (owner, 2026-08-27: "everything behind the menu should
+   be glassy and blur... if he click in a space out of menu the menu should close, not just from
+   the close button"). Sits one level below `.header-nav`/`.header-mobile-menu` (both
+   `--z-sticky`) so the header pill and the menu panel itself stay sharp and interactive above
+   the blur; a click anywhere on this layer closes the menu (MobileMenuPanel.client.tsx wires
+   `onClick={onClose}` on it) — that IS the "click outside the menu" behavior, since this div
+   covers every pixel that isn't the header or the panel. Mounted/unmounted together with the
+   panel (same `open` gate in MobileMenu.tsx), so a plain mount-triggered `animation` is used
+   for the fade-in rather than a `transition`, which wouldn't have a "before" state to animate
+   from on first paint. */
+.header-mobile-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: calc(var(--z-sticky) - 1);
+  background: color-mix(in srgb, var(--surface) 45%, transparent);
+  backdrop-filter: blur(8px) saturate(140%);
+  -webkit-backdrop-filter: blur(8px) saturate(140%);
+  animation: header-mobile-backdrop-in var(--duration-enter) var(--ease-default) both;
 }
 
-.header-mobile-menu-kicker,
-.header-mobile-menu-title {
-  margin: 0;
+@keyframes header-mobile-backdrop-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
-.header-mobile-menu-kicker {
-  color: var(--text-muted);
-  font-size: var(--text-xs);
-  font-weight: var(--font-semibold);
-  line-height: var(--leading-snug);
+@media (prefers-reduced-motion: reduce) {
+  .header-mobile-backdrop {
+    animation: none;
+  }
 }
 
-.header-mobile-menu-title {
-  margin-block-start: var(--space-0-5);
-  color: var(--text-primary);
-  font-size: var(--text-base);
-  font-weight: var(--font-bold);
-  line-height: var(--leading-snug);
-}
-
-.header-mobile-menu-close {
-  width: var(--space-11);
-  height: var(--space-11);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex: 0 0 auto;
-  border: 1px solid var(--border-default);
-  border-radius: var(--radius-lg);
-  background: var(--surface);
-  color: var(--text-secondary);
-  cursor: pointer;
-  transition:
-    background-color var(--transition-base),
-    border-color var(--transition-base),
-    color var(--transition-base);
-}
-
-.header-mobile-menu-close:hover,
-.header-mobile-menu-close:focus-visible {
-  background: var(--muted);
-  border-color: var(--border-accent);
-  color: var(--text-primary);
-}
+/* `.header-mobile-menu-head`/`.header-mobile-menu-close` removed, owner follow-up 2026-08-27:
+   "the first section that have close button should not appear at all, he can close the navbar
+   by clicking same button of burger menu or click outside navbar" — the burger button already
+   toggles open/closed and the backdrop click-outside above closes it too, so the dedicated
+   close row (first just its kicker/title text, then just the button after the prior fix) is
+   gone completely now. See MobileMenuPanel.client.tsx. */
 
 .header-mobile-menu-body {
   width: 100%;
@@ -1276,6 +1265,18 @@
   .header-mobile-btn {
     display: inline-flex;
   }
+
+  /* Owner, 2026-08-27: "make the navbar longer in width not too small in center" — with the
+     center nav hidden, `.header-inner`'s default `width:fit-content` let the pill shrink down
+     to just wrap the logo + icon group, floating as a small capsule in the middle of the bar
+     with a lot of dead space on both sides. Forcing it to actually BE its existing `max-width`
+     cap (not exceeding it, just no longer collapsing below it) plus `space-between` spreads the
+     logo and the icon group out to the pill's own outer edges — the "longer" bar the owner
+     asked for, still the same floating-pill look, not a hard edge-to-edge redesign. */
+  .header-inner {
+    width: calc(100% - var(--space-6));
+    justify-content: space-between;
+  }
 }
 
 @media (min-width: 1280px) and (hover: hover) and (pointer: fine) {
@@ -1311,23 +1312,18 @@
 }
 
 /* Desktop "/tools" renders as <ToolsNavButton> INSIDE NavLinks.tsx's own list (see the
-   `link.cta` branch there), sitting in the nav-links row itself, not header-actions.
-   `.header-mobile-link--cta` below is separate: the mobile drawer keeps "/tools" in its plain
-   link list, just with cta-weight styling — it doesn't use ToolsNavButton/BorderBeam. */
-.header-mobile-link--cta {
+   `link.cta` branch there), sitting in the nav-links row itself, not header-actions. The mobile
+   drawer used to render "/tools" as a plain link with its own `--cta` accent styling; owner,
+   2026-08-27: "the button of tools on mobile... should be like desktop" — it now reuses
+   ToolsNavButton directly (MobileMenuPanel.client.tsx), so the old `.header-mobile-link--cta`
+   rules are gone and `.header-mobile-tools-btn` below just stretches that same component to
+   fill the drawer's list width instead. */
+.header-mobile-tools-btn {
+  width: 100%;
+  min-height: var(--space-12);
   margin-block-start: var(--space-2);
-  border-color: var(--accent);
-  background: var(--accent);
-  color: var(--text-on-accent);
-  font-weight: var(--font-bold);
   justify-content: center;
-}
-
-.header-mobile-link--cta:hover,
-.header-mobile-link--cta:focus-visible {
-  background: var(--accent-hover);
-  border-color: var(--accent-hover);
-  color: var(--text-on-accent);
+  font-size: var(--text-base);
 }
 
 /* ── ToolsNavButton — Magic UI BorderBeam on a real <Link> (2026-08-20, second pass) ─────────

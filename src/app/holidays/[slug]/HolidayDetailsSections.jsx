@@ -26,9 +26,9 @@ import EmbedCodeSnippet from '@/components/shared/EmbedCodeSnippet.client';
 
 const CATEGORY_CALCULATORS = {
   islamic: [
-    { href: '/tools/gulf-finance/aqiqah',      label: 'حاسبة العقيقة',       desc: 'عدد الذبائح وتكلفتها التقديرية',  accent: 'var(--amber)' },
+    { href: '/tools/islamic/aqiqah',      label: 'حاسبة العقيقة',       desc: 'عدد الذبائح وتكلفتها التقديرية',  accent: 'var(--amber)' },
     { href: '/tools/health/fasting',     label: 'حاسبة الصيام',        desc: 'مواعيد الإمساك والإفطار وعدد الساعات', accent: 'var(--accent)' },
-    { href: '/tools/gulf-finance/wasiyya',     label: 'حاسبة الوصية الشرعية', desc: 'كم يجوز أن توصي من تركتك',   accent: 'var(--text-secondary)' },
+    { href: '/tools/islamic/wasiyya',     label: 'حاسبة الوصية الشرعية', desc: 'كم يجوز أن توصي من تركتك',   accent: 'var(--text-secondary)' },
   ],
   national: [
     { href: '/tools/gulf-finance/end-of-service-benefits', label: 'نهاية الخدمة السعودية', desc: 'مكافأة الاستقالة والفصل وفق نظام العمل', accent: 'var(--green)' },
@@ -39,8 +39,8 @@ const CATEGORY_CALCULATORS = {
     { href: '/tools/gulf-finance/end-of-service-benefits', label: 'نهاية الخدمة السعودية', desc: 'مكافأة الاستقالة والفصل وفق نظام العمل', accent: 'var(--green)' },
     { href: '/tools/gulf-finance/article-77-compensation',  label: 'تعويض المادة 77',      desc: 'تعويض الفصل التعسفي بحد أدنى أجر شهرين',  accent: 'var(--blue)' },
     { href: '/tools/gulf-finance/sick-leave',           label: 'الإجازة المرضية',    desc: 'راتبك أثناء المرض وفق المادة 117',      accent: 'var(--amber)' },
-    { href: '/tools/gulf-finance/domestic-worker-cost', label: 'تكلفة استقدام عاملة', desc: 'الرسوم الحكومية الفعلية عبر مساند',      accent: 'var(--calc-cat-finance)' },
-    { href: '/tools/gulf-finance/nafaqah',               label: 'حاسبة النفقة',        desc: 'تقدير نفقة الزوجة والأولاد',              accent: 'var(--amber)' },
+    { href: '/tools/domestic-worker/domestic-worker-cost', label: 'تكلفة استقدام عاملة', desc: 'الرسوم الحكومية الفعلية عبر مساند',      accent: 'var(--calc-cat-finance)' },
+    { href: '/tools/islamic/nafaqah',               label: 'حاسبة النفقة',        desc: 'تقدير نفقة الزوجة والأولاد',              accent: 'var(--amber)' },
     { href: '/tools/gulf-finance/jordan-income-tax',    label: 'ضريبة الدخل الأردن',    desc: 'شرائح 5%–30% + إعفاءات — صافي الراتب',    accent: 'var(--blue)' },
     { href: '/tools/gulf-finance/egypt-water-bill',     label: 'فاتورة المياه مصر',     desc: 'شرائح تصاعدية + رسم الصرف الصحي',         accent: 'var(--blue)' },
     { href: '/tools/gulf-finance/traffic-fine-discount', label: 'خصم المخالفات المرورية', desc: 'خصم 25% خلال 45 يوماً من التسجيل',  accent: 'var(--blue)' },
@@ -59,18 +59,18 @@ const CATEGORY_CALCULATORS = {
   ],
   business: [
     { href: '/tools/gulf-finance/article-77-compensation', label: 'تعويض المادة 77', desc: 'تعويض الفصل التعسفي وفق نظام العمل',   accent: 'var(--blue)' },
-    { href: '/tools/gulf-finance/domestic-worker-cost', label: 'تكلفة استقدام عاملة', desc: 'الرسوم الحكومية الفعلية عبر مساند',      accent: 'var(--calc-cat-finance)' },
+    { href: '/tools/domestic-worker/domestic-worker-cost', label: 'تكلفة استقدام عاملة', desc: 'الرسوم الحكومية الفعلية عبر مساند',      accent: 'var(--calc-cat-finance)' },
     { href: '/tools/gulf-finance/end-of-service-benefits', label: 'نهاية الخدمة السعودية', desc: 'مكافأة الاستقالة والفصل وفق نظام العمل', accent: 'var(--green)' },
     { href: '/tools/gulf-finance/working-days',       label: 'أيام العمل بين تاريخين', desc: 'عطلة نهاية الأسبوع الصحيحة لكل دولة', accent: 'var(--blue)' },
   ],
   astronomy: [
     { href: '/tools/health/fasting',   label: 'حاسبة الصيام',   desc: 'ساعات الصيام في أي مدينة وشهر',     accent: 'var(--accent)' },
-    { href: '/tools/gulf-finance/iddah',    label: 'حاسبة العدة الشرعية', desc: 'حساب هجري دقيق للأرملة والمطلقة',   accent: 'var(--amber)' },
+    { href: '/tools/islamic/iddah',    label: 'حاسبة العدة الشرعية', desc: 'حساب هجري دقيق للأرملة والمطلقة',   accent: 'var(--amber)' },
     { href: '/tools/health/pregnancy', label: 'حاسبة الحمل',    desc: 'موعد الولادة بالتقويمين',            accent: 'var(--blue)' },
   ],
   holidays: [
     { href: '/tools/gulf-finance/traffic-fine-discount', label: 'خصم المخالفات المرورية', desc: 'خصم 25% خلال 45 يوماً من التسجيل', accent: 'var(--blue)' },
-    { href: '/tools/gulf-finance/domestic-worker-cost', label: 'تكلفة استقدام عاملة',   desc: 'الرسوم الحكومية الفعلية عبر مساند',   accent: 'var(--amber)' },
+    { href: '/tools/domestic-worker/domestic-worker-cost', label: 'تكلفة استقدام عاملة',   desc: 'الرسوم الحكومية الفعلية عبر مساند',   accent: 'var(--amber)' },
     { href: '/tools/gulf-finance/end-of-service-benefits', label: 'نهاية الخدمة السعودية', desc: 'مكافأة الاستقالة والفصل وفق نظام العمل', accent: 'var(--green)' },
   ],
 };

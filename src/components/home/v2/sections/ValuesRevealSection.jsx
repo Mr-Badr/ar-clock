@@ -7,8 +7,8 @@
 import ScrollRevealText from './ScrollRevealText.client';
 import './scroll-reveal-text.css';
 
-const STATEMENT = 'كل رقم نعرضه راجعناه، وكل تاريخ تحقّقنا منه، وكل أداة بنيناها من جديد — لأنك تستحق منصة تهتم بالتفاصيل بقدر ما تهتم أنت بوقتك.';
-
+const STATEMENT =
+  'كل رقـم نـعـرضـه راجـعـنـاه، وكل تـاريـخ تـحـقّـقـنـا مـنـه، وكل أداة بـنـيـنـاهـا مـن جـديـد — لأنـك تـسـتـحـق مـنـصـة تـهـتـم بـالـتـفـاصـيـل بقدر ما تـهـتـم أنت بـوقـتـك.';
 export default function ValuesRevealSection() {
   return (
     <section className="srt-section" aria-labelledby="srt-title">

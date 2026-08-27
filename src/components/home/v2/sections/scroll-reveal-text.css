@@ -48,7 +48,8 @@
 }
 
 .srt-text {
-  margin: 0;
+  margin: auto;
+  width: 80%;
   color: var(--text-primary);
   font-family: var(--font-thmanyah), var(--font-heading);
   font-weight: var(--font-bold);
@@ -66,5 +67,7 @@
 @media (min-width: 860px) {
   .srt-text {
     letter-spacing: 0.03em;
+    margin: auto;
+    width: 80%;
   }
 }

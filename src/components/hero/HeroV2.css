@@ -101,24 +101,84 @@
   z-index: -1;
 }
 
-.hero-v2-eyebrow {
+/* Brand wordmark (2026-08-27, simplified same day) — replaces the old text-pill eyebrow. Went
+   through several animated-SVG letter-draw attempts (react-bits StrokeText) that never read as
+   smooth in the owner's own browser; owner directive: "delete all these animations, just simple
+   clean word... little bit of shadow." Plain server-rendered text now (real SEO weight, zero
+   JS/hydration cost), a single lightweight CSS fade+rise entrance on load and a soft gold
+   text-shadow for depth.
+   Color, 2026-08-27 follow-up (owner: "make it bigger and give it this color in both dark and
+   light #D5A127") — a fixed hex, not the theme-aware --gold-text token, since the owner wants the
+   exact same shade regardless of theme.
+   Size + stroke, 2026-08-27 follow-up 2 (owner: "a little more bigger... should have text
+   shadow, also should have text stroke") — bumped the clamp range up again.
+   Stroke technique fixed same day, follow-up 3 (owner: "inside the text i see some lines, please
+   make it cleaner inside and the stroke more clear", screenshot showed dark seam lines cutting
+   through the letters): the first attempt used `-webkit-text-stroke`, which traces each glyph's
+   OUTLINE PATH individually — on connected Arabic script the letterforms join and their contours
+   overlap, so the stroke path doubles up right where letters connect, rendering as visible dark
+   seams inside the word instead of a clean outline. Replaced with a layered `text-shadow`
+   faux-stroke instead: 4 small hard (0-blur) offset copies of the whole glyph SILHOUETTE in each
+   direction, which reads as one continuous, seam-free outline around the actual letter shapes
+   (silhouettes don't have internal contours to double up), plus the original soft glow on top for
+   depth.
+   Entrance reveal rewritten, follow-up 4 (owner: "just small effect on first reload... search in
+   the web for clean premium reload, this word is so important"). Real research (premium SaaS
+   hero/wordmark reveal patterns) converges on one specific technique over plain fade/slide: a
+   "focusing camera lens" reveal — opacity, a soft `filter: blur()`, and a very slight `scale()`
+   all settle to their resting state together, ease-out, no bounce/overshoot. The blur is what
+   reads as "premium" — plain opacity/translateY (the previous version) is the generic entrance
+   every element on this page already uses; combining it with a defocus-to-focus sell makes THIS
+   one word feel deliberately spotlighted, which is the point since it's the first thing visitors
+   see. Kept deliberately small per "just small effect": blur only 6px, scale only 1.03, duration
+   0.9s — a subtle settle, not a production. `filter`/`transform`/`opacity` are all
+   GPU-compositable, so this stays smooth on low-end devices, and it only ever runs once. */
+.hero-v2-brandmark {
   margin: 0;
-  display: inline-flex;
-  align-items: center;
-  padding: 0.4rem 0.9rem;
-  border-radius: var(--radius-full, 999px);
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  color: rgba(255, 255, 255, 0.9);
-  font-size: var(--text-xs);
+  /* Owner, 2026-08-27: "this word should be closer to the text under it... so much space
+     between them." Root cause wasn't the grid gap (a normal 20px, same as the rest of the
+     hero) — this is a bare <p>, so with no line-height of its own it inherited the sitewide
+     relaxed body value. At this font-size that measured out to a 66px line box for a 36px
+     glyph (~1.85 ratio), i.e. ~15px of invisible leading stacked on both the top AND bottom of
+     the word, on top of the real gap below it. Tightened to a display-heading ratio, same idea
+     as .hero-v2-title's own 1.28. */
+  line-height: 1.15;
+  font-family: var(--font-heading);
+  font-size: clamp(2.2rem, 1.5rem + 3vw, 3.75rem);
   font-weight: var(--font-bold);
-  letter-spacing: 0.01em;
+  letter-spacing: 0;
+  color: #D5A127;
+  text-shadow:
+    -1px -1px 0 color-mix(in srgb, #D5A127 45%, black),
+    1px -1px 0 color-mix(in srgb, #D5A127 45%, black),
+    -1px 1px 0 color-mix(in srgb, #D5A127 45%, black),
+    1px 1px 0 color-mix(in srgb, #D5A127 45%, black),
+    0 2px 18px color-mix(in srgb, #D5A127 45%, transparent),
+    /* Plain black drop shadow (owner: "just a little clean black shadow") — a small, low-opacity
+       grounding shadow, separate from the gold glow above (which is a colored aura, not depth).
+       Listed last so it sits furthest back, behind the gold outline/glow layers. */
+    0 2px 4px rgba(0, 0, 0, 0.35);
+  animation: hero-brandmark-in 0.9s cubic-bezier(0.16, 1, 0.3, 1) backwards;
 }
 
-.light .hero-v2-eyebrow {
-  background: rgba(11, 17, 32, 0.08);
-  border-color: rgba(11, 17, 32, 0.16);
-  color: rgba(11, 17, 32, 0.9);
+@keyframes hero-brandmark-in {
+  from {
+    opacity: 0;
+    filter: blur(6px);
+    transform: scale(1.03);
+  }
+
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-v2-brandmark {
+    animation: none;
+  }
 }
 
 .hero-v2-title {
@@ -130,8 +190,7 @@
      is the only weight this title ever renders at, so it's the only one requested here; falls
      back to the sitewide heading font if the custom family somehow fails to load. */
   font-family: var(--font-thmanyah), var(--font-heading);
-  font-size: clamp(2.1rem, 1.5rem + 3.4vw, 3.75rem);
-  line-height: 1.28;
+font-size: clamp(1.8rem, 1.2rem + 2vw, 3.2rem);  line-height: 1.28;
   font-weight: var(--font-bold);
   text-wrap: balance;
   perspective: 800px;

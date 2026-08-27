@@ -113,6 +113,16 @@
      text-align) place the numeral in its own column already. */
   text-align: right;
   direction: ltr;
+  /* Owner, 2026-08-27: "the number is increasing, the left part that have text is moving" — the
+     `.tb-figure` grid's first column is `auto`-sized (see the 860px+ rule below), so it tracks
+     this element's own intrinsic content width; as NumberTicker counts up, "+0" through "+150"
+     changes character count (2 digits → 4), which grows the auto column and pushes the
+     `.tb-figure-copy` column along with it every tick. Reserving a fixed min-width sized to the
+     final "+150" value pins the column at its end-state width for the entire count-up, so the
+     copy beside it never moves; text-align:right absorbs the growth from the empty side instead
+     of the visible edge, and it's invisible either way since this is a transparent
+     gradient-clipped glyph with no box chrome around it. */
+  min-width: 4.5ch;
 }
 
 .tb-figure-copy {

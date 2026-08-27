@@ -43,10 +43,11 @@ const TYPE_GROUPS = [
     slugs: ['zakat-gold-calculator', 'zakat-stocks-calculator', 'zakat-trade-goods-calculator', 'zakat-salary-calculator'],
   },
   {
-    // These 4 calculators already existed under /tools/gulf-finance/ (a mismatched home for
-    // religious-obligation tools) — cross-listed here without moving their URLs (no redirects,
-    // no sitemap churn, no lost link equity). Verified real via direct grep of
-    // src/lib/calculators/data.js before adding, 2026-08-11.
+    // These 4 calculators were cross-listed here 2026-08-11 while still physically living under
+    // /tools/gulf-finance/ (a mismatched home for religious-obligation tools) — that was finished
+    // 2026-08-25, when their real `href`s moved to /tools/islamic/* alongside the rest of the
+    // gulf-finance split (fuel-prices, domestic-worker, international-benefits). This group's
+    // `slugs` needed no change: `findRoute(slug).href` below already resolves to the new URL.
     code: 'other-fiqh',
     name: 'أدوات فقهية أخرى',
     note: 'حاسبات شرعية أخرى في الموقع — العقيقة والوصية والنفقة والعدة.',

@@ -79,10 +79,14 @@ export default function ScrollStack({ children }) {
 
         const scale = (0.94 + entrance * 0.06) * (1 - covered * 0.08);
         const lift = (1 - entrance) * 44;
-        const opacity = entrance * (1 - covered * 0.4);
 
+        // Owner, 2026-08-27: "the opacity change and became less than 1... keep the opacity 1
+        // even if i scroll, always same opacity." Opacity used to carry BOTH the entrance
+        // fade-in and the "covered" dim as the next card rises over this one — now fixed at 1
+        // always; the stack/lift/scale motion (still fully live) and the brightness dim below
+        // carry the whole effect instead.
         const el = cards[i];
-        el.style.opacity = opacity.toFixed(3);
+        el.style.opacity = '1';
         el.style.transform = `translateY(${lift.toFixed(1)}px) scale(${scale.toFixed(4)})`;
         el.style.filter = covered > 0.01 ? `brightness(${(1 - covered * 0.22).toFixed(3)})` : '';
       }

@@ -878,7 +878,16 @@
 /*   3. Arabic body text needs line-height ≥ 1.6                             */
 :root {
   --font-base: var(--font-noto-sans-arabic), system-ui, sans-serif;
-  --font-heading: var(--font-base);
+  /* Sitewide title font (owner directive, 2026-08-25): every h1/h2/h3 that uses the default
+     --font-heading token (i.e. everything except guide-v2's deliberately different editorial
+     serif, --font-guide-display/Markazi Text, used only for long-form guide H1s/pull-quotes) now
+     renders in Thmanyah Sans (--font-thmanyah, defined once at the <html> root in layout.tsx via
+     next/font's localFont — already available everywhere, no per-page wiring needed). Previously
+     Thmanyah was hand-opted-into only by the homepage sections and /time-now; most of the site
+     (every /tools/<category> hub, calculator pages, etc.) silently fell through to plain Noto
+     Sans Arabic. Noto stays as the fallback for any glyph Thmanyah doesn't cover.
+     Found while auditing /tools/gulf-finance after its 2026-08-25 category split. */
+  --font-heading: var(--font-thmanyah), var(--font-base);
 
   /* Arabic type scale from DESIGN.md */
   --text-2xs: 0.625rem;

@@ -293,6 +293,16 @@ $100/mo ≈ 33 MAD/day · $300/mo ≈ 100 MAD/day.
   the top of every checklist until done.
 - **~Dec 1**: pre-Ramadan ramp begins (Ramadan 1449 ≈ Feb 2027) — all hijri pages auto-roll, verify
   titles.
+- **Fuel prices (added 2026-08-25, went through 3 revisions same day — full history in
+  `fuel-prices-live.js`'s header comment)**: 9 countries (Saudi, UAE, Kuwait, Qatar, Bahrain,
+  Oman, Egypt, Morocco, Jordan) + the `gulf-fuel-prices` comparison hub all fetch live
+  automatically from openvan.camp (free, no key/registration, `fuel-prices-live.js`) — **no
+  standing monthly task for any of them**. `fuel-prices-data.js`'s per-country entries are only
+  the fallback shown on the rare occasion a live fetch fails. Two other sources were tried and
+  rejected first (oilpriceapi.com's Gulf retail line never worked at all; a Saudi-specific hobby
+  API mislabels its own data) — kept in `fuel-prices-live.js`'s header so they aren't
+  re-attempted. If a genuine free live source for a 10th country ever turns up, add it following
+  `fuel-prices-data.js`'s existing shape and `fuel-prices-registry.js` generates the rest.
 
 ---
 

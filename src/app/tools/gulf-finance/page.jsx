@@ -2,6 +2,7 @@ import Link from 'next/link';
 
 import CountryFlag from '@/components/shared/CountryFlag';
 import ToolTopAdSlot from '@/components/tools-v2/ToolTopAdSlot';
+import { HubGuideSection, HubFaq, buildHubFaqSchema } from '@/components/tools-v2/HubGuideSection';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { CALCULATOR_ROUTES } from '@/lib/calculators/data';
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
@@ -21,9 +22,18 @@ function findRoute(slug) {
 // tag field (mixes country names, topical labels, and marketing tags like "4 في 1") and can't
 // be trusted to carry country scope on its own (confirmed via a full audit of the finance
 // cluster, 2026-07-30). Saudi first (the site's primary market), then the rest of the GCC,
-// then non-Gulf Arab countries. The 3 non-Arab finance-cluster tools (Canada/France/Denmark
-// child-benefit/sales-date tools) are deliberately excluded from this hub — they aren't
-// Gulf/Arab finance and belong in a different category once one exists for them.
+// then non-Gulf Arab countries.
+//
+// **2026-08-25 second-wave split**: this hub had grown to 43 tools across countries far beyond
+// the Gulf (owner: "this is no more gulf finance"). Fuel prices (13 countries + comparison) moved
+// to /tools/fuel-prices; domestic-worker recruitment (8 tools) moved to its own
+// /tools/domestic-worker (a real, distinct topic — "hiring household staff," not "your own pay");
+// the general Sharia rulings (wasiyya/iddah/aqiqah/nafaqah) moved into /tools/islamic, finishing
+// what that hub's own cross-link section had already half-done since 2026-08-11; the 3 non-Arab
+// diaspora tools (Canada/Denmark/France) moved to the new /tools/international-benefits — they
+// were never Gulf/Arab finance, only living here since 2026-08-05 because /calculators needed
+// eliminating and they needed *some* home at the time. See data.js's CALCULATOR_HUBS entries and
+// next.config.js's `GULF_FINANCE_SECOND_WAVE_MIGRATION_REDIRECTS` for the full mechanics.
 //
 // **2026-08-03 removal pass**: 39 tools removed hub-wide after real competitor research
 // confirmed each was either (a) explicitly blacklisted (PLAN.md §2 — net-salary, gosi-retirement,
@@ -32,47 +42,20 @@ function findRoute(slug) {
 // own loan calculators, ZenHR/LegalHub/Jisr's all-8-country EOS tools), or (c) pure generic
 // utility math with zero Gulf-specific angle (percentage, bill-splitter, etc). Full research +
 // removal list: `keyword-research/gulf-finance-additions/` session notes and
-// `docs/PLAN.md` §13. Kuwait/Qatar/Bahrain/Oman lost ALL their tools in this pass (every single
-// one was in the removed set) — this was a real, unfilled gap, not an oversight, until
-// 2026-08-04's domestic-worker-recruitment-cost research (a genuinely differentiated angle,
-// not a thin duplicate of the removed loan/insurance calculators) filled all four plus added a
-// UAE-specific tool alongside the pre-existing one — see
-// keyword-research/domestic-worker-cost/DECISION.md for the full research and primary-source
-// verification behind every fee figure used.
+// `docs/PLAN.md` §13.
 const COUNTRY_GROUPS = [
   {
     code: 'sa',
     name: 'السعودية',
     slugs: [
       'end-of-service-benefits', 'sick-leave', 'saudi-pay-dates', 'saned-eligibility',
-      'domestic-worker-cost', 'nafaqah',
       'article-77-compensation', 'traffic-fine-discount',
     ],
   },
   {
     code: 'ae',
     name: 'الإمارات',
-    slugs: ['uae-end-of-service', 'dubai-company-setup-cost', 'domestic-worker-cost-uae'],
-  },
-  {
-    code: 'kw',
-    name: 'الكويت',
-    slugs: ['domestic-worker-cost-kuwait'],
-  },
-  {
-    code: 'qa',
-    name: 'قطر',
-    slugs: ['domestic-worker-cost-qatar'],
-  },
-  {
-    code: 'bh',
-    name: 'البحرين',
-    slugs: ['domestic-worker-cost-bahrain'],
-  },
-  {
-    code: 'om',
-    name: 'عُمان',
-    slugs: ['domestic-worker-cost-oman'],
+    slugs: ['uae-end-of-service', 'dubai-company-setup-cost'],
   },
   {
     code: 'eg',
@@ -85,16 +68,10 @@ const COUNTRY_GROUPS = [
     slugs: ['jordan-income-tax'],
   },
 ];
-// المغرب (ma) أُزيلت بالكامل 2026-08-03 — morocco-net-salary كانت أداتها الوحيدة، وحُذفت بعد
-// منافسة حقيقية مؤكدة (ahmedbouchefra.com يغطي CNSS/AMO/IR بالكامل، حاسبات متعددة أخرى). لا يوجد
-// محتوى مغربي آخر في هذا الـHub حالياً.
-
-// The 3 non-Arab diaspora payment-date tools (Denmark/Canada/France) were physically relocated
-// here from the retired /calculators/* tree 2026-08-05 (owner directive: no /calculators path at
-// all) — they still aren't Gulf/Arab finance, so kept in their OWN group rather than folded into
-// a country group above, but listed for a real internal link (helps crawl/indexing) rather than
-// left as an orphan page reachable only via the sitemap.
-const INTERNATIONAL_TOOLS_SLUGS = ['boernepenge-denmark', 'cgeb-canada', 'soldes-france'];
+// (historical) الكويت/قطر/البحرين/عُمان/المغرب/الجزائر/تونس/العراق/لبنان كان لكل منها مجموعة هنا
+// في مراحل مختلفة (إما عمالة منزلية أو أسعار وقود فقط) — أُزيلت كل هذه المجموعات نهائياً 2026-08-25
+// عندما انتقلت أدواتها لفئاتها الصحيحة (domestic-worker أو fuel-prices)، لأنها كانت أداتها الوحيدة
+// في هذا المسار. لا يوجد لأي من هذه الدول أداة أخرى في gulf-finance حالياً.
 
 // Tools whose calculation logic genuinely covers more than one country (a real dropdown/switch
 // in the tool itself). Full country list goes in the link's tooltip (with the description) —
@@ -105,21 +82,11 @@ const MULTI_COUNTRY_TOOLS = [
   { slug: 'annual-leave', tag: '6 دول', coverage: 'السعودية، الإمارات، الكويت، قطر، مصر، الأردن' },
   { slug: 'working-days', tag: '8 دول', coverage: 'السعودية، الكويت، البحرين، عُمان، مصر، الأردن، الإمارات، قطر' },
   { slug: 'iqama', tag: 'SA + AE', coverage: 'السعودية والإمارات فقط' },
-  { slug: 'domestic-worker-eligibility', tag: '6 دول', coverage: 'السعودية، الإمارات، الكويت، قطر، البحرين، عُمان' },
-  { slug: 'domestic-worker-contract-generator', tag: '6 دول', coverage: 'السعودية، الإمارات، الكويت، قطر، البحرين، عُمان' },
 ];
 
-// Fiqh/Sharia rulings aren't tied to any one country's civil law — grouped separately from the
-// country sections above on purpose. aqiqah's ruling is universal too; only its cost ESTIMATE
-// is priced to the Saudi market, noted in its tooltip rather than moving the whole tool into
-// the Saudi section (the grouping rule here is "whose LAW governs this," and no country's law
-// governs an aqiqah ruling). `zakat` (general) was removed 2026-08-03 (explicit PLAN.md §2
-// blacklist match) — the narrower Sharia tools below survive since they're a genuinely
-// different, less-covered niche than a general zakat calculator.
-// `inheritance` removed 2026-08-03 — almwareeth.com alone covers 5 schools of thought + 9 Arab
-// countries' laws, plus 6+ other dedicated competitors and 2 mobile apps, the most saturated
-// Islamic-calculator niche found this session.
-const SHARIA_TOOLS_SLUGS = ['wasiyya', 'iddah', 'aqiqah'];
+// Fiqh/Sharia rulings (wasiyya/iddah/aqiqah/nafaqah) and domestic-worker recruitment tools moved
+// out entirely 2026-08-25 — see the COUNTRY_GROUPS comment above and data.js's CALCULATOR_HUBS
+// entries for 'islamic'/'domestic-worker'.
 
 // Three highest-relevance picks shown above the full grouped list — the mockup's
 // "featured row" pattern (top picks before the exhaustive per-group lists). Updated 2026-08-03:
@@ -154,13 +121,12 @@ const FAQ_ITEMS = [
 export const metadata = buildCanonicalMetadata({
   title: 'حاسبات الرواتب ونهاية الخدمة في الخليج والدول العربية',
   description:
-    'احسب مكافأة نهاية الخدمة، تعويض المادة 77، خصم المخالفات المرورية، والنفقة — حاسبات مالية عربية دقيقة، مقسّمة حسب كل دولة.',
+    'احسب مكافأة نهاية الخدمة، تعويض المادة 77، خصم المخالفات المرورية، ومواعيد الرواتب — حاسبات مالية عربية دقيقة، مقسّمة حسب كل دولة.',
   keywords: [
     'حاسبات مالية خليجية',
     'حاسبة مكافأة نهاية الخدمة',
     'حاسبة تعويض المادة 77',
     'حاسبة خصم المخالفات المرورية',
-    'حاسبة النفقة في السعودية',
     'مواعيد الرواتب في السعودية',
     'حاسبات مالية بالعربي',
   ],
@@ -201,8 +167,6 @@ export default function GulfFinanceCategoryHubPage() {
   const allListedSlugs = new Set([
     ...COUNTRY_GROUPS.flatMap((g) => g.slugs),
     ...MULTI_COUNTRY_TOOLS.map((t) => t.slug),
-    ...SHARIA_TOOLS_SLUGS,
-    ...INTERNATIONAL_TOOLS_SLUGS,
   ]);
   const toolCount = allListedSlugs.size;
   const countryCount = COUNTRY_GROUPS.length;
@@ -235,15 +199,7 @@ export default function GulfFinanceCategoryHubPage() {
       }),
     },
   };
-  const faqSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: FAQ_ITEMS.map((item) => ({
-      '@type': 'Question',
-      name: item.question,
-      acceptedAnswer: { '@type': 'Answer', text: item.answer },
-    })),
-  };
+  const faqSchema = buildHubFaqSchema(FAQ_ITEMS);
 
   return (
     <main className="bg-base text-primary" dir="rtl" lang="ar">
@@ -318,40 +274,12 @@ export default function GulfFinanceCategoryHubPage() {
               ))}
             </ul>
           </div>
-
-          <div className="tool-v2-type-group">
-            <h2>أدوات شرعية عامة</h2>
-            <p className="tool-v2-type-group-note">أحكام فقهية لا يحكمها قانون دولة بعينها.</p>
-            <ul className="tool-v2-tool-link-list">
-              {SHARIA_TOOLS_SLUGS.map((slug) => (
-                <ToolLink key={slug} slug={slug} />
-              ))}
-            </ul>
-          </div>
-
-          <div className="tool-v2-type-group">
-            <h2>مواعيد دفعات دولية</h2>
-            <p className="tool-v2-type-group-note">أنظمة دعم ومواعيد رسمية خارج الخليج والعالم العربي.</p>
-            <ul className="tool-v2-tool-link-list">
-              {INTERNATIONAL_TOOLS_SLUGS.map((slug) => (
-                <ToolLink key={slug} slug={slug} />
-              ))}
-            </ul>
-          </div>
         </div>
         </TooltipProvider>
 
-        <div className="tool-v2-type-group">
-          <h2>أسئلة قبل اختيار حاسبة مالية</h2>
-          <div className="tool-v2-faq">
-            {FAQ_ITEMS.map((item, index) => (
-              <details key={item.question} open={index === 0}>
-                <summary>{item.question}<svg className="tool-v2-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg></summary>
-                <p>{item.answer}</p>
-              </details>
-            ))}
-          </div>
-        </div>
+        <HubGuideSection id="hub-faq" title="أسئلة قبل اختيار حاسبة مالية">
+          <HubFaq items={FAQ_ITEMS} />
+        </HubGuideSection>
       </div>
     </main>
   );

@@ -86,7 +86,7 @@
   background: var(--amber);
 }
 .guide-v2-hero h1 {
-  font-family: var(--font-guide-display), var(--font-heading);
+  font-family: var(--font-heading);
   font-weight: 700;
   font-size: clamp(2rem, 4.5vw, 2.9rem);
   line-height: 1.22;
@@ -312,7 +312,7 @@
   border-inline-start: 3px solid var(--amber);
 }
 .guide-v2-pullquote p {
-  font-family: var(--font-guide-display), var(--font-heading);
+  font-family: var(--font-heading);
   font-size: 1.5rem;
   line-height: 1.5;
   font-weight: 600;
@@ -361,7 +361,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: var(--font-guide-display), var(--font-heading);
+  font-family: var(--font-heading);
   font-weight: 700;
   font-size: 1.05rem;
   background: var(--amber-subtle);
@@ -600,7 +600,7 @@
   border-top: 1px solid var(--border);
 }
 .guide-v2-related-head {
-  font-family: var(--font-guide-display), var(--font-heading);
+  font-family: var(--font-heading);
   font-weight: 700;
   font-size: 1.3rem;
   color: var(--text-1);
@@ -656,7 +656,7 @@
   text-align: start;
 }
 .guide-v2-hub-hero h1 {
-  font-family: var(--font-guide-display), var(--font-heading);
+  font-family: var(--font-heading);
   font-weight: 700;
   font-size: clamp(2rem, 4.5vw, 2.9rem);
   line-height: 1.22;
@@ -702,7 +702,7 @@
   color: var(--amber-text);
 }
 .guide-v2-hub-card-title {
-  font-family: var(--font-guide-display), var(--font-heading);
+  font-family: var(--font-heading);
   font-weight: 700;
   font-size: 1.4rem;
   color: var(--text-1);

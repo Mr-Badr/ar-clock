@@ -36,37 +36,42 @@ export default function HeroV2() {
         </div>
 
         <div className="hero-v2-content">
-          {/* Owner, 2026-08-23: "why the first thing the user see is time and dates, it should
-              be generic statement... a hook that give a general value not specific page or
-              concept" — this eyebrow is the very first line read, above the H1, so it now sets
-              up a broad promise (simplifies your day) instead of naming one feature; the H1 and
-              lead right below still carry the fuller "everything that matters daily" message. */}
-          <p className="hero-v2-eyebrow" data-hero-item>ميقاتنا — صُنعت لتُبسّط يومك</p>
+          {/* Owner, 2026-08-27: swapped the old "ميقاتنا — صُنعت لتُبسّط يومك" text pill for the
+              brand wordmark — same spaced-tatweel "مـــيـــقــاتــنــا" lockup already used in
+              the footer (Footer.jsx's .footer-brand-name). Went through several animated-SVG
+              attempts (react-bits StrokeText: letter-by-letter stroke-draw + fill) that never
+              read as smooth in the owner's own browser no matter how the timing/mechanism was
+              tuned — owner directive, same day: "delete all these animations, just simple clean
+              word... little bit of shadow." Reverted to a plain server-rendered heading (real
+              text, real SEO weight, zero JS) with a single CSS fade+rise entrance (see
+              .hero-v2-brandmark in HeroV2.css) and a soft gold text-shadow for a touch of depth.
+              DELIBERATELY NOT wrapped in [data-hero-item]: that attribute makes HeroMotion slide
+              the element up from y:24→0 as part of its own entrance stagger, which would
+              double up with this element's own fade+rise keyframe. */}
+          <p className="hero-v2-brandmark" aria-hidden="true">مـــيـــقــاتــنــا</p>
 
           <h1 className="hero-v2-title" data-hero-item>
-            {/* Word-by-word "fold down from the top" reveal — split by WORD, not character:
-                Arabic letters connect/reshape based on their neighbors, so isolating individual
-                characters in their own boxes would break that cursive joining and look broken.
-                Pure CSS keyframes (see .hero-v2-title-word in HeroV2.css), not GSAP/JS-triggered
-                — this H1 is server-rendered, SEO-critical text, and a JS-driven opacity-from-0
-                reveal risks a real "hides content that already painted" flash if hydration is
-                slow (the exact bug this project's own motion components were fixed for). A pure
-                CSS animation starts on first paint, with no hydration race to lose. */}
-            {'كل ما يهمّك يوميًا، بجودة تستحقها'.split(' ').map((word, i) => (
-              <span
-                className="hero-v2-title-word"
-                key={`${word}-${i}`}
-                style={{ animationDelay: `${i * 70}ms` }}
-              >
-                {word}
-                {i < 5 ? ' ' : ''}
-              </span>
-            ))}
-          </h1>
+  <span className="hero-v2-title-line hero-v2-title-line-main">
+    {'كل ما يهمّك يــومــيــًا'.split(' ').map((word, i) => (
+      <span key={`${word}-${i}`}>
+        <span
+          className="hero-v2-title-word"
+          style={{ animationDelay: `${i * 70}ms` }}
+        >
+          {word}
+        </span>
+        {i < 3 && '\u00A0'}
+      </span>
+    ))}
+  </span>
 
-          <p className="hero-v2-lead" data-hero-item>
-            منصة عربية أنيقة، صُنعت لتمنحك إجابة سريعة وموثوقة، متى احتجتها.
-          </p>
+  <span
+    className="hero-v2-title-line hero-v2-title-line-sub"
+    style={{ animationDelay: '280ms' }}
+  >
+    بجودة تــســتــحــقــهــا
+  </span>
+</h1>
 
           <div className="hero-v2-actions">
             <HeroSearchTrigger />

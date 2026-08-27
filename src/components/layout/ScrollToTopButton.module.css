@@ -24,6 +24,42 @@
     color var(--transition-fast);
 }
 
+/* Scroll-progress ring (owner, 2026-08-27: "a line that increase based on position of the user
+   inside the page, just like a border around the button"). A conic-gradient sweeping from 0% to
+   `--progress`% (set on the button element itself, see ScrollToTopButton.tsx), cut down to a
+   thin ring via a radial-gradient mask — no SVG, no stroke animation, just one CSS custom
+   property updated on scroll. Sits just outside the button's own 1px border (`inset: -4px`) so
+   it reads as a halo tracking the button, not a replacement for the border itself. */
+/* Owner follow-up: "the ring should start from the top center of button, also make the ring
+   smaller size not that thin" (fixed the start angle + thickened it up from the first pass),
+   then "how can i change the line... it should look more thin" (thinned 3.5px → 2px), then
+   owner made it 1.5px directly and hit real pixelation: "why i see these pixels, the line is
+   not looking clean and smouth."
+   Root cause: the mask's two color-stops (`transparent calc(100% - Npx)`, `#000 calc(100% -
+   Npx)`) sat at the EXACT SAME position — a zero-width hard cutoff, not a gradient. That's fine
+   at a few px thick, but at ~1.5px on a ~44px circle there's almost no room for the rasterizer
+   to anti-alias that instant jump, so it shows as visible jagged/blocky pixels instead of a
+   smooth curve. Fixed by giving the inner edge a small (1px) FEATHER — the two stops are now at
+   different positions, so the browser interpolates a soft transition instead of a hard step.
+   `--stroke` is the visible line's thickness; tune that one value for thicker/thinner — the
+   feather formula (`--stroke + 1px` → `--stroke`) stays correct automatically either way.
+   `inset` (below) controls how far the ring floats outside the button's own edge — separate
+   from thickness, don't conflate the two if tuning further. */
+.button::before {
+  --stroke: 1.5px;
+  content: "";
+  position: absolute;
+  inset: -3px;
+  border-radius: inherit;
+  background: conic-gradient(
+    var(--accent-alt) calc(var(--progress, 0) * 1%),
+    transparent 0
+  );
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - var(--stroke) - 1px), #000 calc(100% - var(--stroke)));
+  mask: radial-gradient(farthest-side, transparent calc(100% - var(--stroke) - 1px), #000 calc(100% - var(--stroke)));
+  pointer-events: none;
+}
+
 .buttonVisible {
   opacity: 1;
   pointer-events: auto;

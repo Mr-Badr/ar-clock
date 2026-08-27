@@ -26,7 +26,11 @@ const LINK_GROUPS = [
     ],
   },
   {
-    heading: 'الشركة',
+    // Owner, 2026-08-27: "these names is bad, do better namings" — "الشركة" ("the company") is a
+    // stiff, literal translation of a generic English footer label; this site isn't a company
+    // portal, and none of these 3 links are corporate-identity content. "عن ميقاتنا" names it by
+    // what it actually is (info about the site itself) and keeps the brand voice.
+    heading: 'عن ميقاتنا',
     links: [
       { href: '/about', label: 'من نحن' },
       { href: '/editorial-policy', label: 'السياسة التحريرية' },
@@ -34,7 +38,10 @@ const LINK_GROUPS = [
     ],
   },
   {
-    heading: 'قانوني',
+    // "قانوني" ("legal") is the same problem — an awkward transliteration-flavored label that
+    // Arabic footers don't actually use standalone. "السياسات" ("Policies") is the natural
+    // Arabic term for exactly this group (terms/privacy/disclaimer).
+    heading: 'السياسات',
     links: [
       { href: '/terms', label: 'شروط الاستخدام' },
       { href: '/privacy', label: 'سياسة الخصوصية' },
@@ -71,7 +78,8 @@ const Footer = () => {
               />
             </Link>
 
-            <h2 className="footer-brand-name">{SITE_BRAND}</h2>
+            <h2 className="footer-brand-name">مـــيـــقــاتــنــا
+</h2>
 
             <p className="footer-brand-desc">
               أدوات وحاسبات عربية، ومواعيد المناسبات — بلا تسجيل، وبتجربة بسيطة وسريعة.

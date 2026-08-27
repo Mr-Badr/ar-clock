@@ -23,14 +23,17 @@ function findRoute(slug) {
 // اكسس كنترول للتجزئة) were rejected on competition/CPC grounds — see docs/PLAN.md §13. This
 // hub deliberately starts with ONE deep, fully-researched page rather than several thin ones —
 // see keyword-research/access-control-intercom-hub/DECISION.md.
-const FEATURED_SLUGS = ['attendance-cost-calculator'];
+// **2026-08-25**: +1 — `work-hours-calculator`, a genuinely different intent (personal/HR wage
+// calculation) from the B2B system-purchase-decision tool above, found as a real gap in a
+// dedicated tool-research pass (real Arabic competitors were only B2B Excel-template upsells).
+const FEATURED_SLUGS = ['attendance-cost-calculator', 'work-hours-calculator'];
 
 const TYPE_GROUPS = [
   {
     code: 'tools',
     name: 'الأدوات والحاسبات',
     note: 'قبل التعاقد مع أي مزود — قارن الأسعار الحقيقية واحسب تكلفة شركتك الفعلية.',
-    slugs: ['attendance-cost-calculator'],
+    slugs: ['attendance-cost-calculator', 'work-hours-calculator'],
   },
 ];
 
@@ -52,12 +55,14 @@ function ToolLink({ slug }) {
 }
 
 export const metadata = buildCanonicalMetadata({
-  title: 'نظام الحضور والانصراف — حاسبة التكلفة ومقارنة الأسعار',
+  title: 'الحضور والانصراف — تكلفة النظام وحاسبة ساعات العمل',
   description:
-    'احسب تكلفة نظام الحضور والانصراف المناسب لعدد موظفي شركتك، وقارن أسعار حقيقية لأبرز المزودين قبل التعاقد.',
+    'احسب تكلفة نظام الحضور والانصراف المناسب لعدد موظفي شركتك، واحسب راتبك من ساعات العمل العادية والإضافية — بالنسبة القانونية الصحيحة لكل دولة.',
   keywords: [
     'نظام الحضور والانصراف',
     'حاسبة تكلفة نظام حضور وانصراف',
+    'حاسبة ساعات العمل',
+    'حساب الراتب من ساعات العمل',
     'اجهزة بصمة حضور وانصراف',
     'برنامج حضور وانصراف سحابي',
     'انظمة حضور وانصراف في السعودية',
@@ -98,7 +103,7 @@ export default function AttendanceCategoryHubPage() {
           </div>
           <p>
             كم تدفع شركتك فعلياً مقابل نظام الحضور والانصراف، ومتى يستحق البصمة أم التطبيق
-            السحابي — احسب تكلفتك الحقيقية حسب عدد موظفيك بدل التخمين أو انتظار عرض سعر.
+            السحابي — واحسب راتبك أنت من ساعات عملك العادية والإضافية مباشرة.
           </p>
           <div className="tool-v2-cat-meta">
             <span><b>{toolCount}</b> صفحة مرتبطة مباشرة</span>

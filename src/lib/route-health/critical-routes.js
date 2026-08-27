@@ -22,11 +22,16 @@ export const CRITICAL_ROUTE_PROBES = Object.freeze([
     forbiddenMarkers: ['content="noindex'],
   },
   {
+    // Found 2026-08-25 while running health:routes for the tool-research session: this marker
+    // said 'كل الحاسبات في مكان واحد' but the page's real H1 has been 'كل الأدوات في مكان واحد'
+    // since the "not just calculators" pivot — meaning this check had been silently failing (a
+    // false positive on real regressions) for however long that copy's been live. Same exact
+    // class of bug as the 2026-08-09 blog-article probe above; fixed the string, not the page.
     id: 'calculators-hub',
     path: '/tools',
     label: 'Calculators hub',
     minimumBodyBytes: 10000,
-    requiredMarkers: ['كل الحاسبات في مكان واحد', '/tools/health', '/tools/gulf-finance'],
+    requiredMarkers: ['كل الأدوات في مكان واحد', '/tools/health', '/tools/gulf-finance'],
     forbiddenMarkers: ['content="noindex'],
   },
   {

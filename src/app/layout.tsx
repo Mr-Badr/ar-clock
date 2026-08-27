@@ -48,11 +48,16 @@ const notoSansArabic = Noto_Sans_Arabic({
 });
 
 // Thmanyah Sans — owner-supplied custom Arabic type family (public/fonts/thmanyah-sans-*.woff2),
-// 2026-08-23. Scoped to the hero H1 only for now (see .hero-v2-title in HeroV2.css) — not the
-// sitewide heading font, so it's `preload:false` here (next/font/local still self-hosts and
-// prevents CLS, it just doesn't compete with Noto Sans Arabic for the critical preload budget on
-// every other page). All 4 weights are registered as one family; only Bold is actually requested
-// by any current CSS, so only that one file downloads.
+// 2026-08-23. Was `preload:false` from when this was scoped to just the homepage hero H1 — a
+// 2026-08-25 owner directive (see base.css's --font-heading comment) made it the SITEWIDE
+// heading font instead, but this flag was never revisited. Confirmed via a real rAF trace
+// (2026-08-27) that this was an active, reproducible bug on the homepage: the hero title box
+// measured 288x111 at t=865ms (rendering in the Noto Sans Arabic fallback) then visibly reflowed
+// to 350x74 at t=1057ms once Thmanyah's woff2 finished loading and swapped in — the exact
+// "bigger and longer for a second, then it snaps" the owner reported. Since Thmanyah now backs
+// every h1/h2/h3 sitewide, including the always-above-the-fold homepage hero, it belongs in the
+// critical preload budget now. Only Bold is actually requested by any current CSS, so only that
+// one file (~78KB) downloads regardless of `preload` covering all 4 declared weights.
 const thmanyahSans = localFont({
   src: [
     { path: '../../public/fonts/thmanyah-sans-Light.woff2', weight: '300', style: 'normal' },
@@ -62,7 +67,7 @@ const thmanyahSans = localFont({
   ],
   variable: '--font-thmanyah',
   display: 'swap',
-  preload: false,
+  preload: true,
 });
 
 export const metadata: Metadata = {

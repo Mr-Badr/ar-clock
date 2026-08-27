@@ -259,6 +259,55 @@ const LEGACY_INDEXING_REDIRECTS = [
   { source: '/calculators/zakat', destination: '/tools/islamic' },
 ];
 
+// The fuel-price feature (13 country pages + comparison) moved out of /tools/gulf-finance into
+// its own /tools/fuel-prices category 2026-08-25 — "gulf-finance" no longer fit a pan-Arab (not
+// just GCC) live-pricing feature. These URLs are hours old with ~zero real Google indexing, so
+// this is the cheapest possible time to fix the structure; redirects added anyway as correct
+// practice and to keep any already-shared/bookmarked links working. See fuel-prices-registry.js's
+// header and data.js's `compare` CALCULATOR_ROUTES entry for the rest of this migration.
+const FUEL_PRICES_CATEGORY_MIGRATION_REDIRECTS = [
+  { source: '/tools/gulf-finance/saudi-fuel-prices', destination: '/tools/fuel-prices/saudi-fuel-prices' },
+  { source: '/tools/gulf-finance/uae-fuel-prices', destination: '/tools/fuel-prices/uae-fuel-prices' },
+  { source: '/tools/gulf-finance/kuwait-fuel-prices', destination: '/tools/fuel-prices/kuwait-fuel-prices' },
+  { source: '/tools/gulf-finance/qatar-fuel-prices', destination: '/tools/fuel-prices/qatar-fuel-prices' },
+  { source: '/tools/gulf-finance/bahrain-fuel-prices', destination: '/tools/fuel-prices/bahrain-fuel-prices' },
+  { source: '/tools/gulf-finance/oman-fuel-prices', destination: '/tools/fuel-prices/oman-fuel-prices' },
+  { source: '/tools/gulf-finance/egypt-fuel-prices', destination: '/tools/fuel-prices/egypt-fuel-prices' },
+  { source: '/tools/gulf-finance/morocco-fuel-prices', destination: '/tools/fuel-prices/morocco-fuel-prices' },
+  { source: '/tools/gulf-finance/jordan-fuel-prices', destination: '/tools/fuel-prices/jordan-fuel-prices' },
+  { source: '/tools/gulf-finance/algeria-fuel-prices', destination: '/tools/fuel-prices/algeria-fuel-prices' },
+  { source: '/tools/gulf-finance/tunisia-fuel-prices', destination: '/tools/fuel-prices/tunisia-fuel-prices' },
+  { source: '/tools/gulf-finance/iraq-fuel-prices', destination: '/tools/fuel-prices/iraq-fuel-prices' },
+  { source: '/tools/gulf-finance/lebanon-fuel-prices', destination: '/tools/fuel-prices/lebanon-fuel-prices' },
+  { source: '/tools/gulf-finance/gulf-fuel-prices', destination: '/tools/fuel-prices/compare' },
+];
+
+// Second wave of the same 2026-08-25 gulf-finance split, same day: domestic-worker recruitment (8
+// tools, a genuinely distinct topic from personal salary/labor-law finance), general Sharia
+// rulings (4 tools, finishing what /tools/islamic's cross-link section had already half-done since
+// 2026-08-11), and the 3 non-Arab diaspora payment-date tools. Unlike the fuel-price move, these
+// pages are ~20 days old (confirmed via `git log --diff-filter=A`), not hours — a 301 preserves
+// the vast majority of ranking signal, but this is real link equity being moved, not a zero-risk
+// same-day fix. See data.js's `domestic-worker`/`international-benefits` CALCULATOR_HUBS entries
+// and gulf-finance/page.jsx's own comment for the rest of this migration.
+const GULF_FINANCE_SECOND_WAVE_MIGRATION_REDIRECTS = [
+  { source: '/tools/gulf-finance/domestic-worker-cost', destination: '/tools/domestic-worker/domestic-worker-cost' },
+  { source: '/tools/gulf-finance/domestic-worker-uae', destination: '/tools/domestic-worker/domestic-worker-uae' },
+  { source: '/tools/gulf-finance/domestic-worker-kuwait', destination: '/tools/domestic-worker/domestic-worker-kuwait' },
+  { source: '/tools/gulf-finance/domestic-worker-qatar', destination: '/tools/domestic-worker/domestic-worker-qatar' },
+  { source: '/tools/gulf-finance/domestic-worker-bahrain', destination: '/tools/domestic-worker/domestic-worker-bahrain' },
+  { source: '/tools/gulf-finance/domestic-worker-oman', destination: '/tools/domestic-worker/domestic-worker-oman' },
+  { source: '/tools/gulf-finance/domestic-worker-eligibility', destination: '/tools/domestic-worker/domestic-worker-eligibility' },
+  { source: '/tools/gulf-finance/domestic-worker-contract', destination: '/tools/domestic-worker/domestic-worker-contract' },
+  { source: '/tools/gulf-finance/wasiyya', destination: '/tools/islamic/wasiyya' },
+  { source: '/tools/gulf-finance/iddah', destination: '/tools/islamic/iddah' },
+  { source: '/tools/gulf-finance/aqiqah', destination: '/tools/islamic/aqiqah' },
+  { source: '/tools/gulf-finance/nafaqah', destination: '/tools/islamic/nafaqah' },
+  { source: '/tools/gulf-finance/cgeb-canada', destination: '/tools/international-benefits/cgeb-canada' },
+  { source: '/tools/gulf-finance/soldes-france', destination: '/tools/international-benefits/soldes-france' },
+  { source: '/tools/gulf-finance/boernepenge-denmark', destination: '/tools/international-benefits/boernepenge-denmark' },
+];
+
 const nextConfig = {
   // ── Server ───────────────────────────────────────────────────────────────────
   serverExternalPackages: [
@@ -302,7 +351,18 @@ const nextConfig = {
       stale: 3600,
       revalidate: 86400,
       expire: 604800,
-    }
+    },
+    // uae-fuel-prices live fetch (2026-08-25) — the source only changes monthly, so this isn't
+    // about needing fresher data than a day old; it's a safety margin so the page is never more
+    // than ~1 day behind whenever the upstream API actually publishes an update. `stale: 3600`
+    // serves an already-cached response instantly while revalidating in the background; `expire:
+    // 259200` (3 days) is the hard ceiling — past that, a request blocks on a fresh fetch attempt
+    // rather than keep serving something that old.
+    fuelPricesDaily: {
+      stale: 3600,
+      revalidate: 86400,
+      expire: 259200,
+    },
   },
 
   // ── Experiments ──────────────────────────────────────────────────────────────
@@ -417,6 +477,14 @@ const nextConfig = {
         permanent: true,
       })),
       ...LEGACY_INDEXING_REDIRECTS.map((redirect) => ({
+        ...redirect,
+        permanent: true,
+      })),
+      ...FUEL_PRICES_CATEGORY_MIGRATION_REDIRECTS.map((redirect) => ({
+        ...redirect,
+        permanent: true,
+      })),
+      ...GULF_FINANCE_SECOND_WAVE_MIGRATION_REDIRECTS.map((redirect) => ({
         ...redirect,
         permanent: true,
       })),

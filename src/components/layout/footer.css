@@ -12,6 +12,28 @@
   isolation: isolate;
   overflow: hidden;
   border-block-start: 1px solid rgba(255, 255, 255, 0.14);
+  /* Owner, 2026-08-27 follow-up: "we want the footer to have more high not just padding, but
+     actual hight, just a little bit more" — the previous pass only added padding around the
+     same content, which grows with the content's own height rather than guaranteeing the
+     footer BAND itself is any taller (desktop measured ~464px regardless). This is a real
+     floor on `.footer-root` itself: `.footer-container` is a normal in-flow block sitting at
+     the top of it, so once its content is shorter than this minimum, the extra space shows up
+     as more of footer.jpg visible below the text, with nothing added below the fold that isn't
+     already there — exactly "more image, not more padding." Mobile already exceeds this value
+     from its own stacked content, so it's a no-op there; the bump is desktop-only in practice
+     (~464px → ~544px, a real but modest increase, not a dramatic one).
+
+     Follow-up, same day: "keep same footer high but the last part keep it in bottom" — with
+     `.footer-container` a normal in-flow block, the leftover space from this min-height showed
+     up as dead air BELOW the whole container (copyright row floating mid-footer, blank photo
+     underneath it) rather than the copyright row actually sitting at the true bottom edge.
+     `display:flex` here + `.footer-container{flex:1}` + `.footer-bottom{margin-block-start:
+     auto}` is the standard "sticky footer" pattern: the brand/links block stays put at the top,
+     the copyright row gets pushed all the way down to fill the remaining height itself, so the
+     dead space moves from "below everything" to "between the links and the copyright row" —
+     same total footer height, copyright text now flush against the real bottom. */
+  min-height: 34rem;
+  display: flex;
 }
 
 .light .footer-root {
@@ -41,7 +63,18 @@
   position: relative;
   width: min(100%, 1440px);
   margin-inline: auto;
-  padding: var(--space-10) var(--space-6) var(--space-6);
+  /* Owner, 2026-08-27: "footer in desktop and mobile should have more high because we want the
+     image to appear more" — more top padding around the same content, on both desktop and
+     mobile (no breakpoint override shrinks this back down), so footer.jpg gets real room to
+     read as a photo instead of being mostly cropped edge behind the text. Bottom padding cut
+     down separately below, same day follow-up: "the text... should have no padding bottom,
+     just a little bit" — was `--space-6` (24px), now just `--space-3` (12px), the copyright
+     row's own small edge margin now that it's pinned to the true bottom (see `.footer-root`'s
+     flex + `.footer-bottom`'s `margin-block-start:auto` above/below). */
+  padding: var(--space-20) var(--space-6) var(--space-3);
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
 /* 2026-08-23: no more text-shadow halos — the full-footer .footer-bg-scrim above now does the
@@ -138,16 +171,24 @@
   text-align: start;
 }
 
+/* Owner, 2026-08-27: "the title of each list should be special and look like a title, maybe
+   underline or something else" — first attempt was a dimmer/smaller heading plus a short accent
+   underline. Owner follow-up: "the underline is bad, so just change the colors of titles and
+   make them different... change this underline, so they always should have a little bigger font
+   size and always dark in both modes." Underline dropped entirely. Color is now the site's fixed
+   brand gold (same literal hex as the hero wordmark, StrokeText.client.jsx's replacement in
+   HeroV2.css) instead of a `.light`/dark-mode-flipping white-ish tone — one consistent, visibly
+   distinct ("different" from the plain white/near-black link color below it) identity color that
+   reads as a deep, muted tone rather than stark white in EITHER theme, which is what makes a
+   fixed non-flipping color the right read for "always dark in both modes" here: the links below
+   still flip white/near-black with the theme, the titles deliberately don't. Font size bumped up
+   from the previous pass's --text-xs to --text-sm ("a little bigger"). */
 .footer-col-heading {
   margin: 0 0 var(--space-3);
-  color: #ffffff;
+  color: #D5A127;
   font-size: var(--text-sm);
   font-weight: var(--font-bold);
   line-height: var(--leading-snug);
-}
-
-.light .footer-col-heading {
-  color: #0b1120;
 }
 
 .footer-col-list {
@@ -189,6 +230,10 @@
   align-items: center;
   justify-content: center;
   gap: var(--space-4);
+  /* Pushes this row to the bottom of `.footer-container`'s flex column (see `.footer-root`/
+     `.footer-container` above) instead of sitting right after `.footer-main` with dead space
+     below it — the standard flexbox "sticky footer" trick. */
+  margin-block-start: auto;
   padding-block-start: var(--space-5);
   border-block-start: 1px solid rgba(255, 255, 255, 0.16);
 }
@@ -223,14 +268,26 @@
     row-gap: var(--space-8);
   }
 
+  /* Owner, 2026-08-27: "the first section that have logo in center" — the brand block (logo,
+     wordmark, blurb, email) was still start-aligned like a desktop sidebar even though it now
+     spans the full row on mobile; centering it reads intentionally as its own hero-ish opening
+     section instead of a left-stranded column with empty space beside it. Scoped to this
+     breakpoint only — desktop keeps the original start-aligned sidebar layout, unchanged. */
   .footer-brand {
     grid-column: 1 / -1;
+    justify-items: center;
+    text-align: center;
+  }
+
+  .footer-brand-logo,
+  .footer-brand-cta {
+    margin-inline: auto;
   }
 }
 
 @media (max-width: 620px) {
   /* Owner directive, 2026-08-24: "footer links in two columns" on mobile — this used to collapse
-     the 3 link groups (الأدوات والصفحات / الشركة / قانوني) to a single stacked column here,
+     the 3 link groups (الأدوات والصفحات / عن ميقاتنا / السياسات) to a single stacked column here,
      which reads as a long scroll of headings and links. Dropping this override lets the
      1080px breakpoint's 2-column `.footer-main` grid keep applying — brand block still full-width
      (`.footer-brand { grid-column: 1 / -1; }` above), the 3 link groups now sit two-per-row

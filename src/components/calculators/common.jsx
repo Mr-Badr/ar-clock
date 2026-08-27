@@ -89,7 +89,14 @@ function getUniqueCalculatorLinks(items) {
 
 function getComplementSlugs(cluster) {
   const complementSlugsByCluster = {
-    finance: ['uae-end-of-service', 'article-77-compensation', 'traffic-fine-discount', 'domestic-worker-cost', 'domestic-worker-cost-uae', 'domestic-worker-cost-kuwait', 'domestic-worker-cost-qatar', 'domestic-worker-cost-bahrain', 'domestic-worker-cost-oman', 'domestic-worker-eligibility', 'domestic-worker-contract-generator', 'saned-eligibility', 'annual-leave', 'sick-leave', 'working-days', 'end-of-service-benefits', 'iqama', 'wasiyya', 'nafaqah'],
+    finance: ['uae-end-of-service', 'article-77-compensation', 'traffic-fine-discount', 'saned-eligibility', 'annual-leave', 'sick-leave', 'working-days', 'end-of-service-benefits', 'iqama'],
+    // 3 new clusters (2026-08-25) — domestic-worker/international-benefits split out of 'finance'
+    // alongside fuel-prices the same day; see data.js's CALCULATOR_HUBS entries for the full
+    // history. Same-cluster CALCULATOR_ROUTES entries already give every page its siblings for
+    // free via `clusterRoutes` in buildRelatedCalculatorLinks below — these lists are deliberately
+    // just genuinely cross-category complements instead.
+    'fuel-prices': ['fuel-efficiency'],
+    'domestic-worker': ['iqama', 'end-of-service-benefits'],
     building: ['building', 'rebar', 'cement', 'tiles', 'masonry-units', 'gypsum-board', 'building-paint', 'construction-waterproofing', 'sqft-sqm-converter', 'iqama'],
     age: ['sleep', 'bedtime', 'retirement'],
     sleep: ['age-calculator', 'sleep', 'time-now'],

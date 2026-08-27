@@ -1,3 +1,5 @@
+import { FUEL_PRICE_ROUTE_ENTRIES } from '@/lib/calculators/fuel-prices-registry';
+
 const _Y = new Date().getFullYear();
 const _resolveYear = (s) => (typeof s === 'string' ? s.replace(/\{\{year\}\}/g, _Y) : s);
 const _resolveRouteYears = (route) => ({
@@ -2471,8 +2473,8 @@ const _CALCULATOR_ROUTES_RAW = [
   },
   {
     slug: 'aqiqah',
-    href: '/tools/gulf-finance/aqiqah',
-    cluster: 'finance',
+    href: '/tools/islamic/aqiqah',
+    cluster: 'islamic',
     shortLabel: 'حاسبة العقيقة',
     title: 'حاسبة تكلفة العقيقة — عدد الذبائح والتكلفة التقديرية',
     heroTitle: 'حاسبة تكلفة العقيقة {{year}} | كم عدد الذبائح والسعر التقديري',
@@ -2499,8 +2501,8 @@ const _CALCULATOR_ROUTES_RAW = [
   },
   {
     slug: 'wasiyya',
-    href: '/tools/gulf-finance/wasiyya',
-    cluster: 'finance',
+    href: '/tools/islamic/wasiyya',
+    cluster: 'islamic',
     shortLabel: 'حاسبة الوصية الشرعية',
     title: 'حاسبة الوصية الشرعية — كم يجوز أن توصي من تركتك',
     heroTitle: 'حاسبة الوصية الشرعية {{year}} | كم يجوز أن توصي من تركتك (حد الثلث)',
@@ -2527,8 +2529,8 @@ const _CALCULATOR_ROUTES_RAW = [
   },
   {
     slug: 'nafaqah',
-    href: '/tools/gulf-finance/nafaqah',
-    cluster: 'finance',
+    href: '/tools/islamic/nafaqah',
+    cluster: 'islamic',
     shortLabel: 'حاسبة النفقة',
     title: 'حاسبة تقدير النفقة في السعودية — نفقة الزوجة والأولاد',
     heroTitle: 'حاسبة تقدير النفقة في السعودية {{year}} | نفقة الزوجة والأولاد',
@@ -2617,8 +2619,8 @@ const _CALCULATOR_ROUTES_RAW = [
   },
   {
     slug: 'domestic-worker-cost',
-    href: '/tools/gulf-finance/domestic-worker-cost',
-    cluster: 'finance',
+    href: '/tools/domestic-worker/domestic-worker-cost',
+    cluster: 'domestic-worker',
     shortLabel: 'تكلفة استقدام عاملة',
     title: 'حاسبة تكلفة استقدام عاملة منزلية — الرسوم الحكومية الفعلية عبر مساند',
     heroTitle: 'تكلفة استقدام عاملة منزلية {{year}} | الرسوم الحكومية وراتبها ومكتب الاستقدام',
@@ -2701,8 +2703,8 @@ const _CALCULATOR_ROUTES_RAW = [
   },
   {
     slug: 'iddah',
-    href: '/tools/gulf-finance/iddah',
-    cluster: 'finance',
+    href: '/tools/islamic/iddah',
+    cluster: 'islamic',
     shortLabel: 'حاسبة العدة الشرعية',
     title: 'حاسبة العدة الشرعية — للأرملة والمطلقة والحامل وفق التقويم الهجري',
     heroTitle: 'حاسبة العدة الشرعية {{year}} | متى تنتهي عدتك وفق التقويم الهجري الفعلي',
@@ -2823,8 +2825,8 @@ const _CALCULATOR_ROUTES_RAW = [
   },
   {
     slug: 'cgeb-canada',
-    href: '/tools/gulf-finance/cgeb-canada',
-    cluster: 'finance',
+    href: '/tools/international-benefits/cgeb-canada',
+    cluster: 'international-benefits',
     shortLabel: 'دعم المقاضي والأساسيات كندا',
     title: 'دعم المقاضي والأساسيات في كندا (CGEB) — مواعيد الصرف الربعية',
     heroTitle: 'دعم المقاضي والأساسيات في كندا {{year}} | مواعيد الصرف الربعية',
@@ -2851,8 +2853,8 @@ const _CALCULATOR_ROUTES_RAW = [
   },
   {
     slug: 'soldes-france',
-    href: '/tools/gulf-finance/soldes-france',
-    cluster: 'finance',
+    href: '/tools/international-benefits/soldes-france',
+    cluster: 'international-benefits',
     shortLabel: 'مواعيد التخفيضات في فرنسا',
     title: 'متى تبدأ التخفيضات في فرنسا (Soldes) — الشتوية والصيفية',
     heroTitle: 'مواعيد التخفيضات في فرنسا {{year}} | Soldes الشتوية والصيفية',
@@ -2879,8 +2881,8 @@ const _CALCULATOR_ROUTES_RAW = [
   },
   {
     slug: 'boernepenge-denmark',
-    href: '/tools/gulf-finance/boernepenge-denmark',
-    cluster: 'finance',
+    href: '/tools/international-benefits/boernepenge-denmark',
+    cluster: 'international-benefits',
     shortLabel: 'دعم الأطفال في الدنمارك',
     title: 'دعم الأطفال في الدنمارك (Børnepenge) — مواعيد الصرف الفصلية والشهرية',
     heroTitle: 'دعم الأطفال في الدنمارك {{year}} | مواعيد الصرف الفصلية والشهرية',
@@ -3687,8 +3689,8 @@ const _CALCULATOR_ROUTES_RAW = [
   },
   {
     slug: 'domestic-worker-cost-uae',
-    href: '/tools/gulf-finance/domestic-worker-uae',
-    cluster: 'finance',
+    href: '/tools/domestic-worker/domestic-worker-uae',
+    cluster: 'domestic-worker',
     shortLabel: 'تكلفة استقدام عاملة — الإمارات',
     title: 'حاسبة تكلفة استقدام عاملة منزلية في الإمارات',
     heroTitle: 'تكلفة استقدام عاملة منزلية في الإمارات {{year}} | رسوم تدبير والتأشيرة الاتحادية',
@@ -3717,8 +3719,8 @@ const _CALCULATOR_ROUTES_RAW = [
   },
   {
     slug: 'domestic-worker-cost-kuwait',
-    href: '/tools/gulf-finance/domestic-worker-kuwait',
-    cluster: 'finance',
+    href: '/tools/domestic-worker/domestic-worker-kuwait',
+    cluster: 'domestic-worker',
     shortLabel: 'تكلفة استقدام عاملة — الكويت',
     title: 'حاسبة تكلفة استقدام عاملة منزلية في الكويت',
     heroTitle: 'تكلفة استقدام عاملة منزلية في الكويت {{year}} | رسوم نقل الكفالة والمكتب',
@@ -3746,8 +3748,8 @@ const _CALCULATOR_ROUTES_RAW = [
   },
   {
     slug: 'domestic-worker-cost-qatar',
-    href: '/tools/gulf-finance/domestic-worker-qatar',
-    cluster: 'finance',
+    href: '/tools/domestic-worker/domestic-worker-qatar',
+    cluster: 'domestic-worker',
     shortLabel: 'تكلفة استقدام عاملة — قطر',
     title: 'حاسبة تكلفة استقدام عاملة منزلية في قطر',
     heroTitle: 'تكلفة استقدام عاملة منزلية في قطر {{year}} | السقف الرسمي حسب الجنسية',
@@ -3775,8 +3777,8 @@ const _CALCULATOR_ROUTES_RAW = [
   },
   {
     slug: 'domestic-worker-cost-bahrain',
-    href: '/tools/gulf-finance/domestic-worker-bahrain',
-    cluster: 'finance',
+    href: '/tools/domestic-worker/domestic-worker-bahrain',
+    cluster: 'domestic-worker',
     shortLabel: 'تكلفة استقدام عاملة — البحرين',
     title: 'حاسبة تكلفة استقدام عاملة منزلية في البحرين',
     heroTitle: 'تكلفة استقدام عاملة منزلية في البحرين {{year}} | رسوم تصريح العمل الرسمية LMRA',
@@ -3803,8 +3805,8 @@ const _CALCULATOR_ROUTES_RAW = [
   },
   {
     slug: 'domestic-worker-cost-oman',
-    href: '/tools/gulf-finance/domestic-worker-oman',
-    cluster: 'finance',
+    href: '/tools/domestic-worker/domestic-worker-oman',
+    cluster: 'domestic-worker',
     shortLabel: 'تكلفة استقدام عاملة — عُمان',
     title: 'حاسبة تكلفة استقدام عاملة منزلية في عُمان',
     heroTitle: 'تكلفة استقدام عاملة منزلية في عُمان {{year}} | رسم تصريح العمل الرسمي',
@@ -3831,8 +3833,8 @@ const _CALCULATOR_ROUTES_RAW = [
   },
   {
     slug: 'domestic-worker-eligibility',
-    href: '/tools/gulf-finance/domestic-worker-eligibility',
-    cluster: 'finance',
+    href: '/tools/domestic-worker/domestic-worker-eligibility',
+    cluster: 'domestic-worker',
     shortLabel: 'مدقق أهلية استقدام عاملة',
     title: 'هل يحق لي استقدام عاملة منزلية أو سائق خاص؟',
     heroTitle: 'شروط استقدام عاملة منزلية {{year}} | مدقق أهلية لكل دول الخليج',
@@ -3887,8 +3889,8 @@ const _CALCULATOR_ROUTES_RAW = [
   },
   {
     slug: 'domestic-worker-contract-generator',
-    href: '/tools/gulf-finance/domestic-worker-contract',
-    cluster: 'finance',
+    href: '/tools/domestic-worker/domestic-worker-contract',
+    cluster: 'domestic-worker',
     shortLabel: 'مولّد عقد عاملة منزلية',
     title: 'مولّد عقد عمل عاملة منزلية وسائق خاص',
     heroTitle: 'نموذج عقد عمل عاملة منزلية {{year}} | مولّد لكل دول الخليج',
@@ -3939,6 +3941,285 @@ const _CALCULATOR_ROUTES_RAW = [
       'حساب تكلفة نظام الحضور والانصراف حسب الموظفين',
       'انظمة حضور وانصراف في السعودية',
       'اسعار اجهزة البصمة في الامارات',
+    ],
+  },
+  {
+    // Second tool in the attendance hub (2026-08-25) — a genuinely different intent from
+    // 'attendance-cost-calculator' (which prices *buying* a tracking system, a B2B purchase
+    // decision): this is a personal/HR *wage* calculator (hours worked -> pay owed), found as a
+    // real gap after checking real Arabic competitors (only B2B Excel-template upsells from
+    // daftra.com/qoyod.com, no genuinely good daily-use tool) — see the session's tool-research
+    // list for the full methodology.
+    slug: 'work-hours-calculator',
+    href: '/tools/attendance/work-hours-calculator',
+    cluster: 'attendance',
+    shortLabel: 'حاسبة ساعات العمل والراتب',
+    title: 'حاسبة ساعات العمل والراتب — عادي وإضافي',
+    heroTitle: 'حاسبة ساعات العمل والراتب {{year}} | احسب أجر ساعات العمل الإضافي',
+    description:
+      'أدخل عدد ساعات عملك العادية والإضافية وأجر الساعة، واحصل على إجمالي راتبك المستحق فوراً — بالنسبة القانونية الصحيحة لأجر العمل الإضافي في دولتك.',
+    accent: 'var(--green)',
+    accentSoft: 'var(--green-subtle)',
+    badge: 'الحضور والانصراف / عادي وإضافي',
+    keywords: [
+      'حاسبة ساعات العمل',
+      'حساب ساعات العمل',
+      'حساب الراتب من ساعات العمل',
+      'حاسبة العمل الإضافي',
+      'حساب العمل الاضافي',
+      'كم اجر ساعة العمل الاضافي',
+      'حساب اجر الساعة الاضافية في السعودية',
+      'نسبة العمل الاضافي في الامارات',
+      'حاسبة راتب بالساعة',
+      'حساب راتب الساعة',
+      'كيف احسب راتبي من ساعات عملي',
+    ],
+  },
+  {
+    // New category (2026-08-25) — a real gap found in the same tool-research session: "ما حجم
+    // التلفزيون المناسب لغرفتي" has only static brand buying-guide articles in Arabic (Samsung,
+    // LG, TCL), zero interactive tools. Formula sourced from real SMPTE/THX engineering standards,
+    // not a blog's rule of thumb — see the tool page's own sources section.
+    slug: 'tv-size-calculator',
+    href: '/tools/electronics/tv-size-calculator',
+    cluster: 'electronics',
+    shortLabel: 'حاسبة حجم الشاشة المناسب',
+    title: 'حاسبة حجم التلفزيون المناسب لمسافة المشاهدة',
+    heroTitle: 'حاسبة حجم التلفزيون المناسب {{year}} | حسب مسافة المشاهدة',
+    description:
+      'أدخل مسافة الجلوس أو المقاس الذي تفكر فيه، واعرف الحجم أو المسافة المثالية فوراً — بمعيارين حقيقيين (مريح وسينمائي)، لا تقديراً بالعين.',
+    accent: 'var(--blue)',
+    accentSoft: 'var(--blue-subtle)',
+    badge: 'الإلكترونيات / حجم الشاشة',
+    keywords: [
+      'حجم التلفزيون المناسب للغرفة',
+      'حاسبة حجم الشاشة',
+      'حساب حجم الشاشة المناسب',
+      'حساب حجم التلفزيون المناسب للغرفة',
+      'كم حجم تلفزيون احتاج',
+      'مقاس التلفزيون المناسب لمسافة المشاهدة',
+      'افضل مسافة مشاهدة التلفزيون',
+      'حجم شاشة 55 بوصة كم يبعد',
+    ],
+  },
+  {
+    // New category (2026-08-25) — this site's first real-estate tool, found via tool-research
+    // aimed at high-RPM daily decisions. Data verified via direct WebFetch against a real
+    // regulation citation (Saudi Royal Decree M/130) and cross-checked market-convention sources
+    // (UAE) — see the tool page's own sources section and FAQ for the full citations.
+    slug: 'agent-commission-calculator',
+    href: '/tools/real-estate/agent-commission-calculator',
+    cluster: 'real-estate',
+    shortLabel: 'حاسبة عمولة الوسيط العقاري',
+    title: 'حاسبة عمولة الوسيط العقاري — بيع وإيجار',
+    heroTitle: 'حاسبة عمولة الوسيط العقاري {{year}} | بيع وإيجار مع الضريبة',
+    description:
+      'احسب عمولة الوسيط العقاري المستحقة على صفقتك مع ضريبة القيمة المضافة فوراً — بالنسبة النظامية الصحيحة لدولتك، بيعاً أو إيجاراً.',
+    accent: 'var(--green)',
+    accentSoft: 'var(--green-subtle)',
+    badge: 'العقارات / عمولة الوسيط',
+    keywords: [
+      'حاسبة عمولة الوسيط العقاري',
+      'حساب عمولة الوسيط العقاري',
+      'حساب عمولة العقار',
+      'عمولة العقار في السعودية',
+      'كم عمولة السمسار العقاري',
+      'عمولة الوسيط العقاري في الامارات',
+      'نسبة عمولة العقار مع الضريبة',
+      'من يدفع عمولة الوسيط العقاري',
+    ],
+  },
+  {
+    // Same session, second real-estate tool — a real daily-decision gap: "هل ايجاري مناسب لراتبي"
+    // has real search intent but existing Arabic content is static advice articles, not an
+    // interactive tool. The 30%-of-income rule is a widely-cited financial-planning guideline
+    // (not a specific country's law), stated as such rather than a fabricated legal rule.
+    slug: 'rent-affordability-calculator',
+    href: '/tools/real-estate/rent-affordability-calculator',
+    cluster: 'real-estate',
+    shortLabel: 'حاسبة نسبة الإيجار من الراتب',
+    title: 'حاسبة نسبة الإيجار من الراتب — هل إيجارك مناسب لدخلك؟',
+    heroTitle: 'حاسبة نسبة الإيجار من الراتب {{year}} | قاعدة الـ30%',
+    description:
+      'أدخل راتبك الشهري وقيمة إيجارك، واعرف فوراً هل النسبة بينهما صحية أم مرتفعة — بمعيار قاعدة الـ30% المعتمدة عالمياً في التخطيط المالي.',
+    accent: 'var(--green)',
+    accentSoft: 'var(--green-subtle)',
+    badge: 'العقارات / نسبة الإيجار من الراتب',
+    keywords: [
+      'حاسبة نسبة الايجار من الراتب',
+      'حساب نسبة الايجار من الراتب',
+      'هل ايجاري مناسب لراتبي',
+      'كم يجب ان يكون الايجار من الراتب',
+      'قاعدة الثلاثين بالمئة للايجار',
+      'نسبة الايجار الى الدخل',
+      'حساب الايجار المناسب للدخل الشهري',
+      'كم نسبة الايجار المسموح بها من الراتب',
+    ],
+  },
+  {
+    // Same session — Egypt-specific gap found via tool-research: "رسوم الشهر العقاري" has real
+    // search volume and existing Arabic content restates the fee tiers as prose, never as an
+    // interactive tool. Data verified via direct WebFetch of a mainstream news source (Shorouk
+    // News) — see the tool page's own sources section.
+    slug: 'egypt-transfer-fee-calculator',
+    href: '/tools/real-estate/egypt-transfer-fee-calculator',
+    cluster: 'real-estate',
+    shortLabel: 'حاسبة رسوم الشهر العقاري',
+    title: 'حاسبة رسوم الشهر العقاري وضريبة التصرفات العقارية في مصر',
+    heroTitle: 'حاسبة رسوم الشهر العقاري {{year}} | التسجيل + ضريبة التصرفات في مصر',
+    description:
+      'احسب رسوم تسجيل عقارك في الشهر العقاري مع ضريبة التصرفات العقارية (2.5%) فوراً حسب مساحة العقار وقيمة العقد — بالأرقام الرسمية الحالية.',
+    accent: 'var(--green)',
+    accentSoft: 'var(--green-subtle)',
+    badge: 'العقارات / رسوم الشهر العقاري',
+    keywords: [
+      'حاسبة رسوم الشهر العقاري',
+      'حساب رسوم الشهر العقاري',
+      'رسوم تسجيل الشقق في الشهر العقاري',
+      'ضريبة التصرفات العقارية',
+      'حساب ضريبة التصرفات العقارية',
+      'رسوم نقل ملكية شقة مصر',
+      'كام رسوم تسجيل الشقة في الشهر العقاري',
+      'من يدفع ضريبة التصرفات العقارية',
+    ],
+  },
+  {
+    // New category (2026-08-25) — found via tool-gap research: "تكلفة تأشيرة شنغن" has real
+    // search intent but zero interactive Arabic calculators, and every Arabic source found still
+    // cites the old €80 fee (raised to €90 on 11 June 2024) — verified via direct WebFetch of
+    // home-affairs.ec.europa.eu.
+    slug: 'schengen-visa-cost-calculator',
+    href: '/tools/travel/schengen-visa-cost-calculator',
+    cluster: 'travel',
+    shortLabel: 'حاسبة تكلفة تأشيرة شنغن',
+    title: 'حاسبة تكلفة تأشيرة شنغن — للفرد والعائلة',
+    heroTitle: 'حاسبة تكلفة تأشيرة شنغن {{year}} | الرسم الرسمي + رسوم مركز التأشيرات',
+    description:
+      'احسب تكلفة تأشيرة شنغن الحقيقية لعائلتك فوراً — الرسم الرسمي المحدث (90 يورو للبالغ) بالإضافة إلى رسوم مركز التأشيرات، لا رقماً قديماً أو تقديراً بالعين.',
+    accent: 'var(--blue)',
+    accentSoft: 'var(--blue-subtle)',
+    badge: 'السفر / تكلفة تأشيرة شنغن',
+    keywords: [
+      'حاسبة تكلفة تأشيرة شنغن',
+      'حساب تكلفة فيزا شنغن',
+      'رسوم تأشيرة شنغن',
+      'كم رسوم فيزا شنغن',
+      'تكلفة فيزا شنغن للعائلة',
+      'رسوم تأشيرة شنغن للاطفال',
+      'اسعار مركز التأشيرات شنغن',
+      'رسوم تأشيرة شنغن الحقيقية',
+    ],
+  },
+  {
+    // New category (2026-08-27) — found via global tool-gap research aimed at Arab-diaspora
+    // countries, not just the Gulf. Immigration is one of the highest-RPM verticals anywhere
+    // ($30-80/click legal-services CPC, confirmed via real search) and UK settlement is a genuine
+    // zero-Arabic-competition gap: proven English-market demand (icslegal.com/ilrtracker.com/
+    // kayalegal.co.uk all sell this exact tool), zero Arabic version found anywhere. Rule
+    // verified via direct WebFetch of gov.uk's Immigration Rules Appendix Continuous Residence.
+    slug: 'uk-ilr-absence-calculator',
+    href: '/tools/immigration/uk-ilr-absence-calculator',
+    cluster: 'immigration',
+    shortLabel: 'حاسبة أيام الغياب للإقامة الدائمة ببريطانيا',
+    title: 'حاسبة أيام الغياب للإقامة الدائمة (ILR) في بريطانيا',
+    heroTitle: 'حاسبة أيام الغياب للإقامة الدائمة {{year}} | قاعدة الـ180 يوماً في بريطانيا',
+    description:
+      'أدخل رحلاتك خارج بريطانيا واعرف فوراً هل تجاوزت حد 180 يوماً في أي نافذة 12 شهراً — القاعدة الفعلية لمسارات الاستقرار ذات الـ5 سنوات (CR 3.1)، لا تقديراً يدوياً معرضاً للخطأ.',
+    accent: 'var(--blue)',
+    accentSoft: 'var(--blue-subtle)',
+    badge: 'الهجرة / الإقامة الدائمة ببريطانيا',
+    keywords: [
+      'حاسبة الاقامة الدائمة بريطانيا',
+      'حساب ايام الغياب ILR',
+      'قاعدة 180 يوم بريطانيا',
+      'حساب مدة الاقامة المستمرة بريطانيا',
+      'كم يوم مسموح الغياب عن بريطانيا',
+      'ILR absence calculator بالعربي',
+      'شروط الاقامة الدائمة في بريطانيا',
+      'تتبع ايام الغياب للاستقرار في بريطانيا',
+    ],
+  },
+  {
+    // Same session — France/Germany citizenship-duration gap: zero Arabic (or English) interactive
+    // tools found for either country, only static articles. Data verified via WebFetch of
+    // service-public.gouv.fr (France) and BAMF/bundesregierung.de/multiple news sources
+    // (Germany's June 2024 reform to 5 years, AND the 3-year fast-track's repeal effective 30
+    // October 2025 — deliberately excluded here since it no longer exists).
+    slug: 'eu-citizenship-duration-calculator',
+    href: '/tools/immigration/eu-citizenship-duration-calculator',
+    cluster: 'immigration',
+    shortLabel: 'حاسبة مدة الأهلية للجنسية الأوروبية',
+    title: 'حاسبة مدة الأهلية للجنسية الفرنسية والألمانية',
+    heroTitle: 'حاسبة مدة الأهلية للجنسية {{year}} | فرنسا وألمانيا',
+    description:
+      'أدخل تاريخ إقامتك واعرف فوراً متى تحق لك الجنسية الفرنسية أو الألمانية حسب حالتك الفعلية — بالمدد الرسمية الصحيحة والمحدثة، لا مقالاً عاماً غير مرتبط بحالتك.',
+    accent: 'var(--green)',
+    accentSoft: 'var(--green-subtle)',
+    badge: 'الهجرة / الجنسية الأوروبية',
+    keywords: [
+      'حاسبة مدة الجنسية الفرنسية',
+      'حساب سنوات الاقامة للجنسية الالمانية',
+      'حساب مدة الحصول على الجنسية الفرنسية',
+      'شروط الجنسية الالمانية 2026',
+      'كم سنة اقامة للجنسية الفرنسية',
+      'الجنسية الالمانية بعد الزواج',
+      'مدة الجنسية الفرنسية عن طريق الزواج',
+      'شروط التجنس في فرنسا والمانيا',
+    ],
+  },
+  {
+    // Same session — US DV Lottery (Green Card lottery) eligibility gap: no interactive Arabic
+    // eligibility checker found, only guide articles (several citing stale pre-$1-fee info). Rule
+    // verified via WebSearch/WebFetch of travel.state.gov-sourced summaries; deliberately does NOT
+    // hardcode the eligible-country list (it changes every cycle) to avoid shipping a stale one.
+    slug: 'dv-lottery-eligibility-checker',
+    href: '/tools/immigration/dv-lottery-eligibility-checker',
+    cluster: 'immigration',
+    shortLabel: 'التحقق من أهلية قرعة الجرين كارد',
+    title: 'التحقق من أهلية قرعة الجرين كارد (DV Lottery)',
+    heroTitle: 'التحقق من أهلية قرعة الجرين كارد {{year}} | شرط التعليم والخبرة',
+    description:
+      'تحقق فوراً هل تستوفي شرط التعليم أو الخبرة العملية لقرعة الجرين كارد الأمريكية — بالقاعدة الرسمية الدقيقة (O*NET)، مع أحدث تواريخ التسجيل والنتائج ورسم التسجيل الجديد.',
+    accent: 'var(--blue)',
+    accentSoft: 'var(--blue-subtle)',
+    badge: 'الهجرة / قرعة الجرين كارد',
+    keywords: [
+      'التحقق من اهلية قرعة الجرين كارد',
+      'حساب اهلية الجرين كارد',
+      'شروط التسجيل في قرعة أمريكا',
+      'قرعة الجرين كارد شرط التعليم',
+      'DV Lottery شروط الخبرة العملية',
+      'موعد قرعة أمريكا 2026',
+      'رسوم التسجيل في قرعة الجرين كارد',
+      'قرعة الهجرة العشوائية لامريكا شروط',
+    ],
+  },
+  {
+    // Same session — Canada Express Entry CRS. Real competition exists (Y-Axis has an Arabic
+    // "calculator"), but direct WebFetch confirmed it's a 9-step lead-gen funnel ending in "00
+    // points" and a consultant call, never an instant real score — beatable by simply doing what
+    // it pretends to do. Point values cross-checked via WebFetch of a published CRS grid summary
+    // (immigration.ca) against the officially stable IRCC table.
+    slug: 'canada-crs-calculator',
+    href: '/tools/immigration/canada-crs-calculator',
+    cluster: 'immigration',
+    shortLabel: 'حاسبة نقاط الهجرة الى كندا (CRS)',
+    title: 'حاسبة نقاط الهجرة إلى كندا — نظام التصنيف الشامل CRS',
+    heroTitle: 'حاسبة نقاط الهجرة إلى كندا {{year}} | CRS فورية بدون تسجيل',
+    description:
+      'احسب نقاطك الفعلية في نظام التصنيف الشامل الكندي فوراً — رقم حقيقي من 1,200 نقطة أمامك مباشرة، لا نموذج تسجيل من 9 خطوات ينتهي بمكالمة استشاري.',
+    accent: 'var(--green)',
+    accentSoft: 'var(--green-subtle)',
+    badge: 'الهجرة / نقاط كندا CRS',
+    keywords: [
+      'حاسبة نقاط الهجرة الى كندا',
+      'حساب نقاط CRS',
+      'حاسبة نقاط اكسبرس انتري',
+      'حساب نقاط الهجرة الكندية فوري',
+      'نظام التصنيف الشامل كندا',
+      'كم نقطة احتاج للهجرة الى كندا',
+      'حاسبة CRS بدون تسجيل',
+      'نقاط الهجرة الكندية حسب العمر والتعليم',
     ],
   },
   {
@@ -4306,6 +4587,32 @@ const _CALCULATOR_ROUTES_RAW = [
       'دليل المذاهب الاربعة في الزكاة',
     ],
   },
+  ...FUEL_PRICE_ROUTE_ENTRIES,
+  {
+    // Renamed from 'gulf-fuel-prices' 2026-08-25 when the fuel-price feature moved out of
+    // /tools/gulf-finance into its own /tools/fuel-prices category — "gulf" was never accurate
+    // for a 13-country comparison spanning the Gulf, Maghreb, and Levant. See
+    // fuel-prices-registry.js's header + next.config.js's fuel-price migration redirects.
+    slug: 'compare',
+    href: '/tools/fuel-prices/compare',
+    cluster: 'fuel-prices',
+    shortLabel: 'مقارنة أسعار البنزين',
+    title: 'مقارنة أسعار البنزين في 13 دولة عربية — كل الأنواع في جدول واحد',
+    heroTitle: 'مقارنة أسعار البنزين في الخليج والدول العربية {{year}} | 13 دولة',
+    description:
+      'جدول يقارن سعر لتر البنزين والديزل في 13 دولة عربية: السعودية والإمارات والكويت وقطر والبحرين وعُمان ومصر والمغرب والأردن والجزائر وتونس والعراق ولبنان، محدث تلقائياً من مصدر مباشر.',
+    accent: 'var(--green)',
+    accentSoft: 'var(--green-subtle)',
+    badge: 'أسعار الوقود',
+    keywords: [
+      'مقارنة اسعار البنزين في دول الخليج',
+      'مقارنة اسعار البنزين في الدول العربية',
+      'مقارنة اسعار الوقود بين السعودية والامارات',
+      'اسعار البنزين في الدول العربية هذا الاسبوع',
+      'مقارنة اسعار الديزل العربية',
+      'اسعار البنزين في الجزائر وتونس والعراق ولبنان',
+    ],
+  },
 ];
 
 export const CALCULATOR_ROUTES = _CALCULATOR_ROUTES_RAW.map(_resolveRouteYears);
@@ -4598,6 +4905,162 @@ export const CALCULATOR_HUBS = [
       'bill-splitter',
       'work-hours',
       'dubai-company-setup-cost',
+    ],
+  },
+  {
+    // New hub (2026-08-25) — split out of the 'finance' hub above once the fuel-price feature
+    // (13 countries + comparison page) outgrew /tools/gulf-finance's own identity. See
+    // fuel-prices-registry.js's header + next.config.js's fuel-price migration redirects.
+    slug: 'fuel-prices',
+    href: '/tools/fuel-prices',
+    badge: 'وقود / طاقة',
+    title: 'أسعار الوقود اليوم في الدول العربية',
+    heroTitle: 'أسعار الوقود اليوم | البنزين والديزل في 13 دولة عربية',
+    description:
+      'سعر لتر البنزين والديزل اليوم لـ13 دولة عربية، كل دولة بصفحتها الخاصة، محدثة تلقائياً من مصدر مباشر.',
+    accent: 'var(--green)',
+    accentSoft: 'var(--green-subtle)',
+    keywords: [
+      'اسعار الوقود اليوم',
+      'سعر البنزين اليوم',
+      'اسعار البنزين في الدول العربية',
+      'مقارنة اسعار الوقود',
+    ],
+    routeSlugs: [
+      'saudi-fuel-prices', 'uae-fuel-prices', 'kuwait-fuel-prices', 'qatar-fuel-prices',
+      'bahrain-fuel-prices', 'oman-fuel-prices', 'egypt-fuel-prices', 'morocco-fuel-prices',
+      'jordan-fuel-prices', 'algeria-fuel-prices', 'tunisia-fuel-prices', 'iraq-fuel-prices',
+      'lebanon-fuel-prices', 'compare',
+    ],
+  },
+  {
+    // New hub (2026-08-25) — split out of the 'finance' hub above, second wave alongside
+    // 'fuel-prices': a real, already-researched vertical (see
+    // keyword-research/domestic-worker-cost/DECISION.md, referenced in the original
+    // domestic-worker-cost build) that's a genuinely different topic from personal salary/labor
+    // law finance — "cost of hiring household staff," not "your own pay."
+    slug: 'domestic-worker',
+    href: '/tools/domestic-worker',
+    badge: 'استقدام / عمالة منزلية',
+    title: 'تكلفة استقدام عاملة منزلية في الخليج',
+    heroTitle: 'تكلفة استقدام عاملة منزلية | 6 دول خليجية + الأهلية والعقد',
+    description:
+      'تكلفة استقدام عاملة أو سائق منزلي في السعودية والإمارات والكويت وقطر والبحرين وعُمان، بالرسوم الحكومية الفعلية لكل دولة، مع محقق أهلية ومولّد عقد.',
+    accent: 'var(--calc-cat-finance)',
+    accentSoft: 'color-mix(in srgb, var(--calc-cat-finance) 12%, var(--bg-surface-2))',
+    keywords: [
+      'تكلفة استقدام عاملة منزلية',
+      'حساب تكلفة استقدام عاملة منزلية',
+      'رسوم استقدام عاملة منزلية',
+      'كم تكلفة استقدام خادمة',
+      'شروط استقدام عاملة منزلية',
+      'عقد عاملة منزلية',
+    ],
+    routeSlugs: [
+      'domestic-worker-cost', 'domestic-worker-cost-uae', 'domestic-worker-cost-kuwait',
+      'domestic-worker-cost-qatar', 'domestic-worker-cost-bahrain', 'domestic-worker-cost-oman',
+      'domestic-worker-eligibility', 'domestic-worker-contract-generator',
+    ],
+  },
+  {
+    // New hub (2026-08-25) — the 3 diaspora payment-date tools (Denmark/Canada/France) were never
+    // Gulf/Arab finance; they only ended up under gulf-finance 2026-08-05 when /calculators was
+    // eliminated sitewide and needed some home. Genuinely separate subject, own category now.
+    slug: 'international-benefits',
+    href: '/tools/international-benefits',
+    badge: 'دفعات دولية',
+    title: 'مواعيد دفعات ومزايا دولية للمقيمين بالخارج',
+    heroTitle: 'مواعيد دفعات دولية | إعانة الطفل والتخفيضات الموسمية',
+    description:
+      'مواعيد إعانة الطفل في الدنمارك وكندا، ومواعيد التخفيضات الموسمية في فرنسا — لمن يعيش أو له ارتباط بهذه الدول.',
+    accent: 'var(--calc-cat-finance)',
+    accentSoft: 'color-mix(in srgb, var(--calc-cat-finance) 12%, var(--bg-surface-2))',
+    keywords: [
+      'موعد اعانة الطفل الدنمارك',
+      'موعد اعانة الطفل كندا',
+      'مواعيد التخفيضات في فرنسا',
+    ],
+    routeSlugs: ['boernepenge-denmark', 'cgeb-canada', 'soldes-france'],
+  },
+  {
+    // New hub (2026-08-25) — see the 'tv-size-calculator' CALCULATOR_ROUTES entry's comment for
+    // the research behind this category.
+    slug: 'electronics',
+    href: '/tools/electronics',
+    badge: 'إلكترونيات منزلية',
+    title: 'الإلكترونيات والأجهزة المنزلية',
+    heroTitle: 'حاسبة حجم التلفزيون المناسب لمسافة المشاهدة',
+    description:
+      'احسب حجم التلفزيون المناسب لغرفتك حسب مسافة المشاهدة، بمعيارين حقيقيين (مريح وسينمائي) بدل التقدير بالعين قبل الشراء.',
+    accent: 'var(--blue)',
+    accentSoft: 'var(--blue-subtle)',
+    keywords: ['حجم التلفزيون المناسب للغرفة', 'حاسبة حجم الشاشة', 'حساب حجم الشاشة المناسب', 'كم حجم تلفزيون احتاج'],
+    routeSlugs: ['tv-size-calculator'],
+  },
+  {
+    // New hub (2026-08-25) — see the 'agent-commission-calculator' CALCULATOR_ROUTES entry's
+    // comment for the research behind this category. Grew to 3 tools same session (rent
+    // affordability, Egypt transfer fee) — see each entry's own comment.
+    slug: 'real-estate',
+    href: '/tools/real-estate',
+    badge: 'عقارات',
+    title: 'العقارات — عمولة الوسيط ونسبة الإيجار من الراتب',
+    heroTitle: 'حاسبات العقارات: عمولة الوسيط، نسبة الإيجار، رسوم النقل',
+    description:
+      'احسب عمولة الوسيط العقاري، وهل إيجارك مناسب لراتبك، ورسوم نقل ملكية عقارك — بالأرقام الرسمية الصحيحة لكل حالة.',
+    accent: 'var(--green)',
+    accentSoft: 'var(--green-subtle)',
+    keywords: [
+      'حاسبة عمولة الوسيط العقاري',
+      'حساب عمولة الوسيط العقاري',
+      'عمولة العقار في السعودية',
+      'كم عمولة السمسار العقاري',
+      'حاسبة نسبة الايجار من الراتب',
+      'هل ايجاري مناسب لراتبي',
+      'حاسبة رسوم الشهر العقاري',
+    ],
+    routeSlugs: ['agent-commission-calculator', 'rent-affordability-calculator', 'egypt-transfer-fee-calculator'],
+  },
+  {
+    // New hub (2026-08-25) — see the 'schengen-visa-cost-calculator' CALCULATOR_ROUTES entry's
+    // comment for the research behind this category.
+    slug: 'travel',
+    href: '/tools/travel',
+    badge: 'سفر',
+    title: 'السفر — حاسبة تكلفة تأشيرة شنغن',
+    heroTitle: 'حاسبة تكلفة تأشيرة شنغن للفرد والعائلة',
+    description:
+      'احسب تكلفة تأشيرة شنغن الحقيقية لعائلتك — الرسم الرسمي المحدث بالإضافة إلى رسوم مركز التأشيرات، لا رقماً قديماً أو تقديراً بالعين.',
+    accent: 'var(--blue)',
+    accentSoft: 'var(--blue-subtle)',
+    keywords: ['حاسبة تكلفة تأشيرة شنغن', 'حساب تكلفة فيزا شنغن', 'رسوم تأشيرة شنغن', 'كم رسوم فيزا شنغن'],
+    routeSlugs: ['schengen-visa-cost-calculator'],
+  },
+  {
+    // New hub (2026-08-27) — see the 'uk-ilr-absence-calculator' CALCULATOR_ROUTES entry's comment
+    // for the research behind this category. Immigration tools for Arab-diaspora countries beyond
+    // the Gulf (UK, France, Germany, USA, Canada) — confirmed real high-RPM vertical.
+    slug: 'immigration',
+    href: '/tools/immigration',
+    badge: 'هجرة وإقامة',
+    title: 'الهجرة — بريطانيا وأوروبا وأمريكا وكندا',
+    heroTitle: 'حاسبات الهجرة: الإقامة الدائمة، الجنسية، قرعة أمريكا، نقاط كندا',
+    description:
+      'احسب أيام غيابك عن بريطانيا، ومتى تحق لك الجنسية الفرنسية أو الألمانية، وهل تستوفي شروط قرعة الجرين كارد، ونقاطك الفعلية للهجرة إلى كندا — بأرقام رسمية محدثة، لا تقديراً عاماً.',
+    accent: 'var(--blue)',
+    accentSoft: 'var(--blue-subtle)',
+    keywords: [
+      'حاسبة الاقامة الدائمة بريطانيا',
+      'حساب سنوات الاقامة للجنسية الالمانية',
+      'حاسبة مدة الجنسية الفرنسية',
+      'التحقق من اهلية قرعة الجرين كارد',
+      'حاسبة نقاط الهجرة الى كندا',
+    ],
+    routeSlugs: [
+      'uk-ilr-absence-calculator',
+      'eu-citizenship-duration-calculator',
+      'dv-lottery-eligibility-checker',
+      'canada-crs-calculator',
     ],
   },
   {

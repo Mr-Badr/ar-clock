@@ -6920,6 +6920,18 @@ main:not(.calc-hub-page) .calc-cta-card .calc-section-title {
   border-color: color-mix(in srgb, var(--red) 30%, transparent);
 }
 
+/* Added for the fuel-price pages (2026-08-25) — sa/ae variants didn't exist yet. */
+.calc-esb-country-badge--sa {
+  background: color-mix(in srgb, var(--green) 12%, var(--bg-surface-2));
+  color: var(--green-text);
+  border-color: color-mix(in srgb, var(--green) 22%, transparent);
+}
+.calc-esb-country-badge--ae {
+  background: color-mix(in srgb, var(--blue) 12%, var(--bg-surface-2));
+  color: var(--blue-text);
+  border-color: color-mix(in srgb, var(--blue) 22%, transparent);
+}
+
 .calc-esb-live-dot {
   width: 8px;
   height: 8px;
@@ -6938,6 +6950,16 @@ main:not(.calc-hub-page) .calc-cta-card .calc-section-title {
   0%, 100% { box-shadow: 0 0 0 3px color-mix(in srgb, var(--green) 20%, transparent); }
   50% { box-shadow: 0 0 0 5px color-mix(in srgb, var(--green) 8%, transparent); }
 }
+
+/* The .fuel-price-* rules that used to live here (added 2026-08-25) were moved to
+   src/app/tools/gulf-finance/guide-v2.css — this stylesheet is only ever loaded by the
+   embed-widget route (src/app/embed/calculators/[slug]/page.jsx), never by the actual
+   /tools/gulf-finance/*-fuel-prices pages (each /tools/<category> route family loads its own,
+   separate, un-shared guide-v2.css — see that file's own header comment). Confirmed via
+   getComputedStyle that none of these rules were reaching the fuel-price pages at all; leaving
+   the dead copy here would just be misleading for a future reader. The .calc-esb-country-badge
+   --sa/--ae variants above stay — they're general-purpose and this file's actual real consumers
+   (real calculators using the esb result-panel pattern) can still use them. */
 
 .calc-esb-amount-hero {
   display: flex;

@@ -178,6 +178,10 @@ export default async function GulfPayDatesPage() {
                   (إجازات رسمية، مناسبات وطنية) قد تُصدر الجهات المختصة في كل دولة قراراً بتقديم
                   الصرف ليوم عمل سابق. راجع صفحة العداد الخاصة بكل موعد للتفاصيل الكاملة.
                 </p>
+                <p style={{ marginTop: 'var(--space-3)' }}>
+                  تتابع راتبك الشهري؟ راجع أيضاً{' '}
+                  <Link href="/tools/fuel-prices/compare">مقارنة أسعار البنزين في 13 دولة عربية</Link>.
+                </p>
               </section>
 
               <ToolInArticleAd slotId="mid-gulf-pay-dates" />

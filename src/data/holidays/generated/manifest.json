@@ -1,6 +1,6 @@
 {
   "schemaVersion": 6,
-  "generatedAt": "2026-08-25T10:04:57.336Z",
+  "generatedAt": "2026-08-27T20:02:15.402Z",
   "totalEvents": 445,
   "totalPublished": 444,
   "totalAliases": 2759,
@@ -198,7 +198,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "eid-al-fitr",
@@ -327,7 +327,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "eid-al-adha",
@@ -456,7 +456,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "day-of-arafa",
@@ -585,7 +585,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "hajj-start",
@@ -714,7 +714,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "islamic-new-year",
@@ -843,7 +843,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "ashura",
@@ -972,7 +972,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "laylat-al-qadr",
@@ -1101,7 +1101,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "social-security-sa",
@@ -1128,7 +1128,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "isra-miraj",
@@ -1257,7 +1257,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "oman-accession-day",
@@ -1284,7 +1284,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "first-dhul-hijjah",
@@ -1413,7 +1413,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "bac-results-tunisia",
@@ -1440,7 +1440,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "winter",
@@ -1465,7 +1465,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "spring",
@@ -1490,7 +1490,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "spring-vac",
@@ -1515,7 +1515,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "summer",
@@ -1540,7 +1540,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "summer-vac",
@@ -1565,7 +1565,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "back-to-school",
@@ -1590,7 +1590,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "national-day-sa",
@@ -1617,7 +1617,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "founding-day-sa",
@@ -1644,7 +1644,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "school-start-sa",
@@ -1671,7 +1671,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "salary-sa",
@@ -1698,7 +1698,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "citizen-account-sa",
@@ -1725,7 +1725,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "sinai-liberation-day-egypt",
@@ -1752,7 +1752,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "results-th-eg",
@@ -1779,7 +1779,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "hafez-sa",
@@ -1806,7 +1806,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "exams-th-eg",
@@ -1833,7 +1833,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "housing-support-sa",
@@ -1860,7 +1860,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "school-start-eg",
@@ -1887,7 +1887,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "salary-eg",
@@ -1914,7 +1914,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "exams-bac-dz",
@@ -1941,7 +1941,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "autumn",
@@ -1966,7 +1966,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "school-start-dz",
@@ -1993,7 +1993,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "sham-nessim",
@@ -2020,7 +2020,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "revolution-dz",
@@ -2047,7 +2047,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "school-start-ma",
@@ -2074,7 +2074,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "throne-day",
@@ -2101,7 +2101,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "independence-ma",
@@ -2128,7 +2128,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "independence-dz",
@@ -2155,7 +2155,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "national-day-ae",
@@ -2182,7 +2182,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "school-start-ae",
@@ -2209,7 +2209,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "school-start-tn",
@@ -2236,7 +2236,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "independence-tn",
@@ -2263,7 +2263,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "national-day-kw",
@@ -2290,7 +2290,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "school-start-kw",
@@ -2317,7 +2317,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "national-day-qa",
@@ -2344,7 +2344,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "school-start-qa",
@@ -2371,7 +2371,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "valentines-day",
@@ -2500,7 +2500,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "labor-day",
@@ -2525,7 +2525,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "sand-sa",
@@ -2552,7 +2552,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "takaful-karama-eg",
@@ -2579,7 +2579,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "world-health-day",
@@ -2708,7 +2708,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "earth-day",
@@ -2837,7 +2837,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "world-diabetes-day",
@@ -2968,7 +2968,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "international-womens-day",
@@ -2999,7 +2999,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "world-teachers-day",
@@ -3128,7 +3128,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "arabic-language-day",
@@ -3257,7 +3257,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "saudi-flag-day",
@@ -3284,7 +3284,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "jordan-independence-day",
@@ -3311,7 +3311,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "bahrain-national-day",
@@ -3338,7 +3338,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "liberation-day-kw",
@@ -3365,7 +3365,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "oman-national-day",
@@ -3392,7 +3392,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "martyrs-day-ae",
@@ -3419,7 +3419,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "revolution-day-eg",
@@ -3446,7 +3446,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "armed-forces-day-eg",
@@ -3473,7 +3473,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "green-march-ma",
@@ -3500,7 +3500,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "thanksgiving-usa",
@@ -3527,7 +3527,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "black-friday-usa",
@@ -3554,7 +3554,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "cyber-monday-usa",
@@ -3581,7 +3581,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "mawlid",
@@ -3710,7 +3710,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "halloween-usa",
@@ -3737,7 +3737,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "mothers-day",
@@ -3762,7 +3762,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "christmas-usa",
@@ -3789,7 +3789,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "national-exam-ma",
@@ -3816,7 +3816,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "new-year",
@@ -3841,7 +3841,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "new-years-eve-new-york",
@@ -3868,7 +3868,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "nisf-shaban",
@@ -3997,7 +3997,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "pension-eg",
@@ -4024,7 +4024,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "pension-sa",
@@ -4051,7 +4051,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "world-childrens-day",
@@ -4180,7 +4180,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "international-day-of-education",
@@ -4309,7 +4309,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "world-mental-health-day",
@@ -4438,7 +4438,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "world-environment-day",
@@ -4567,7 +4567,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "independence-manifesto-day-morocco",
@@ -4594,7 +4594,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "amazigh-new-year-algeria",
@@ -4621,7 +4621,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "amazigh-new-year-morocco",
@@ -4648,7 +4648,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "january-25-egypt",
@@ -4675,7 +4675,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "sudan-independence-day",
@@ -4702,7 +4702,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "mauritania-independence-day",
@@ -4729,7 +4729,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "christmas-sudan",
@@ -4756,7 +4756,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "coptic-christmas-sudan",
@@ -4783,7 +4783,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "national-day-switzerland",
@@ -4810,7 +4810,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "national-day-austria",
@@ -4837,7 +4837,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "independence-day-finland",
@@ -4864,7 +4864,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "constitution-day-denmark",
@@ -4891,7 +4891,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "st-patricks-day-ireland",
@@ -4918,7 +4918,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "independence-day-brazil",
@@ -4945,7 +4945,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "independence-day-argentina",
@@ -4972,7 +4972,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "independence-day-chile",
@@ -4999,7 +4999,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "independence-day-georgia",
@@ -5026,7 +5026,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "independence-day-azerbaijan",
@@ -5053,7 +5053,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "independence-day-malaysia",
@@ -5080,7 +5080,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "independence-day-bosnia",
@@ -5107,7 +5107,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "tiradentes-day-brazil",
@@ -5134,7 +5134,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "republic-day-brazil",
@@ -5161,7 +5161,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "black-consciousness-day-brazil",
@@ -5188,7 +5188,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "may-revolution-day-argentina",
@@ -5215,7 +5215,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "flag-day-argentina",
@@ -5242,7 +5242,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "navy-day-chile",
@@ -5269,7 +5269,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "army-day-chile",
@@ -5296,7 +5296,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "st-georges-day-georgia",
@@ -5323,7 +5323,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "national-unity-day-georgia",
@@ -5350,7 +5350,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "republic-day-azerbaijan",
@@ -5377,7 +5377,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "martyrs-day-azerbaijan",
@@ -5404,7 +5404,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "malaysia-day",
@@ -5431,7 +5431,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "federal-territory-day-malaysia",
@@ -5458,7 +5458,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "statehood-day-bosnia",
@@ -5485,7 +5485,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "nakba-day-palestine",
@@ -5512,7 +5512,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "constitution-day-norway",
@@ -5539,7 +5539,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "vappu-finland",
@@ -5566,7 +5566,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "africa-day-mauritania",
@@ -5593,7 +5593,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "all-saints-day-austria",
@@ -5620,7 +5620,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "christmas-lebanon",
@@ -5647,7 +5647,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "christmas-day-sweden",
@@ -5674,7 +5674,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "second-day-christmas-sweden",
@@ -5701,7 +5701,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "constitution-day-thailand",
@@ -5728,7 +5728,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "chulalongkorn-day-thailand",
@@ -5755,7 +5755,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "independence-day-indonesia",
@@ -5782,7 +5782,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "pancasila-day-indonesia",
@@ -5809,7 +5809,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "independence-day-maldives",
@@ -5836,7 +5836,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "republic-day-maldives",
@@ -5863,7 +5863,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "independence-day-armenia",
@@ -5890,7 +5890,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "constitution-day-armenia",
@@ -5917,7 +5917,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "constitution-memorial-day-japan",
@@ -5944,7 +5944,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "culture-day-japan",
@@ -5971,7 +5971,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "liberation-day-korea",
@@ -5998,7 +5998,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "hangul-day-korea",
@@ -6025,7 +6025,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "independence-day-uzbekistan",
@@ -6052,7 +6052,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "constitution-day-uzbekistan",
@@ -6079,7 +6079,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "nowruz-uzbekistan",
@@ -6106,7 +6106,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "abu-simbel-sun-alignment-february",
@@ -6133,7 +6133,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "abu-simbel-sun-alignment-october",
@@ -6160,7 +6160,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "al-marbaaniya-saudi",
@@ -6187,7 +6187,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "al-safari-saudi",
@@ -6214,7 +6214,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "al-wasm-saudi",
@@ -6241,7 +6241,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "all-saints-day-belgium",
@@ -6268,7 +6268,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "all-saints-day-france",
@@ -6295,7 +6295,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "all-saints-day-spain",
@@ -6322,7 +6322,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "all-saints-sweden",
@@ -6349,7 +6349,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "aman-social-tunisia",
@@ -6376,7 +6376,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "annunciation-day-lebanon",
@@ -6403,7 +6403,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "anzac-day-australia",
@@ -6430,7 +6430,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "april-fools",
@@ -6559,7 +6559,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "arab-orphan-day",
@@ -6688,7 +6688,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "armed-forces-day-morocco",
@@ -6715,7 +6715,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "armed-forces-day-oman",
@@ -6742,7 +6742,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "armed-forces-day-uae",
@@ -6769,7 +6769,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "armenian-christmas-lebanon",
@@ -6796,7 +6796,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "armistice-day-belgium",
@@ -6823,7 +6823,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "armistice-day-france",
@@ -6850,7 +6850,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "army-day-iraq",
@@ -6877,7 +6877,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "army-day-lebanon",
@@ -6904,7 +6904,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "ars-france",
@@ -6931,7 +6931,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "ascension-day-france",
@@ -6958,7 +6958,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "ascension-day-germany",
@@ -6985,7 +6985,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "asian-cup-2027",
@@ -7012,7 +7012,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "asir-summer-season",
@@ -7039,7 +7039,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "assumption-day-france",
@@ -7066,7 +7066,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "assumption-day-lebanon",
@@ -7093,7 +7093,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "australia-day",
@@ -7120,7 +7120,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "autism-day",
@@ -7145,7 +7145,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "babylon-international-festival-iraq",
@@ -7172,7 +7172,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "bac-results-algeria",
@@ -7199,7 +7199,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "bac-results-bh",
@@ -7226,7 +7226,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "bac-results-jordan",
@@ -7253,7 +7253,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "bac-results-kw",
@@ -7280,7 +7280,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "bac-results-morocco",
@@ -7307,7 +7307,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "bac-results-ae",
@@ -7334,7 +7334,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "badr-day",
@@ -7463,7 +7463,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "bahraini-womens-day",
@@ -7490,7 +7490,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "barnbidrag-sweden",
@@ -7517,7 +7517,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "barnetrygd-norway",
@@ -7544,7 +7544,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "bastille-day-france",
@@ -7571,7 +7571,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "battle-of-khandaq",
@@ -7596,7 +7596,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "battle-of-uhud",
@@ -7725,7 +7725,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "blood-donor-day",
@@ -7854,7 +7854,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "bostadsbidrag-sweden",
@@ -7881,7 +7881,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "boxing-day-canada",
@@ -7908,7 +7908,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "boxing-day-uk",
@@ -7935,7 +7935,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "buergergeld-germany",
@@ -7962,7 +7962,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "caf-payment-france",
@@ -7989,7 +7989,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "cairo-international-film-festival",
@@ -8016,7 +8016,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "canada-day",
@@ -8043,7 +8043,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "carthage-international-festival-tunisia",
@@ -8070,7 +8070,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "ccb-canada",
@@ -8097,7 +8097,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "charity-day",
@@ -8122,7 +8122,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "child-benefit-om",
@@ -8149,7 +8149,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "childrens-day-uae",
@@ -8176,7 +8176,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "christmas-canada",
@@ -8203,7 +8203,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "christmas-eve-sweden",
@@ -8230,7 +8230,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "christmas-germany",
@@ -8257,7 +8257,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "christmas-jordan",
@@ -8284,7 +8284,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "christmas-netherlands",
@@ -8311,7 +8311,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "christmas-palestine",
@@ -8338,7 +8338,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "christmas-syria",
@@ -8365,7 +8365,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "christmas-uk",
@@ -8392,7 +8392,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "cinco-de-mayo-usa",
@@ -8419,7 +8419,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "columbus-day-usa",
@@ -8446,7 +8446,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "conquest-of-andalusia",
@@ -8575,7 +8575,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "constitution-day-kuwait",
@@ -8602,7 +8602,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "constitution-day-lebanon",
@@ -8629,7 +8629,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "constitution-day-spain",
@@ -8656,7 +8656,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "coptic-christmas-egypt",
@@ -8683,7 +8683,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "cost-of-living-allowance-bahrain",
@@ -8710,7 +8710,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "crous-scholarship-france",
@@ -8737,7 +8737,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "csn-payment-sweden",
@@ -8764,7 +8764,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "democracy-day-turkey",
@@ -8791,7 +8791,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "direct-social-support-morocco",
@@ -8818,7 +8818,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "diriyah-season",
@@ -8845,7 +8845,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "disability-day",
@@ -8870,7 +8870,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "doctors-day-egypt",
@@ -8897,7 +8897,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "dst-abolition-morocco",
@@ -8924,7 +8924,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "dst-usa",
@@ -8951,7 +8951,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "dubai-shopping-festival",
@@ -8978,7 +8978,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "early-may-bank-holiday-uk",
@@ -9005,7 +9005,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "easter-monday-france",
@@ -9032,7 +9032,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "easter-monday-germany",
@@ -9059,7 +9059,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "easter-monday-netherlands",
@@ -9086,7 +9086,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "easter-monday-uk",
@@ -9113,7 +9113,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "easter-syria",
@@ -9140,7 +9140,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "education-day-uae",
@@ -9167,7 +9167,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "eid-al-fitr-australia",
@@ -9194,7 +9194,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "epiphany-spain",
@@ -9221,7 +9221,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "epiphany-sweden",
@@ -9248,7 +9248,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "evacuation-day-egypt",
@@ -9275,7 +9275,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "evacuation-day-syria",
@@ -9302,7 +9302,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "evacuation-day-tunisia",
@@ -9329,7 +9329,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "fall-of-granada",
@@ -9458,7 +9458,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "family-day",
@@ -9483,7 +9483,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "family-day-canada",
@@ -9510,7 +9510,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "fath-makkah",
@@ -9639,7 +9639,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "ferragosto-italy",
@@ -9666,7 +9666,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "fete-de-la-musique-france",
@@ -9693,7 +9693,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "fete-du-travail-france",
@@ -9720,7 +9720,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "final-exams-saudi",
@@ -9747,7 +9747,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "flag-day-jordan",
@@ -9774,7 +9774,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "flag-day-uae",
@@ -9801,7 +9801,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "flag-day-usa",
@@ -9828,7 +9828,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "food-day",
@@ -9957,7 +9957,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "friendship-day",
@@ -9982,7 +9982,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "geminids-meteor-shower",
@@ -10007,7 +10007,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "good-friday-canada",
@@ -10034,7 +10034,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "good-friday-germany",
@@ -10061,7 +10061,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "good-friday-uk",
@@ -10088,7 +10088,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "great-arab-revolt-day-jordan",
@@ -10115,7 +10115,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "gulf-childrens-day",
@@ -10140,7 +10140,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "guy-fawkes-night-uk",
@@ -10167,7 +10167,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "hala-february-kuwait",
@@ -10194,7 +10194,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "housing-allowance-kuwait",
@@ -10221,7 +10221,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "human-rights-day",
@@ -10350,7 +10350,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "independence-day-bahrain",
@@ -10377,7 +10377,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "independence-day-kuwait",
@@ -10404,7 +10404,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "independence-day-lebanon",
@@ -10431,7 +10431,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "independence-day-qatar",
@@ -10458,7 +10458,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "independence-day-usa",
@@ -10485,7 +10485,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "independence-day-yemen",
@@ -10512,7 +10512,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "international-coffee-day",
@@ -10641,7 +10641,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "international-peace-day",
@@ -10770,7 +10770,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "international-youth-day",
@@ -10899,7 +10899,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "invasion-remembrance-kw",
@@ -10926,7 +10926,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "iraq-national-day",
@@ -10953,7 +10953,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "jeddah-season",
@@ -10980,7 +10980,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "jerash-festival-jordan",
@@ -11007,7 +11007,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "job-security-oman",
@@ -11034,7 +11034,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "june-30-revolution-egypt",
@@ -11061,7 +11061,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "juneteenth-usa",
@@ -11088,7 +11088,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "karameh-day-jordan",
@@ -11115,7 +11115,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "khaleeji-27",
@@ -11142,7 +11142,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "khareef-salalah",
@@ -11169,7 +11169,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "kinderbijslag-netherlands",
@@ -11196,7 +11196,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "kindergeld-germany",
@@ -11223,7 +11223,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "king-abdulaziz-camel-festival-saudi",
@@ -11250,7 +11250,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "king-salman-bayah-saudi",
@@ -11277,7 +11277,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "kings-day-netherlands",
@@ -11304,7 +11304,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "knowledge-day-algeria",
@@ -11331,7 +11331,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "labor-day-canada",
@@ -11358,7 +11358,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "labor-day-usa",
@@ -11385,7 +11385,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "last-ten-nights-ramadan",
@@ -11514,7 +11514,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "liberation-day-libya",
@@ -11541,7 +11541,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "liberation-day-netherlands",
@@ -11568,7 +11568,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "liberation-day-syria",
@@ -11595,7 +11595,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "libya-independence-day",
@@ -11622,7 +11622,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "literacy-day",
@@ -11751,7 +11751,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "martyrs-day-algeria",
@@ -11778,7 +11778,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "martyrs-day-lebanon",
@@ -11805,7 +11805,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "martyrs-day-libya",
@@ -11832,7 +11832,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "martyrs-day-tunisia",
@@ -11859,7 +11859,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "memorial-day-usa",
@@ -11886,7 +11886,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "midday-work-ban-bahrain",
@@ -11913,7 +11913,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "midday-work-ban-kuwait",
@@ -11940,7 +11940,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "midday-work-ban-oman",
@@ -11967,7 +11967,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "midday-work-ban-qatar",
@@ -11994,7 +11994,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "midday-work-ban-uae",
@@ -12021,7 +12021,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "midsummer-sweden",
@@ -12048,7 +12048,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "midyear-break-jordan",
@@ -12075,7 +12075,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "midyear-break-saudi",
@@ -12102,7 +12102,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "mlk-day-usa",
@@ -12129,7 +12129,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "moroccan-womens-day",
@@ -12156,7 +12156,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "mujahid-day-dz",
@@ -12183,7 +12183,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "muscat-festival-oman",
@@ -12210,7 +12210,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "nafis-uae",
@@ -12237,7 +12237,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "nakba-day",
@@ -12264,7 +12264,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "national-aid-jordan",
@@ -12291,7 +12291,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "national-charter-day-bahrain",
@@ -12318,7 +12318,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "national-day-belgium",
@@ -12345,7 +12345,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "national-day-spain",
@@ -12372,7 +12372,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "national-day-sweden",
@@ -12399,7 +12399,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "national-labor-support-kuwait",
@@ -12426,7 +12426,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "national-press-day-algeria",
@@ -12453,7 +12453,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "new-years-day-uk",
@@ -12480,7 +12480,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "nowruz-iraq",
@@ -12507,7 +12507,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "nurses-day",
@@ -12636,7 +12636,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "october-14-revolution-yemen",
@@ -12663,7 +12663,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "omani-womens-day",
@@ -12690,7 +12690,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "orthodox-christmas-palestine",
@@ -12717,7 +12717,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "orthodox-easter-syria",
@@ -12744,7 +12744,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "oued-eddahab-day-ma",
@@ -12771,7 +12771,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "palestine-independence-day",
@@ -12798,7 +12798,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "palestine-land-day",
@@ -12825,7 +12825,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "palestine-solidarity-day",
@@ -12850,7 +12850,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "pension-algeria",
@@ -12877,7 +12877,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "pension-bahrain",
@@ -12904,7 +12904,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "pension-day-france",
@@ -12931,7 +12931,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "pension-jordan",
@@ -12958,7 +12958,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "pension-kuwait",
@@ -12985,7 +12985,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "pension-oman",
@@ -13012,7 +13012,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "pension-uae",
@@ -13039,7 +13039,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "pension-sweden",
@@ -13066,7 +13066,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "perseids-meteor-shower",
@@ -13091,7 +13091,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "prime-noel-france",
@@ -13118,7 +13118,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "prisoners-day-palestine",
@@ -13145,7 +13145,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "qatar-sport-day",
@@ -13172,7 +13172,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "qurain-cultural-festival-kuwait",
@@ -13199,7 +13199,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "rajab-start",
@@ -13328,7 +13328,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "recapture-of-riyadh",
@@ -13355,7 +13355,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "reef-support-saudi",
@@ -13382,7 +13382,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "remembrance-day-canada",
@@ -13409,7 +13409,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "remembrance-sunday-uk",
@@ -13436,7 +13436,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "renaissance-day-oman",
@@ -13463,7 +13463,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "republic-day-iraq",
@@ -13490,7 +13490,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "republic-day-italy",
@@ -13517,7 +13517,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "republic-day-tunisia",
@@ -13544,7 +13544,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "republic-day-turkey",
@@ -13571,7 +13571,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "retiree-salary-iraq",
@@ -13598,7 +13598,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "revolution-day-libya",
@@ -13625,7 +13625,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "revolution-day-ma",
@@ -13652,7 +13652,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "revolution-day-syria",
@@ -13679,7 +13679,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "revolution-day-tunisia",
@@ -13706,7 +13706,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "riyadh-season",
@@ -13733,7 +13733,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "royal-accession-day-jordan",
@@ -13760,7 +13760,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "saint-maroun-day-lebanon",
@@ -13787,7 +13787,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "salary-bahrain",
@@ -13814,7 +13814,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "salary-jordan",
@@ -13841,7 +13841,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "salary-kuwait",
@@ -13868,7 +13868,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "salary-oman",
@@ -13895,7 +13895,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "salary-qatar",
@@ -13922,7 +13922,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "salary-uae",
@@ -13949,7 +13949,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "saned-saudi",
@@ -13976,7 +13976,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "saudi-cup",
@@ -14003,7 +14003,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "school-grant-algeria",
@@ -14030,7 +14030,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "school-holidays-france",
@@ -14057,7 +14057,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "school-start-bh",
@@ -14084,7 +14084,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "school-start-jo",
@@ -14111,7 +14111,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "school-start-om",
@@ -14138,7 +14138,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "school-start-tr",
@@ -14165,7 +14165,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "semester-break-turkey",
@@ -14192,7 +14192,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "september-26-revolution-yemen",
@@ -14219,7 +14219,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "shaban-start",
@@ -14348,7 +14348,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "six-days-shawwal",
@@ -14477,7 +14477,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "social-assistance-bahrain",
@@ -14504,7 +14504,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "social-assistance-kuwait",
@@ -14531,7 +14531,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "social-security-qa",
@@ -14558,7 +14558,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "social-security-usa",
@@ -14585,7 +14585,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "social-welfare-iraq",
@@ -14612,7 +14612,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "solar-eclipse",
@@ -14637,7 +14637,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "soundstorm-riyadh",
@@ -14664,7 +14664,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "sovereignty-childrens-day-turkey",
@@ -14691,7 +14691,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "spring-bank-holiday-uk",
@@ -14718,7 +14718,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "st-francis-day-italy",
@@ -14745,7 +14745,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "student-allowance-kuwait",
@@ -14772,7 +14772,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "student-day-algeria",
@@ -14799,7 +14799,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "suez-canal-nationalization-egypt",
@@ -14826,7 +14826,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "suhail-star",
@@ -14853,7 +14853,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "summer-bank-holiday-uk",
@@ -14880,7 +14880,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "tarwiyah-day",
@@ -15009,7 +15009,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "tashreeq-days",
@@ -15138,7 +15138,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "tasua-day",
@@ -15267,7 +15267,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "tax-day-usa",
@@ -15294,7 +15294,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "tax-refund-france",
@@ -15321,7 +15321,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "teachers-day-egypt",
@@ -15348,7 +15348,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "teachers-day-saudi",
@@ -15375,7 +15375,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "thanksgiving-canada",
@@ -15402,7 +15402,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "tree-day-tunisia",
@@ -15429,7 +15429,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "trillium-benefit-canada",
@@ -15456,7 +15456,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "truth-reconciliation-day-canada",
@@ -15483,7 +15483,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "tunisian-womens-day",
@@ -15510,7 +15510,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "uae-founding-day",
@@ -15537,7 +15537,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "uae-tolerance-day",
@@ -15564,7 +15564,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "uae-womens-day",
@@ -15591,7 +15591,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "unemployment-grant-algeria",
@@ -15618,7 +15618,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "unity-day-germany",
@@ -15645,7 +15645,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "unity-day-morocco",
@@ -15672,7 +15672,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "unity-day-yemen",
@@ -15699,7 +15699,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "university-stipend-saudi",
@@ -15726,7 +15726,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "veterans-day-usa",
@@ -15753,7 +15753,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "victoria-day-canada",
@@ -15780,7 +15780,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "victory-day-algeria",
@@ -15807,7 +15807,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "victory-day-france",
@@ -15834,7 +15834,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "victory-day-iraq",
@@ -15861,7 +15861,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "victory-day-turkey",
@@ -15888,7 +15888,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "volunteer-day",
@@ -16017,7 +16017,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "wafat-khadija",
@@ -16042,7 +16042,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "washington-birthday-usa",
@@ -16069,7 +16069,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "whit-monday-france",
@@ -16096,7 +16096,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "whit-monday-germany",
@@ -16123,7 +16123,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "white-friday",
@@ -16148,7 +16148,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "wildlife-day",
@@ -16277,7 +16277,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "winter-at-tantora-alula",
@@ -16304,7 +16304,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "winter-break-qatar",
@@ -16331,7 +16331,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "winter-time-egypt",
@@ -16358,7 +16358,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "winter-time-france",
@@ -16385,7 +16385,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "winter-time-germany",
@@ -16412,7 +16412,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "world-book-day",
@@ -16541,7 +16541,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "world-cancer-day",
@@ -16670,7 +16670,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "world-cup-2030",
@@ -16697,7 +16697,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "world-fathers-day",
@@ -16827,7 +16827,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "world-happiness-day",
@@ -16956,7 +16956,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "world-no-tobacco-day",
@@ -17085,7 +17085,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "world-refugee-day",
@@ -17214,7 +17214,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "world-tourism-day",
@@ -17343,7 +17343,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "world-water-day",
@@ -17472,7 +17472,7 @@
       ],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "youth-day-ma",
@@ -17499,7 +17499,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "youth-sports-day-turkey",
@@ -17526,7 +17526,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     },
     {
       "id": "zayed-humanitarian-day",
@@ -17553,7 +17553,7 @@
       "aliasSlugs": [],
       "hasResearch": true,
       "hasQa": true,
-      "lastModified": "2026-08-25T10:04:57.336Z"
+      "lastModified": "2026-08-27T20:02:15.402Z"
     }
   ]
 }

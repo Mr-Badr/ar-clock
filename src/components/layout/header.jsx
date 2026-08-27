@@ -1,4 +1,15 @@
 // layout/header.jsx
+//
+// Mobile/tablet layout, 2026-08-27, REVERTED same day. First pass moved the logo to the center
+// with the burger/theme split to opposite edges (owner: "logo in middle, theme switcher in
+// left and burger menu right"). Owner follow-up reversed that call: "logo in righ, and two
+// buttons in left: theme switcher then burger menu in left" — plus "make the navbar longer in
+// width not too small in center." So `.header-actions` is back, wrapping ThemeToggle then
+// MobileMenu together (in that DOM order) as one group at the end of the pill, and logo is back
+// to being the first child — this is genuinely the ORIGINAL pre-2026-08-27 structure, just with
+// `.header-inner` now stretched wider on mobile/tablet (see header.css) instead of hugging its
+// content, so the logo and the icon group land at opposite outer edges of a properly wide bar
+// rather than sitting close together in a small centered pill.
 import Link from "next/link";
 import NavLinks from "./NavLinks";
 import ThemeToggle from "./ThemeToggle";

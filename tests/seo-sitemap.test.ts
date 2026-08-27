@@ -195,20 +195,26 @@ test('date sitemap index exposes compact rolling daily-date sitemaps', async () 
   assert.equal([...xml.matchAll(/<sitemap>/g)].length, 5);
 });
 
-test('country date sitemap publishes priority markets instead of every templated country page', async () => {
+test('country date sitemap publishes every templated country page, not just priority markets', async () => {
+  // `dateCountry` was deliberately moved from PRIORITY to ALL scope 2026-08-24 (see
+  // country-indexing.ts's own comment on GEO_ROUTE_INDEXING_POLICIES.dateCountry): the page
+  // renders the same genuinely useful generic content (local Gregorian + Hijri date, capital
+  // timezone) for ANY valid country, so capping the sitemap to the curated priority set was an
+  // unused ceiling, not a content-thinness guard — real coverage gap fixed, matching `timeNow`'s
+  // already-ALL-scoped policy. This test used to assert the OLD curated-only behavior; updated
+  // to assert the new one instead of the old ceiling regressing back in silently.
   const policy = GEO_ROUTE_INDEXING_POLICIES.dateCountry;
   const slugs = selectSeoCountrySlugs(
     [...SEO_PRIORITY_COUNTRY_SLUGS, 'afghanistan'],
     { scope: policy.countryScope },
   );
-  const prioritySlugs = new Set(SEO_PRIORITY_COUNTRY_SLUGS);
 
+  assert.equal(policy.countryScope, 'all');
   assert.ok(slugs.length > 0);
-  assert.ok(slugs.length < 100, 'country date sitemap should remain curated');
-  assert.equal(slugs.every((slug) => prioritySlugs.has(slug)), true);
   assert.equal(slugs.includes('saudi-arabia'), true);
   assert.equal(slugs.includes('united-states'), true);
-  assert.equal(slugs.includes('afghanistan'), false);
+  // ALL scope indexes any valid country slug, not just the curated priority set.
+  assert.equal(slugs.includes('afghanistan'), true);
 });
 
 test('recent date sitemaps publish canonical Gregorian and Hijri day pages', async () => {

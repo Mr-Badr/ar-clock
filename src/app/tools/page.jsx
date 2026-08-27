@@ -1,15 +1,21 @@
 import Link from 'next/link';
 import {
+  AirplaneTilt,
   AppWindow,
+  Buildings,
   Bug,
   Car,
   Elevator,
   Fingerprint,
   Garage,
+  GasPump,
+  Globe,
   GraduationCap,
   Hammer,
+  HandHeart,
   HardHat,
   Heartbeat,
+  IdentificationCard,
   Lightning,
   Mosque,
   Plant,
@@ -19,6 +25,7 @@ import {
   Storefront,
   Drop,
   Snowflake,
+  Television,
   VideoCamera,
   Waves,
   Wallet,
@@ -36,6 +43,13 @@ const SITE_URL = getSiteUrl();
 // the same icon on every card).
 const CATEGORY_ICONS = {
   'gulf-finance': Wallet,
+  'fuel-prices': GasPump,
+  'domestic-worker': HandHeart,
+  'international-benefits': Globe,
+  electronics: Television,
+  'real-estate': Buildings,
+  travel: AirplaneTilt,
+  immigration: IdentificationCard,
   construction: HardHat,
   plumbing: Drop,
   electrical: Lightning,
@@ -73,23 +87,83 @@ const CATEGORIES = [
   {
     slug: 'gulf-finance',
     name: 'الرواتب والمزايا الخليجية',
-    description: 'نهاية الخدمة، تعويض الفصل التعسفي، وتكلفة استقدام عاملة منزلية — لكل دولة حاسبتها.',
-    // Kept in sync manually with the actual count computed in
-    // /tools/gulf-finance/page.jsx (COUNTRY_GROUPS + MULTI_COUNTRY_TOOLS + SHARIA_TOOLS_SLUGS).
+    description: 'مكافأة نهاية الخدمة، تعويض الفصل التعسفي، ومواعيد الرواتب — لكل دولة حاسبتها.',
+    // Kept in sync manually with the actual count computed in /tools/gulf-finance/page.jsx
+    // (COUNTRY_GROUPS + MULTI_COUNTRY_TOOLS).
     // **2026-08-03, two removal passes**: 47 of the original 65 tools removed after real
     // per-tool competitor research — see keyword-research/gulf-finance-cleanup-2026-08-03/DECISION.md.
-    // **2026-08-04**: Kuwait/Qatar/Bahrain/Oman's real gap (flagged above as "not yet filled")
-    // closed with 5 new domestic-worker-recruitment-cost calculators (UAE + the 4 previously-empty
-    // countries), each with real primary-source-verified government fees — see
-    // keyword-research/domestic-worker-cost/DECISION.md. Morocco and Egypt (down to 1 tool) remain
-    // open gaps needing their own research-first pass.
-    // **2026-08-04, second pass**: added the eligibility checker + contract generator from the
-    // same DECISION.md tool-priority list (✅checker → 🧮calculator → 📄generator) — both Gulf-wide
-    // multi-country tools, bringing the total from 23 to 25.
-    // **2026-08-05**: +3 — the Denmark/Canada/France diaspora payment-date tools were relocated
-    // here from the retired /calculators/* tree (own "مواعيد دفعات دولية" group, not counted as
-    // Gulf/Arab finance) as part of eliminating the /calculators URL prefix sitewide.
-    toolCount: 28,
+    // **2026-08-25, full second-wave split**: this hub had grown to 43 tools across countries far
+    // beyond the Gulf and no longer matched its own name (owner: "this is no more gulf finance").
+    // Every tool re-sorted into its correct category: fuel prices (13 countries + comparison, 14
+    // tools) → /tools/fuel-prices; domestic-worker recruitment (8 tools, a genuinely distinct
+    // topic — "hiring household staff," not "your own pay") → /tools/domestic-worker; general
+    // Sharia rulings (wasiyya/iddah/aqiqah/nafaqah, 4 tools) → /tools/islamic, finishing what that
+    // hub's own cross-link section had already half-done since 2026-08-11; the 3 non-Arab diaspora
+    // tools (Canada/Denmark/France) → new /tools/international-benefits. What's left (14 tools) is
+    // the genuine Gulf/Arab labor-law + pay-date + government-fee core the name always promised.
+    // See data.js's CALCULATOR_HUBS entries + next.config.js's migration redirects.
+    toolCount: 14,
+  },
+  {
+    slug: 'fuel-prices',
+    name: 'أسعار الوقود',
+    description: 'سعر لتر البنزين والديزل اليوم في 13 دولة عربية — كل دولة بصفحتها الخاصة، محدثة تلقائياً.',
+    // Split out of gulf-finance 2026-08-25 — see that entry's note above.
+    toolCount: 14,
+  },
+  {
+    slug: 'domestic-worker',
+    name: 'الاستقدام والعمالة المنزلية',
+    description: 'تكلفة استقدام عاملة أو سائق منزلي في 6 دول خليجية، مع محقق أهلية ومولّد عقد.',
+    // Split out of gulf-finance 2026-08-25 — see that entry's note above.
+    toolCount: 8,
+  },
+  {
+    slug: 'international-benefits',
+    name: 'مواعيد ودفعات دولية',
+    description: 'مواعيد إعانة الطفل في كندا والدنمارك، ومواعيد التخفيضات الموسمية في فرنسا.',
+    // Split out of gulf-finance 2026-08-25 — see that entry's note above. Deliberately small (3
+    // tools), matching this site's own precedent for legitimate few-tool categories.
+    toolCount: 3,
+  },
+  {
+    slug: 'electronics',
+    name: 'الإلكترونيات والأجهزة المنزلية',
+    description: 'احسب حجم التلفزيون المناسب لغرفتك حسب مسافة المشاهدة، بمعيارين حقيقيين بدل التقدير بالعين.',
+    // New category (2026-08-25) — real gap found via tool-research: Arabic sources only had
+    // static brand buying-guide articles (Samsung/LG/TCL), zero interactive tools. Deliberately
+    // single-tool for now, same precedent as pools/cctv/garage-doors/elevators/welding/
+    // scaffolding/aluminum-glass.
+    toolCount: 1,
+  },
+  {
+    slug: 'real-estate',
+    name: 'العقارات',
+    description: 'احسب عمولة الوسيط العقاري، وهل إيجارك مناسب لراتبك، ورسوم نقل ملكية عقارك.',
+    // New category (2026-08-25) — real gap found via tool-research aimed at high-RPM daily
+    // decisions (real estate). Grew to 3 tools same session: agent commission, rent
+    // affordability, Egypt transfer fee.
+    toolCount: 3,
+  },
+  {
+    slug: 'travel',
+    name: 'السفر',
+    description: 'احسب تكلفة تأشيرة شنغن الحقيقية لعائلتك — الرسم الرسمي المحدث بالإضافة إلى رسوم مركز التأشيرات.',
+    // New category (2026-08-25) — real gap found via tool-research: Arabic sources still cite the
+    // old €80 Schengen fee (raised to €90 on 11 June 2024), zero interactive tools existed.
+    // Deliberately single-tool for now, same precedent as electronics/pools/cctv/garage-doors/
+    // elevators/welding/scaffolding/aluminum-glass.
+    toolCount: 1,
+  },
+  {
+    slug: 'immigration',
+    name: 'الهجرة',
+    description: 'احسب أيام غيابك عن بريطانيا، ومتى تحق لك الجنسية الفرنسية أو الألمانية، ونقاطك الفعلية للهجرة إلى كندا.',
+    // New category (2026-08-27) — global tool-gap research aimed at Arab-diaspora countries
+    // beyond the Gulf. Immigration is a confirmed high-RPM vertical; 3 of 4 tools found zero
+    // Arabic interactive competition, the 4th (Canada CRS) beats a competitor whose "calculator"
+    // is actually a lead-gen funnel with no real instant score.
+    toolCount: 4,
   },
   {
     slug: 'construction',
@@ -294,8 +368,9 @@ const CATEGORIES = [
     // (1.9M+/mo combined, 88% Low comp). v2 (2026-08-11, owner directive): full hub — 4-madhab-
     // aware core calculators, live pricing across 22 Arab currencies (not Gulf-only), 4 dedicated
     // per-asset-type calculators (gold/stocks/trade-goods/salary), a real madhab-comparison guide,
-    // a live nisab-today page, and 4 existing fiqh calculators (aqiqah/wasiyya/nafaqah/iddah)
-    // cross-listed in from gulf-finance — all cross-linked to each other. Real competitors exist
+    // a live nisab-today page, and 4 general fiqh calculators (aqiqah/wasiyya/nafaqah/iddah,
+    // physically hosted here since 2026-08-25 — see gulf-finance's entry above) — all
+    // cross-linked to each other. Real competitors exist
     // (hasbati.com, arabtoolbox.com, Al-Azhar's own calculator) but none combine a computational
     // 4-madhab selector + persistent Hawl tracking + 20+-currency live pricing + visual results.
     // See docs/PLAN.md §13 and keyword-research/zakat-calculator-tracker/DECISION.md.

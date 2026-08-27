@@ -3,6 +3,7 @@
 
 import Link from "next/link";
 import type { ElementType } from "react";
+import { useEffect } from "react";
 import { usePathname } from "next/navigation";
 import {
   Moon, Sun,
@@ -10,7 +11,6 @@ import {
   Calendar, CalendarDots,
   ArrowsLeftRight,
   Globe,
-  X,
 } from "@phosphor-icons/react";
 import {
   Accordion,
@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/accordion";
 import { cn } from "@/lib/utils";
 import { useIntentPrefetch } from "./useIntentPrefetch";
+import ToolsNavButton from "./ToolsNavButton";
 
 type SubLink = {
   href: string;
@@ -61,28 +62,45 @@ export default function MobileMenuPanel({
   const isActive = (href: string) =>
     href === "/" ? pathname === "/" : pathname.startsWith(href);
 
-  return (
-    <nav
-      className={cn("header-mobile-menu", open && "open")}
-      aria-label="القائمة المتنقلة"
-      aria-hidden={!open}
-    >
-      <div className="header-mobile-menu-head">
-        <div>
-          <p className="header-mobile-menu-kicker">القائمة</p>
-          <p className="header-mobile-menu-title">تنقّل سريع داخل ميقاتنا</p>
-        </div>
-        <button
-          type="button"
-          className="header-mobile-menu-close"
-          onClick={onClose}
-          aria-label="إغلاق القائمة"
-        >
-          <X size={18} weight="bold" aria-hidden="true" />
-        </button>
-      </div>
+  // Owner, 2026-08-27: "if he click in a space out of menu the menu should close, not just from
+  // the close button" — Escape is the keyboard equivalent of that same "dismiss the overlay"
+  // intent, and MobileMenu.tsx already unmounts this whole component on close, so the listener
+  // is cleaned up for free without an `open` guard here.
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [onClose]);
 
-      <div className="header-mobile-menu-body rtl">
+  return (
+    <>
+      {/* Owner: "everything behind the menu should be glassy and blur, when the menu is open,
+          and if he click in a space out of menu the menu should close, not just from the close
+          button." A full-viewport fixed layer, blurred + tinted, sitting just below the header
+          pill and this panel (both `--z-sticky`) so they stay crisp/interactive above it; a
+          click anywhere on it (i.e. anywhere that isn't the header or the panel) closes the
+          menu — the standard "click outside" mechanism, implemented as "click ON the backdrop"
+          rather than a document-wide listener that has to distinguish inside/outside itself. */}
+      <div
+        className="header-mobile-backdrop"
+        aria-hidden="true"
+        onClick={onClose}
+      />
+
+      <nav
+        className={cn("header-mobile-menu", open && "open")}
+        aria-label="القائمة المتنقلة"
+        aria-hidden={!open}
+      >
+        {/* Owner, 2026-08-27 follow-up: "the first section that have close button should not
+            appear at all, he can close the navbar by clicking same button of burger menu or
+            click outside navbar" — the head row (close button, previously kicker/title text
+            before that) is gone entirely now. The burger button itself already toggles
+            open/closed (MobileMenu.tsx's `handleToggle`), and the backdrop click-outside above
+            closes it too, so a third, dedicated close control was redundant. */}
+        <div className="header-mobile-menu-body rtl">
         {links.map((link) => (
           <div key={link.href}>
             {/* The dedicated "/tools" rich-category accordion (CALC_CATEGORIES) was removed
@@ -148,14 +166,20 @@ export default function MobileMenuPanel({
                   </AccordionItem>
                 </Accordion>
               );
-            })() : (
+            })() : link.cta ? (
+              // Owner, 2026-08-27: "the button of tools on mobile... should be like desktop,
+              // but this button should have no arrow just text" — reuses the exact same
+              // component as the desktop pill (border-beam outline, no caret) instead of its
+              // own separately-styled `--cta` link, just stretched full-width for the drawer's
+              // list via this className.
+              <ToolsNavButton className="header-mobile-tools-btn" />
+            ) : (
               <Link
                 href={link.href}
                 prefetch
                 aria-current={isActive(link.href) ? "page" : undefined}
                 className={cn(
                   "header-mobile-link",
-                  link.cta && "header-mobile-link--cta",
                   isActive(link.href) && "active"
                 )}
                 {...getPrefetchHandlers(link.href)}
@@ -165,7 +189,8 @@ export default function MobileMenuPanel({
             )}
           </div>
         ))}
-      </div>
-    </nav>
+        </div>
+      </nav>
+    </>
   );
 }

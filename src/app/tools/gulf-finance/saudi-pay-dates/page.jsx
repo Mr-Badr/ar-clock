@@ -127,6 +127,10 @@ export default function SaudiPayDatesPage() {
                   وطنية) قد تُصدر الجهات المختصة قرارات بتقديم الصرف. راجع الإعلان الرسمي لكل برنامج
                   للتأكيد.
                 </p>
+                <p style={{ marginTop: 'var(--space-3)' }}>
+                  تتابع راتبك الشهري؟ راجع أيضاً{' '}
+                  <Link href="/tools/fuel-prices/saudi-fuel-prices">سعر البنزين في السعودية هذا الشهر</Link>.
+                </p>
               </section>
 
               <ToolInArticleAd slotId="mid-saudi-pay-dates" />
