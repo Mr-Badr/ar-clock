@@ -13,6 +13,7 @@ import {
   Warning,
   Wrench,
 } from '@phosphor-icons/react';
+import PremiumSelect from '@/components/tools-v2/PremiumSelect.client';
 import { toast } from 'sonner';
 import CountryFlag from '@/components/shared/CountryFlag';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
@@ -172,11 +173,12 @@ export default function BuildCostCalculator() {
         </div>
         <div className="tool-v2-field">
           <label htmlFor="build-cost-type">نوع المبنى</label>
-          <select id="build-cost-type" value={buildingType} onChange={(e) => setBuildingType(e.target.value)}>
-            {BUILDING_TYPES.map((t) => (
-              <option key={t.key} value={t.key}>{t.label}</option>
-            ))}
-          </select>
+          <PremiumSelect
+            id="build-cost-type"
+            value={buildingType}
+            onChange={setBuildingType}
+            options={BUILDING_TYPES.map((t) => ({ value: t.key, label: t.label }))}
+          />
         </div>
       </div>
 
@@ -223,11 +225,12 @@ export default function BuildCostCalculator() {
         <label htmlFor="build-cost-region">
           <MapPin size={14} weight="bold" style={{ display: 'inline', verticalAlign: '-2px' }} /> المدينة
         </label>
-        <select id="build-cost-region" value={region} onChange={(e) => setRegion(e.target.value)}>
-          {regionEntries.map(([key, r]) => (
-            <option key={key} value={key}>{r.name}</option>
-          ))}
-        </select>
+        <PremiumSelect
+          id="build-cost-region"
+          value={region}
+          onChange={setRegion}
+          options={regionEntries.map(([key, r]) => ({ value: key, label: r.name }))}
+        />
       </div>
 
       {result ? (

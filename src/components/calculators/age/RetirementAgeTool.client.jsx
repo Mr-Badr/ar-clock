@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { CalendarBlank, Info, ShareNetwork, Timer } from '@phosphor-icons/react';
 import { toast } from 'sonner';
 import { NumberTicker } from '@/components/ui/number-ticker';
+import PremiumSelect from '@/components/tools-v2/PremiumSelect.client';
 import { calculateRetirement, getTodayIso } from '@/lib/calculators/age';
 import { RETIREMENT_RULES } from '@/lib/calculators/age-data';
 
@@ -46,25 +47,38 @@ export default function RetirementAgeTool() {
 
       <div className="tool-v2-field">
         <label htmlFor="retirement-country">الدولة</label>
-        <select id="retirement-country" value={countryCode} onChange={(e) => setCountryCode(e.target.value)}>
-          {RETIREMENT_RULES.map((rule) => (<option key={rule.code} value={rule.code}>{rule.country}</option>))}
-        </select>
+        <PremiumSelect
+          id="retirement-country"
+          value={countryCode}
+          onChange={setCountryCode}
+          options={RETIREMENT_RULES.map((rule) => ({ value: rule.code, label: rule.country }))}
+        />
       </div>
       <div className="tool-v2-field-row-pair">
         <div className="tool-v2-field">
           <label htmlFor="retirement-sector">القطاع</label>
-          <select id="retirement-sector" value={sector} onChange={(e) => setSector(e.target.value)}>
-            <option value="government">حكومي</option>
-            <option value="private">خاص</option>
-            <option value="military">عسكري</option>
-          </select>
+          <PremiumSelect
+            id="retirement-sector"
+            value={sector}
+            onChange={setSector}
+            options={[
+              { value: 'government', label: 'حكومي' },
+              { value: 'private', label: 'خاص' },
+              { value: 'military', label: 'عسكري' },
+            ]}
+          />
         </div>
         <div className="tool-v2-field">
           <label htmlFor="retirement-gender">الجنس</label>
-          <select id="retirement-gender" value={gender} onChange={(e) => setGender(e.target.value)}>
-            <option value="male">رجل</option>
-            <option value="female">امرأة</option>
-          </select>
+          <PremiumSelect
+            id="retirement-gender"
+            value={gender}
+            onChange={setGender}
+            options={[
+              { value: 'male', label: 'رجل' },
+              { value: 'female', label: 'امرأة' },
+            ]}
+          />
         </div>
       </div>
       <div className="tool-v2-field">

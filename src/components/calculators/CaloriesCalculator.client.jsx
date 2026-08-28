@@ -4,6 +4,7 @@ import { useMemo, useState } from 'react';
 import { Fire, ShareNetwork, Warning } from '@phosphor-icons/react';
 import { toast } from 'sonner';
 
+import PremiumSelect from '@/components/tools-v2/PremiumSelect.client';
 import { ACTIVITY_LEVELS, GOALS, calculateCaloriesAndTDEE } from '@/lib/calculators/calories';
 
 function fmt(n) { return Math.round(n).toLocaleString('ar-SA-u-nu-latn'); }
@@ -72,16 +73,22 @@ export default function CaloriesCalculator() {
 
       <div className="tool-v2-field">
         <label htmlFor="cal-activity">مستوى النشاط</label>
-        <select id="cal-activity" value={activityLevel} onChange={(e) => setActivityLevel(e.target.value)}>
-          {ACTIVITY_LEVELS.map((l) => (<option key={l.value} value={l.value}>{l.label}</option>))}
-        </select>
+        <PremiumSelect
+          id="cal-activity"
+          value={activityLevel}
+          onChange={setActivityLevel}
+          options={ACTIVITY_LEVELS.map((l) => ({ value: l.value, label: l.label }))}
+        />
       </div>
 
       <div className="tool-v2-field">
         <label htmlFor="cal-goal">هدفك</label>
-        <select id="cal-goal" value={goal} onChange={(e) => setGoal(e.target.value)}>
-          {GOALS.map((g) => (<option key={g.value} value={g.value}>{g.label}</option>))}
-        </select>
+        <PremiumSelect
+          id="cal-goal"
+          value={goal}
+          onChange={setGoal}
+          options={GOALS.map((g) => ({ value: g.value, label: g.label }))}
+        />
       </div>
 
       {result.isValid ? (

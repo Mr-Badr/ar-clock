@@ -3,6 +3,7 @@
 import { useMemo, useState } from 'react';
 import { Coffee, MoonStars, ShareNetwork, Timer } from '@phosphor-icons/react';
 import { toast } from 'sonner';
+import PremiumSelect from '@/components/tools-v2/PremiumSelect.client';
 import { NAP_DURATION_OPTIONS, SLEEP_LATENCY_OPTIONS, calculateNap } from '@/lib/sleep/calculator';
 
 async function shareResult(title, text) {
@@ -47,15 +48,21 @@ export default function NapTool() {
       <div className="tool-v2-field-row-pair">
         <div className="tool-v2-field">
           <label htmlFor="nap-length">نوع القيلولة</label>
-          <select id="nap-length" value={napMinutes} onChange={(e) => setNapMinutes(e.target.value)}>
-            {NAP_DURATION_OPTIONS.map((item) => (<option key={item.value} value={item.value}>{item.label}</option>))}
-          </select>
+          <PremiumSelect
+            id="nap-length"
+            value={napMinutes}
+            onChange={setNapMinutes}
+            options={NAP_DURATION_OPTIONS.map((item) => ({ value: item.value, label: item.label }))}
+          />
         </div>
         <div className="tool-v2-field">
           <label htmlFor="nap-latency">وقت الغفو</label>
-          <select id="nap-latency" value={latencyMinutes} onChange={(e) => setLatencyMinutes(e.target.value)}>
-            {SLEEP_LATENCY_OPTIONS.map((item) => (<option key={item} value={item}>{item} دقيقة</option>))}
-          </select>
+          <PremiumSelect
+            id="nap-latency"
+            value={latencyMinutes}
+            onChange={setLatencyMinutes}
+            options={SLEEP_LATENCY_OPTIONS.map((item) => ({ value: item, label: `${item} دقيقة` }))}
+          />
         </div>
       </div>
 

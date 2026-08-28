@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { Buildings, Plus, Share as ShareIcon, Sparkle, Trash, Warning } from '@phosphor-icons/react';
 import { toast } from 'sonner';
+import PremiumSelect from '@/components/tools-v2/PremiumSelect.client';
 import { GYPSUM_BOARD_SIZES, GYPSUM_WASTE_LEVELS, calcGypsumBoard, fmt } from '@/lib/calculators/building/constants';
 
 const WASTE_META = {
@@ -110,11 +111,12 @@ export default function GypsumBoardCalculator() {
 
       <div className="tool-v2-field">
         <label htmlFor="gyp-size">مقاس اللوح</label>
-        <select id="gyp-size" value={sizeIndex} onChange={(e) => setSizeIndex(Number(e.target.value))}>
-          {GYPSUM_BOARD_SIZES.map((s, i) => (
-            <option key={s.label} value={i}>{s.label} — {fmt(s.area, 2)} م²/لوح</option>
-          ))}
-        </select>
+        <PremiumSelect
+          id="gyp-size"
+          value={sizeIndex}
+          onChange={(v) => setSizeIndex(Number(v))}
+          options={GYPSUM_BOARD_SIZES.map((s, i) => ({ value: i, label: `${s.label} — ${fmt(s.area, 2)} م²/لوح` }))}
+        />
       </div>
 
       <div className="tool-v2-field">

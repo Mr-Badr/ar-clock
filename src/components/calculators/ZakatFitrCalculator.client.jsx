@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { Basket, Info } from '@phosphor-icons/react';
 
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import PremiumSelect from '@/components/tools-v2/PremiumSelect.client';
 import ZakatCountryPicker from './ZakatCountryPicker.client';
 import { getCurrencyByCode } from '@/lib/shared/arab-currencies';
 import { FITR_STAPLES, MADHABS, getFitrSaaKg, getMadhabRules } from '@/lib/islamic/zakat-madhab';
@@ -156,11 +157,12 @@ export default function ZakatFitrCalculator() {
         <>
           <div className="tool-v2-field">
             <label htmlFor="fitr-staple">القوت الغالب في بلدك</label>
-            <select id="fitr-staple" value={staple} onChange={(e) => setStaple(e.target.value)}>
-              {FITR_STAPLES.map((s) => (
-                <option key={s.id} value={s.id}>{s.label}</option>
-              ))}
-            </select>
+            <PremiumSelect
+              id="fitr-staple"
+              value={staple}
+              onChange={setStaple}
+              options={FITR_STAPLES.map((s) => ({ value: s.id, label: s.label }))}
+            />
           </div>
           <div className="tool-v2-field">
             <label htmlFor="fitr-price-kg">سعر الكيلوغرام اليوم ({currency.short})</label>

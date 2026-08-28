@@ -15,6 +15,7 @@ import {
 } from '@phosphor-icons/react';
 import { toast } from 'sonner';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import PremiumSelect from '@/components/tools-v2/PremiumSelect.client';
 import { fmt } from '@/lib/calculators/building/constants';
 
 // Ported as-is from the pre-existing (verified, WebSearch-checked 2026-07-31) PaintCalculator —
@@ -238,11 +239,16 @@ export default function PaintCalculator() {
           عدد الطبقات
           <FieldHint text="طبقتان هو المعيار الشائع لتغطية جيدة ومنع اللون القديم من الظهور." />
         </label>
-        <select id="paint-coats" value={coats} onChange={(e) => setCoats(Number(e.target.value))}>
-          <option value={1}>طبقة واحدة</option>
-          <option value={2}>طبقتان (الأكثر شيوعاً)</option>
-          <option value={3}>3 طبقات</option>
-        </select>
+        <PremiumSelect
+          id="paint-coats"
+          value={coats}
+          onChange={(v) => setCoats(Number(v))}
+          options={[
+            { value: 1, label: 'طبقة واحدة' },
+            { value: 2, label: 'طبقتان (الأكثر شيوعاً)' },
+            { value: 3, label: '3 طبقات' },
+          ]}
+        />
       </div>
 
       {result ? (

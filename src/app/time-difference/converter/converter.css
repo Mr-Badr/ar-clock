@@ -29,16 +29,31 @@
   flex-shrink: 0;
 }
 
+/* Owner, 2026-08-28: swapped the native <select> here for PremiumSelect (real custom-rendered
+   popup, not raw OS chrome — see components/tools-v2/PremiumSelect.client.jsx) — `variant="inline"`
+   so it keeps this compact auto-width chip look instead of the standard full-width field box.
+   `appearance:none` matters even on a real `<button>` now, not just a `<select>`: Safari renders
+   its own native button chrome underneath custom CSS unless explicitly reset (confirmed real-
+   device bug this session, same fix already applied to PremiumSelect's default variant). */
 .tz-controls__ref-select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  margin: 0;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
   padding: var(--space-1) var(--space-3);
   font-size: 0.9rem;
   font-family: inherit;
+  line-height: normal;
   color: var(--text);
   cursor: pointer;
   direction: rtl;
+}
+.tz-controls__ref-select:focus-visible {
+  outline: none;
+  border-color: var(--accent, var(--border-focus));
 }
 
 .tz-controls__stepper {

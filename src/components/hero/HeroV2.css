@@ -161,6 +161,22 @@
   animation: hero-brandmark-in 0.9s cubic-bezier(0.16, 1, 0.3, 1) backwards;
 }
 
+/* Real, un-spaced brand name — kept in the DOM for crawlers and assistive tech, visually
+   collapsed so only the decorative spaced-tatweel lockup shows. Not `display:none` /
+   `visibility:hidden` (those drop it from the accessibility tree and are discounted by search
+   engines) — the standard visually-hidden clip pattern. */
+.hero-v2-brand-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 @keyframes hero-brandmark-in {
   from {
     opacity: 0;

@@ -4,6 +4,7 @@ import { useMemo, useState } from 'react';
 import { ForkKnife, Plus, Receipt, ShareNetwork, Trash, UsersThree } from '@phosphor-icons/react';
 import { toast } from 'sonner';
 import { usePreferredCurrency } from '@/components/calculators/CurrencyField.client';
+import PremiumSelect from '@/components/tools-v2/PremiumSelect.client';
 import { formatCurrency } from '@/lib/calculators/engine';
 import { calculateEqualSplit, calculateItemizedSplit } from '@/lib/calculators/bill-splitter-engine';
 
@@ -121,9 +122,12 @@ export default function BillSplitterTool() {
 
       <div className="tool-v2-field">
         <label htmlFor="bs-currency">العملة</label>
-        <select id="bs-currency" value={currency} onChange={(e) => setCurrency(e.target.value)}>
-          {currencyOptions.map((opt) => (<option key={opt.code} value={opt.code}>{opt.label}</option>))}
-        </select>
+        <PremiumSelect
+          id="bs-currency"
+          value={currency}
+          onChange={setCurrency}
+          options={currencyOptions.map((opt) => ({ value: opt.code, label: opt.label }))}
+        />
       </div>
 
       {mode === 'equal' ? (
@@ -215,9 +219,12 @@ export default function BillSplitterTool() {
 
           <div className="tool-v2-field">
             <label htmlFor="bs-payer">من دفع الفاتورة؟</label>
-            <select id="bs-payer" value={payerId} onChange={(e) => setPayerId(e.target.value)}>
-              {people.map((person) => (<option key={person.id} value={person.id}>{person.name}</option>))}
-            </select>
+            <PremiumSelect
+              id="bs-payer"
+              value={payerId}
+              onChange={setPayerId}
+              options={people.map((person) => ({ value: person.id, label: person.name }))}
+            />
           </div>
         </>
       )}

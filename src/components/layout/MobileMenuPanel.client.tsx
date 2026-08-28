@@ -4,6 +4,7 @@
 import Link from "next/link";
 import type { ElementType } from "react";
 import { useEffect } from "react";
+import { createPortal } from "react-dom";
 import { usePathname } from "next/navigation";
 import {
   Moon, Sun,
@@ -74,7 +75,21 @@ export default function MobileMenuPanel({
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [onClose]);
 
-  return (
+  // Owner, 2026-08-28 (real iPhone report): "when i open menu in navbar i see the menu blur
+  // and glassy not the content" — root cause is a well-documented iOS Safari quirk: a
+  // `position:fixed` element nested INSIDE another `position:fixed` ancestor doesn't get its
+  // own independent stacking context on iOS — it stays scoped to its parent's, and can get
+  // mis-layered relative to its own siblings. This component was rendered deep inside
+  // `<header className="header-nav">` (itself `position:fixed`, via header.jsx → MobileMenu →
+  // here), so the backdrop and the menu panel — both fixed, both descendants of that same fixed
+  // header — were exactly the nested-fixed setup this bug hits: iOS could paint the blurred
+  // backdrop over the menu's own content instead of behind it. Desktop/Android Chrome, and even
+  // Safari's own dev-tools device emulation, don't reproduce this — it's a real-device-only
+  // WebKit quirk, which is why it wasn't caught earlier. Fixed the standard, correct way (used
+  // industry-wide for exactly this class of bug): portal the whole overlay straight to
+  // `document.body` instead of leaving it nested inside the header, so it's never inside another
+  // fixed ancestor's stacking scope on any browser/device, iOS included.
+  return createPortal(
     <>
       {/* Owner: "everything behind the menu should be glassy and blur, when the menu is open,
           and if he click in a space out of menu the menu should close, not just from the close
@@ -191,6 +206,7 @@ export default function MobileMenuPanel({
         ))}
         </div>
       </nav>
-    </>
+    </>,
+    document.body,
   );
 }

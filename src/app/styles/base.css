@@ -651,6 +651,29 @@
     hyphens: none;
   }
 
+  /* Owner, 2026-08-28 (real, severe report): opening a PremiumSelect (Radix Select, rolled out
+     sitewide this session) made a sticky column jump off-screen and froze scrolling for several
+     seconds, with the popup itself never becoming visible — reproducible on every select box.
+     Root cause confirmed via real-world research, not a guess this time: `react-remove-scroll`
+     (used internally by EVERY Radix popover/select/dialog) stamps `body[data-scroll-locked]`
+     with its own injected `overflow`/`margin-right` styling the instant any one of them opens —
+     this is a well-known, publicly tracked Radix issue, not something specific to this codebase
+     or to Safari (see radix-ui/primitives discussion #2873, "Style applied to
+     body[data-scroll-locked] messes up position:sticky on child elements", and #2369/#2912 for
+     the same "page jumps/scrolls" symptom). A first attempt at working around it by forcing each
+     individual sticky element onto its own compositing layer (`transform:translateZ(0)`) did NOT
+     fix it and was reverted — compositing a very tall sticky column repeatedly is itself
+     expensive and plausibly made the freeze worse, not better. This is the community-verified
+     fix instead: directly neutralize Radix's own injected lock styling at the source, sitewide,
+     so no individual sticky element anywhere on the site needs its own workaround. This does
+     mean the page can still scroll a little while a select is open — an acceptable trade,
+     since a plain native `<select>` never locked background scroll either. */
+  body[data-scroll-locked] {
+    overflow: visible !important;
+    margin-right: 0 !important;
+    padding-right: 0 !important;
+  }
+
   a {
     color: var(--text-link);
     text-decoration: none;

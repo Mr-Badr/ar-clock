@@ -5,6 +5,7 @@ import { FilePlus, Info, Sparkle, Trash } from '@phosphor-icons/react';
 
 import { AnimatedCircularProgressBar } from '@/components/ui/animated-circular-progress-bar';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import PremiumSelect from '@/components/tools-v2/PremiumSelect.client';
 import ZakatCountryPicker from './ZakatCountryPicker.client';
 import { getCurrencyByCode } from '@/lib/shared/arab-currencies';
 import { GOLD_PURITIES } from '@/lib/islamic/zakat-live-prices';
@@ -159,11 +160,11 @@ export default function ZakatGoldCalculator({ livePrices }) {
                 <input type="number" inputMode="decimal" min="0" placeholder="الوزن (جرام)" value={row.weightGrams} onChange={(e) => updateGoldItem(row.id, { weightGrams: e.target.value })} />
               </div>
               <div className="tool-v2-addon-inputs">
-                <select value={row.karat} onChange={(e) => updateGoldItem(row.id, { karat: Number(e.target.value) })}>
-                  {GOLD_PURITIES.map((p) => (
-                    <option key={p.karat} value={p.karat}>{p.label}</option>
-                  ))}
-                </select>
+                <PremiumSelect
+                  value={row.karat}
+                  onChange={(v) => updateGoldItem(row.id, { karat: Number(v) })}
+                  options={GOLD_PURITIES.map((p) => ({ value: p.karat, label: p.label }))}
+                />
                 <label style={{ display: 'inline-flex', alignItems: 'center', gap: 4, fontSize: '0.82rem' }}>
                   <input type="checkbox" checked={row.isPersonal} onChange={(e) => updateGoldItem(row.id, { isPersonal: e.target.checked })} />
                   حلي شخصي

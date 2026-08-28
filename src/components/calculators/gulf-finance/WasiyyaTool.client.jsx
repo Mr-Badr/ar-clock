@@ -3,6 +3,7 @@
 import { useMemo, useState } from 'react';
 import { Info, Scales, ShareNetwork, Warning } from '@phosphor-icons/react';
 import { toast } from 'sonner';
+import PremiumSelect from '@/components/tools-v2/PremiumSelect.client';
 import { computeWasiyya } from '@/lib/calculators/wasiyya';
 
 const CURRENCIES = [
@@ -48,9 +49,12 @@ export default function WasiyyaTool() {
 
       <div className="tool-v2-field">
         <label htmlFor="wasiyya-currency">العملة</label>
-        <select id="wasiyya-currency" value={currency} onChange={(e) => setCurrency(e.target.value)}>
-          {CURRENCIES.map((cur) => (<option key={cur.id} value={cur.id}>{cur.label}</option>))}
-        </select>
+        <PremiumSelect
+          id="wasiyya-currency"
+          value={currency}
+          onChange={setCurrency}
+          options={CURRENCIES.map((cur) => ({ value: cur.id, label: cur.label }))}
+        />
       </div>
 
       <div className="tool-v2-field">

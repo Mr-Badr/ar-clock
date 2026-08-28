@@ -57,7 +57,16 @@ export default function HeroV2() {
               DELIBERATELY NOT wrapped in [data-hero-item]: that attribute makes HeroMotion slide
               the element up from y:24→0 as part of its own entrance stagger, which would
               double up with this element's own fade+rise keyframe. */}
-          <p className="hero-v2-brandmark" aria-hidden="true">مـــيـــقــاتــنــا</p>
+          {/* The spaced-tatweel lockup is the visual brand treatment (letter-spacing can't be
+              used on joined Arabic script). But "مـــيـــقــاتــنــا" is a different string from
+              the real brand "ميقاتنا" — so it carried aria-hidden AND gave Google nothing to
+              match on a "ميقاتنا" / "miqatona" brand search. Now the clean, un-spaced brand name
+              (both scripts) ships as real in-DOM text for crawlers and screen readers, right
+              above the H1, while the decorative spaced version stays aria-hidden. */}
+          <p className="hero-v2-brandmark">
+            <span aria-hidden="true">مـــيـــقــاتــنــا</span>
+            <span className="hero-v2-brand-sr">ميقاتنا — Miqatona</span>
+          </p>
 
           <h1 className="hero-v2-title" data-hero-item>
   <span className="hero-v2-title-line hero-v2-title-line-main">

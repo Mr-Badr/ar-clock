@@ -1,7 +1,13 @@
 import Link from 'next/link';
 
 import { buildCanonicalMetadata } from '@/lib/seo/metadata';
-import { SITE_BRAND, SITE_CONTACT_EMAIL, getSiteUrl } from '@/lib/site-config';
+import {
+  SITE_BRAND,
+  SITE_BRAND_ALT_NAMES,
+  SITE_CONTACT_EMAIL,
+  SITE_SOCIAL_PROFILES,
+  getSiteUrl,
+} from '@/lib/site-config';
 
 const SITE_URL = getSiteUrl();
 
@@ -89,7 +95,7 @@ const SITE_INFO_PAGES = {
       // are the main things). This is one of the pages Google reads most closely for entity/E-E-A-T
       // understanding, so it needed the same fix.
       title: 'ميقاتنا مشروع عربي مستقل لأدوات وحاسبات ومواعيد المناسبات والوقت والتاريخ',
-      lead: `${SITE_BRAND} منصة عربية تُبنى حول أسئلة يومية واضحة: كيف أحسب القسط أو التكلفة أو الزكاة؟ متى المناسبة القادمة وكم باقي عليها؟ كم الساعة الآن وما التاريخ الهجري والميلادي؟ هدفنا أن ترى الجواب أولاً، ثم المصدر أو طريقة الحساب أو الصفحة التالية التي تساعدك على الاعتماد بثقة.`,
+      lead: `${SITE_BRAND} (بالإنجليزية: Miqatona) منصة عربية على miqatona.com تُبنى حول أسئلة يومية واضحة: كيف أحسب القسط أو التكلفة أو الزكاة؟ متى المناسبة القادمة وكم باقي عليها؟ كم الساعة الآن وما التاريخ الهجري والميلادي؟ هدفنا أن ترى الجواب أولاً، ثم المصدر أو طريقة الحساب أو الصفحة التالية التي تساعدك على الاعتماد بثقة.`,
       highlights: [
         {
           value: 'جواب أولاً',
@@ -152,9 +158,14 @@ const SITE_INFO_PAGES = {
         },
         mainEntity: {
           '@type': 'Organization',
+          '@id': `${SITE_URL}#organization`,
           name: SITE_BRAND,
+          alternateName: SITE_BRAND_ALT_NAMES,
           url: SITE_URL,
           email: SITE_CONTACT_EMAIL,
+          ...(SITE_SOCIAL_PROFILES.filter(Boolean).length
+            ? { sameAs: SITE_SOCIAL_PROFILES.filter(Boolean) }
+            : {}),
           founder: {
             '@type': 'Person',
             '@id': `${SITE_URL}/author/badr`,

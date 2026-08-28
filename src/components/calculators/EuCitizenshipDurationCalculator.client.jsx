@@ -3,6 +3,7 @@
 import { useMemo, useState } from 'react';
 import { Info } from '@phosphor-icons/react';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import PremiumSelect from '@/components/tools-v2/PremiumSelect.client';
 
 // Real rules, verified via direct WebFetch/WebSearch of official sources, 2026-08-27:
 // - France: service-public.gouv.fr F2213 — standard naturalization = 5 years residence; reduced
@@ -104,11 +105,15 @@ export default function EuCitizenshipDurationCalculator() {
           حالتك
           <FieldHint text="اختر المسار الذي ينطبق عليك فعلياً — يختلف عدد السنوات المطلوب بشكل كبير حسب الحالة." />
         </label>
-        <select id="eu-situation" value={situationId} onChange={(e) => setSituationId(e.target.value)}>
-          {countryData.situations.map((s) => (
-            <option key={s.id} value={s.id}>{s.label}{s.years > 0 ? ` — ${s.years} سنوات` : ' — بدون حد أدنى'}</option>
-          ))}
-        </select>
+        <PremiumSelect
+          id="eu-situation"
+          value={situationId}
+          onChange={setSituationId}
+          options={countryData.situations.map((s) => ({
+            value: s.id,
+            label: `${s.label}${s.years > 0 ? ` — ${s.years} سنوات` : ' — بدون حد أدنى'}`,
+          }))}
+        />
         <p className="tool-v2-field-note">{situation.desc}</p>
       </div>
 

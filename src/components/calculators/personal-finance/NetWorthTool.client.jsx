@@ -4,6 +4,7 @@ import { useMemo, useState } from 'react';
 import { Bank, Scales, ShareNetwork } from '@phosphor-icons/react';
 import { toast } from 'sonner';
 import { usePreferredCurrency } from '@/components/calculators/CurrencyField.client';
+import PremiumSelect from '@/components/tools-v2/PremiumSelect.client';
 import { calculateNetWorth, formatCurrency, formatNumber } from '@/lib/calculators/engine';
 
 async function shareResult(title, text) {
@@ -40,9 +41,12 @@ export default function NetWorthTool() {
 
       <div className="tool-v2-field">
         <label htmlFor="nw-currency">العملة</label>
-        <select id="nw-currency" value={currency} onChange={(e) => setCurrency(e.target.value)}>
-          {currencyOptions.map((opt) => (<option key={opt.code} value={opt.code}>{opt.label}</option>))}
-        </select>
+        <PremiumSelect
+          id="nw-currency"
+          value={currency}
+          onChange={setCurrency}
+          options={currencyOptions.map((opt) => ({ value: opt.code, label: opt.label }))}
+        />
       </div>
 
       <div className="tool-v2-mini-block-head"><span>الأصول</span></div>

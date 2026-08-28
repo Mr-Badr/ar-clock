@@ -81,8 +81,10 @@ const Footer = () => {
               />
             </Link>
 
-            <h2 className="footer-brand-name">مـــيـــقــاتــنــا
-</h2>
+            <h2 className="footer-brand-name">
+              <span aria-hidden="true">مـــيـــقــاتــنــا</span>
+              <span className="footer-brand-name-sr">ميقاتنا — Miqatona</span>
+            </h2>
 
             <p className="footer-brand-desc">
               أدوات وحاسبات عربية، ومواعيد المناسبات — بلا تسجيل، وبتجربة بسيطة وسريعة.

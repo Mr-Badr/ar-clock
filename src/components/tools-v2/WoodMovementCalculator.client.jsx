@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from 'react';
 import { ArrowsOutLineHorizontal } from '@phosphor-icons/react';
+import PremiumSelect from './PremiumSelect.client';
 
 // Tangential shrinkage % (green → oven-dry) — U.S. Forest Products Laboratory data via the WoodBin
 // reference table, same authoritative source class used across this hub. Movement is computed with
@@ -56,9 +57,12 @@ export default function WoodMovementCalculator() {
 
       <div className="tool-v2-field" style={{ marginBottom: 'var(--space-4)' }}>
         <label htmlFor="wm-species">نوع الخشب</label>
-        <select id="wm-species" value={speciesId} onChange={(e) => setSpeciesId(e.target.value)}>
-          {SPECIES.map((s) => <option key={s.id} value={s.id}>{s.name}</option>)}
-        </select>
+        <PremiumSelect
+          id="wm-species"
+          value={speciesId}
+          onChange={setSpeciesId}
+          options={SPECIES.map((s) => ({ value: s.id, label: s.name }))}
+        />
       </div>
 
       <div className="tool-v2-field" style={{ marginBottom: 'var(--space-4)' }}>

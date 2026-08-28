@@ -1,6 +1,7 @@
 "use client";
 
 import { CalendarBlank, MoonStars } from '@phosphor-icons/react';
+import PremiumSelect from '@/components/tools-v2/PremiumSelect.client';
 import { normalizeBirthInput } from '@/lib/calculators/age';
 
 /** Normalize whichever calendar mode is active into a single ISO date result. */
@@ -56,10 +57,12 @@ export default function BirthInputTool({
           <label>{label} (هجري، من 1343 إلى 1500)</label>
           <div className="tool-v2-field-row-pair" style={{ gridTemplateColumns: '1fr 1.6fr 1fr' }}>
             <input type="number" inputMode="numeric" min="1" max="30" placeholder="اليوم" value={hijriValue.day} onChange={(e) => onHijriChange({ ...hijriValue, day: e.target.value })} />
-            <select value={hijriValue.month} onChange={(e) => onHijriChange({ ...hijriValue, month: e.target.value })} dir="rtl">
-              <option value="">-- الشهر --</option>
-              {HIJRI_MONTHS.map((name, i) => (<option key={i + 1} value={String(i + 1)}>{i + 1} — {name}</option>))}
-            </select>
+            <PremiumSelect
+              value={hijriValue.month}
+              onChange={(month) => onHijriChange({ ...hijriValue, month })}
+              placeholder="-- الشهر --"
+              options={HIJRI_MONTHS.map((name, i) => ({ value: String(i + 1), label: `${i + 1} — ${name}` }))}
+            />
             <input type="number" inputMode="numeric" min="1343" max="1500" placeholder="السنة" value={hijriValue.year} onChange={(e) => onHijriChange({ ...hijriValue, year: e.target.value })} />
           </div>
         </div>

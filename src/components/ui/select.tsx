@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { CheckIcon, ChevronDownIcon, ChevronUpIcon } from "lucide-react"
+import { ChevronDownIcon, ChevronUpIcon } from "lucide-react"
 import { Select as SelectPrimitive } from "radix-ui"
 
 import { cn } from "@/lib/utils"
@@ -121,23 +121,24 @@ function SelectItem({
   children,
   ...props
 }: SelectItemProps): React.JSX.Element {
+  // Owner, 2026-08-28: "we do not want to see this icon on selected item" — the checkmark
+  // indicator used to render via `inset-inline-end-[var(--space-2)]`, a Tailwind class name that
+  // doesn't correspond to any real utility (the correct one is `end-[value]`), so it never
+  // actually positioned correctly — combined with this component never being told the page is
+  // RTL (no `dir="rtl"` was ever passed down to the Select root, so Radix's own internal
+  // direction logic defaulted to `ltr`), the icon rendered overlapping the item's own text
+  // instead of sitting cleanly beside it. Rather than fix the positioning, dropping it entirely
+  // per the owner's direct call — the item the user is hovering/focused on already reads clearly
+  // from the background highlight alone, a second "you're on this one" cue wasn't needed.
   return (
     <SelectPrimitive.Item
       data-slot="select-item"
       className={cn(
-        "relative flex w-full cursor-default select-none items-center gap-[var(--space-2)] rounded-[var(--radius-sm)] py-[var(--space-1-5)] pe-[var(--space-8)] ps-[var(--space-2)] [font-size:var(--text-sm)] text-[var(--text-1)] outline-none transition-[background-color,color] focus:bg-[var(--muted)] focus:text-[var(--text-1)] data-[disabled]:pointer-events-none data-[disabled]:opacity-50 *:[span]:last:flex *:[span]:last:items-center *:[span]:last:gap-[var(--space-2)] [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-[var(--space-4)] [&_svg:not([class*='text-'])]:text-[var(--text-3)]",
+        "relative flex w-full cursor-default select-none items-center gap-[var(--space-2)] rounded-[var(--radius-sm)] py-[var(--space-1-5)] px-[var(--space-2)] [font-size:var(--text-sm)] text-[var(--text-1)] outline-none transition-[background-color,color] focus:bg-[var(--muted)] focus:text-[var(--text-1)] data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
         className
       )}
       {...props}
     >
-      <span
-        data-slot="select-item-indicator"
-        className="absolute inset-inline-end-[var(--space-2)] flex size-[var(--space-3-5)] items-center justify-center"
-      >
-        <SelectPrimitive.ItemIndicator>
-          <CheckIcon className="size-[var(--space-4)]" />
-        </SelectPrimitive.ItemIndicator>
-      </span>
       <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>
     </SelectPrimitive.Item>
   )

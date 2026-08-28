@@ -3,6 +3,7 @@
 import { useMemo, useState } from 'react';
 import { Alarm, ClockCountdown, MoonStars } from '@phosphor-icons/react';
 import { toast } from 'sonner';
+import PremiumSelect from '@/components/tools-v2/PremiumSelect.client';
 import {
   QUICK_WAKE_TIMES,
   SLEEP_CYCLE_OPTIONS,
@@ -57,16 +58,22 @@ export default function BedtimeTool() {
         </div>
         <div className="tool-v2-field">
           <label htmlFor="bedtime-latency">وقت الغفو</label>
-          <select id="bedtime-latency" value={latencyMinutes} onChange={(e) => setLatencyMinutes(e.target.value)}>
-            {SLEEP_LATENCY_OPTIONS.map((item) => (<option key={item} value={item}>{item} دقيقة</option>))}
-          </select>
+          <PremiumSelect
+            id="bedtime-latency"
+            value={latencyMinutes}
+            onChange={setLatencyMinutes}
+            options={SLEEP_LATENCY_OPTIONS.map((item) => ({ value: item, label: `${item} دقيقة` }))}
+          />
         </div>
       </div>
       <div className="tool-v2-field">
         <label htmlFor="bedtime-cycle">طول الدورة</label>
-        <select id="bedtime-cycle" value={cycleMinutes} onChange={(e) => setCycleMinutes(e.target.value)}>
-          {SLEEP_CYCLE_OPTIONS.map((item) => (<option key={item} value={item}>{item} دقيقة</option>))}
-        </select>
+        <PremiumSelect
+          id="bedtime-cycle"
+          value={cycleMinutes}
+          onChange={setCycleMinutes}
+          options={SLEEP_CYCLE_OPTIONS.map((item) => ({ value: item, label: `${item} دقيقة` }))}
+        />
       </div>
 
       {result.isValid ? (

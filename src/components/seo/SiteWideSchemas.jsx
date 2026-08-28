@@ -3,10 +3,12 @@ import { JsonLd } from '@/components/seo/JsonLd';
 import { getDefaultAuthor, buildPersonSchema } from '@/data/site/authors';
 import {
   SITE_BRAND,
-  SITE_BRAND_EN,
+  SITE_BRAND_ALT_NAMES,
   SITE_CONTACT_EMAIL,
   SITE_DESCRIPTION,
   SITE_SCHEMA_TOPICS,
+  SITE_SLOGAN,
+  SITE_SOCIAL_PROFILES,
   getSiteUrl,
 } from '@/lib/site-config';
 
@@ -28,12 +30,17 @@ const CORE_SECTION_PAGES = [
 export default function SiteWideSchemas() {
   const founderPersonSchema = buildPersonSchema('badr');
 
+  // Org's own verified profiles on other platforms (owner fills SITE_SOCIAL_PROFILES). The
+  // founder's personal profiles belong on the Person entity, not here.
+  const orgSameAs = SITE_SOCIAL_PROFILES.filter(Boolean);
+
   const organizationSchema = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
     '@id': ORG_ID,
     name: SITE_BRAND,
-    alternateName: SITE_BRAND_EN,
+    alternateName: SITE_BRAND_ALT_NAMES,
+    slogan: SITE_SLOGAN,
     url: SITE_URL,
     email: SITE_CONTACT_EMAIL,
     foundingDate: '2024',
@@ -49,8 +56,7 @@ export default function SiteWideSchemas() {
       height: 512,
     },
     description: SITE_DESCRIPTION,
-    // Add your real social profile URLs in src/data/site/authors.js → sameAs[]
-    ...(FOUNDER.sameAs?.length ? { sameAs: FOUNDER.sameAs } : {}),
+    ...(orgSameAs.length ? { sameAs: orgSameAs } : {}),
     areaServed: [
       'SA', 'AE', 'EG', 'IQ', 'KW', 'QA', 'JO', 'LB',
       'MA', 'DZ', 'TN', 'LY', 'SD', 'SY', 'YE', 'OM', 'BH', 'MR',
@@ -97,7 +103,7 @@ export default function SiteWideSchemas() {
     '@id': WEBSITE_ID,
     url: SITE_URL,
     name: SITE_BRAND,
-    alternateName: SITE_BRAND_EN,
+    alternateName: SITE_BRAND_ALT_NAMES,
     description: SITE_DESCRIPTION,
     inLanguage: 'ar',
     publisher: { '@id': ORG_ID },

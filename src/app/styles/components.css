@@ -1290,6 +1290,17 @@
   box-shadow: var(--shadow-focus);
 }
 
+/* Owner, 2026-08-28: real report of "a weird design and arrow behind it" on a converted select —
+   caught the exact mechanism while reusing this class on PremiumSelect (a real Radix trigger
+   `<button>`, ConverterForm.tsx): `.select` already bakes in its own background-image chevron for
+   plain native `<select>` elements, and Radix's trigger renders its OWN real `<ChevronDownIcon>`
+   element on top of that — two arrows stacked, exactly the "mixing different designs" symptom.
+   Neutralize the background-image specifically when `.select` lands on a Radix trigger (real
+   `<select>` elements elsewhere keep their chevron unaffected, this only matches the button). */
+.select[data-slot="select-trigger"] {
+  background-image: none;
+}
+
 .light .select {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%233D4668' stroke-width='1.8' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
 }

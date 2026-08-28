@@ -5,6 +5,7 @@ import { Buildings, ShareNetwork, Warning } from '@phosphor-icons/react';
 import { toast } from 'sonner';
 
 import CountryFlag from '@/components/shared/CountryFlag';
+import PremiumSelect from '@/components/tools-v2/PremiumSelect.client';
 import {
   ACTIVITY_TYPES,
   JURISDICTION_TYPES,
@@ -67,23 +68,32 @@ export default function DubaiCompanySetupCalculator() {
 
       <div className="tool-v2-field">
         <label htmlFor="dubai-activity">نوع النشاط</label>
-        <select id="dubai-activity" value={activity} onChange={(e) => setActivity(e.target.value)}>
-          {ACTIVITY_TYPES.map((a) => (<option key={a.value} value={a.value}>{a.label}</option>))}
-        </select>
+        <PremiumSelect
+          id="dubai-activity"
+          value={activity}
+          onChange={setActivity}
+          options={ACTIVITY_TYPES.map((a) => ({ value: a.value, label: a.label }))}
+        />
       </div>
 
       <div className="tool-v2-field-row-pair">
         <div className="tool-v2-field">
           <label htmlFor="dubai-office">نوع المكتب</label>
-          <select id="dubai-office" value={officeType} onChange={(e) => setOfficeType(e.target.value)}>
-            {OFFICE_TYPES.map((o) => (<option key={o.value} value={o.value}>{o.label}</option>))}
-          </select>
+          <PremiumSelect
+            id="dubai-office"
+            value={officeType}
+            onChange={setOfficeType}
+            options={OFFICE_TYPES.map((o) => ({ value: o.value, label: o.label }))}
+          />
         </div>
         <div className="tool-v2-field">
           <label htmlFor="dubai-visas">عدد تأشيرات الإقامة</label>
-          <select id="dubai-visas" value={visaCount} onChange={(e) => setVisaCount(e.target.value)}>
-            {VISA_COUNTS.map((v) => (<option key={v.value} value={v.value}>{v.label}</option>))}
-          </select>
+          <PremiumSelect
+            id="dubai-visas"
+            value={visaCount}
+            onChange={setVisaCount}
+            options={VISA_COUNTS.map((v) => ({ value: v.value, label: v.label }))}
+          />
         </div>
       </div>
       <p className="tool-v2-option-hint">كل تأشيرة تشمل: إذن دخول + فحص طبي + بطاقة هوية إماراتية + بطاقة عمل.</p>

@@ -19,6 +19,7 @@ import {
   ArrowDown,
 } from '@phosphor-icons/react';
 import { HIJRI_MONTHS_AR } from '@/lib/hijri-utils';
+import PremiumSelect from '@/components/tools-v2/PremiumSelect.client';
 import { convertDateAction } from './actions';
 import type { ConvertDateResult, ConversionMethod } from '@/lib/date-adapter';
 import { GREGORIAN_MONTHS_AR } from '@/lib/constants';
@@ -339,16 +340,14 @@ export function ConverterForm({
               <span className={styles.spinnerLabel}>
                 الشهر
               </span>
-              <select
+              <PremiumSelect
+                variant="inline"
                 value={month}
-                onChange={e => setMonth(Number(e.target.value))}
+                onChange={(v: string) => setMonth(Number(v))}
                 className={`select ${styles.monthSelect}`}
-                aria-label="الشهر"
-              >
-                {monthNames.map((mn, i) => (
-                  <option key={mn} value={i + 1}>{mn}</option>
-                ))}
-              </select>
+                ariaLabel="الشهر"
+                options={monthNames.map((mn, i) => ({ value: i + 1, label: mn }))}
+              />
             </div>
 
             <NumberSpinner

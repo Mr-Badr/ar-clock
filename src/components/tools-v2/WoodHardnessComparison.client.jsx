@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from 'react';
 import { Ruler } from '@phosphor-icons/react';
+import PremiumSelect from './PremiumSelect.client';
 
 // Janka hardness values (lbf) — sourced from wood-database.com per-species pages and Wikipedia's
 // cited Janka-hardness-test comparison table, not estimated. See sources on the page. Regional/
@@ -73,15 +74,21 @@ export default function WoodHardnessComparison() {
         <div className="tool-v2-field-row-pair">
           <div className="tool-v2-field">
             <label htmlFor="wood-a">النوع الأول</label>
-            <select id="wood-a" value={aId} onChange={(e) => setAId(e.target.value)}>
-              {SPECIES.map((s) => <option key={s.id} value={s.id}>{s.name}</option>)}
-            </select>
+            <PremiumSelect
+              id="wood-a"
+              value={aId}
+              onChange={setAId}
+              options={SPECIES.map((s) => ({ value: s.id, label: s.name }))}
+            />
           </div>
           <div className="tool-v2-field">
             <label htmlFor="wood-b">النوع الثاني</label>
-            <select id="wood-b" value={bId} onChange={(e) => setBId(e.target.value)}>
-              {SPECIES.map((s) => <option key={s.id} value={s.id}>{s.name}</option>)}
-            </select>
+            <PremiumSelect
+              id="wood-b"
+              value={bId}
+              onChange={setBId}
+              options={SPECIES.map((s) => ({ value: s.id, label: s.name }))}
+            />
           </div>
         </div>
 

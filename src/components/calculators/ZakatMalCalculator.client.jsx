@@ -6,6 +6,7 @@ import { Bank, Coins, HandCoins, Info, MoonStars, Package, Sparkle, Trash, Trend
 import { AnimatedCircularProgressBar } from '@/components/ui/animated-circular-progress-bar';
 import { NumberTicker } from '@/components/ui/number-ticker';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import PremiumSelect from '@/components/tools-v2/PremiumSelect.client';
 import ZakatCountryPicker from './ZakatCountryPicker.client';
 import { getCurrencyByCode } from '@/lib/shared/arab-currencies';
 import { GOLD_PURITIES } from '@/lib/islamic/zakat-live-prices';
@@ -312,11 +313,12 @@ export default function ZakatMalCalculator({ livePrices }) {
             </div>
             <div className="tool-v2-field">
               <label htmlFor="zakat-gold-karat">العيار</label>
-              <select id="zakat-gold-karat" value={values.goldKarat} onChange={(e) => setValue('goldKarat', Number(e.target.value))}>
-                {GOLD_PURITIES.map((p) => (
-                  <option key={p.karat} value={p.karat}>{p.label}</option>
-                ))}
-              </select>
+              <PremiumSelect
+                id="zakat-gold-karat"
+                value={values.goldKarat}
+                onChange={(v) => setValue('goldKarat', Number(v))}
+                options={GOLD_PURITIES.map((p) => ({ value: p.karat, label: p.label }))}
+              />
             </div>
           </div>
           <div className="tool-v2-field">

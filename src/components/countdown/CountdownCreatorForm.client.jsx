@@ -6,6 +6,7 @@ import {
   CalendarDays, MoonStar, AlertCircle, Sparkle, Clock, PartyPopper, Loader2,
 } from 'lucide-react';
 
+import PremiumSelect from '@/components/tools-v2/PremiumSelect.client';
 import { resolveCountdownTarget, sanitizeCountdownTitle } from '@/lib/countdown/resolve';
 import { convertDate } from '@/lib/date-adapter';
 import styles from './CountdownCreatorForm.module.css';
@@ -208,18 +209,13 @@ export default function CountdownCreatorForm() {
             </div>
             <div className={`${styles.hijriField} ${styles.hijriFieldMonth}`}>
               <label className={styles.hijriFieldLabel} htmlFor={`${dateId}-month`}>الشهر</label>
-              <select
+              <PremiumSelect
                 id={`${dateId}-month`}
-                className={styles.select}
                 value={hijriValue.month}
-                onChange={(event) => setHijriValue((v) => ({ ...v, month: event.target.value }))}
-                dir="rtl"
-              >
-                <option value="">-- اختر --</option>
-                {HIJRI_MONTHS.map((name, i) => (
-                  <option key={i + 1} value={String(i + 1)}>{i + 1} — {name}</option>
-                ))}
-              </select>
+                onChange={(month) => setHijriValue((v) => ({ ...v, month }))}
+                placeholder="-- اختر --"
+                options={HIJRI_MONTHS.map((name, i) => ({ value: String(i + 1), label: `${i + 1} — ${name}` }))}
+              />
             </div>
             <div className={styles.hijriField}>
               <label className={styles.hijriFieldLabel} htmlFor={`${dateId}-year`}>السنة الهجرية</label>

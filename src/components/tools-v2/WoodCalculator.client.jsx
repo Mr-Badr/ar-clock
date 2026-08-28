@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from 'react';
 import { Ruler as RulerIcon, ArrowsLeftRight } from '@phosphor-icons/react';
+import PremiumSelect from './PremiumSelect.client';
 
 const M3_TO_FT3 = 35.3147;
 const CM_TO_INCH = 1 / 2.54;
@@ -118,12 +119,17 @@ export default function WoodCalculator() {
           </div>
           <div className="tool-v2-field">
             <label htmlFor="conv-dir">التحويل</label>
-            <select id="conv-dir" value={convDirection} onChange={(e) => setConvDirection(e.target.value)}>
-              <option value="m3-ft3">متر مكعب ← قدم مكعب</option>
-              <option value="ft3-m3">قدم مكعب ← متر مكعب</option>
-              <option value="cm-inch">سنتيمتر ← انش</option>
-              <option value="inch-cm">انش ← سنتيمتر</option>
-            </select>
+            <PremiumSelect
+              id="conv-dir"
+              value={convDirection}
+              onChange={setConvDirection}
+              options={[
+                { value: 'm3-ft3', label: 'متر مكعب ← قدم مكعب' },
+                { value: 'ft3-m3', label: 'قدم مكعب ← متر مكعب' },
+                { value: 'cm-inch', label: 'سنتيمتر ← انش' },
+                { value: 'inch-cm', label: 'انش ← سنتيمتر' },
+              ]}
+            />
           </div>
         </div>
         <div className="guide-v2-checker-result" aria-live="polite">

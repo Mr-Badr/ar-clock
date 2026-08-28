@@ -3,6 +3,7 @@
 import { useMemo, useState } from 'react';
 import { Info } from '@phosphor-icons/react';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import PremiumSelect from '@/components/tools-v2/PremiumSelect.client';
 
 // Real IRCC Comprehensive Ranking System (CRS) point values — cross-checked via WebFetch of a
 // published CRS grid summary (immigration.ca, a long-established Canadian immigration law firm)
@@ -177,9 +178,12 @@ export default function CanadaCrsCalculator() {
         </div>
         <div className="tool-v2-field">
           <label htmlFor="crs-edu">مستوى تعليمك</label>
-          <select id="crs-edu" value={educationId} onChange={(e) => setEducationId(e.target.value)}>
-            {EDUCATION_LEVELS.map((e) => <option key={e.id} value={e.id}>{e.label}</option>)}
-          </select>
+          <PremiumSelect
+            id="crs-edu"
+            value={educationId}
+            onChange={setEducationId}
+            options={EDUCATION_LEVELS.map((e) => ({ value: e.id, label: e.label }))}
+          />
         </div>
       </div>
 
@@ -189,30 +193,42 @@ export default function CanadaCrsCalculator() {
             لغتك الرسمية الأولى (أعلى مستوى بين المهارات الأربع)
             <FieldHint text="إذا اختلفت نتيجتك بين الاستماع/التحدث/القراءة/الكتابة، استخدم الأدنى للحصول على تقدير متحفظ." />
           </label>
-          <select id="crs-clb" value={clbId} onChange={(e) => setClbId(e.target.value)}>
-            {CLB_LEVELS.map((c) => <option key={c.id} value={c.id}>{c.label}</option>)}
-          </select>
+          <PremiumSelect
+            id="crs-clb"
+            value={clbId}
+            onChange={setClbId}
+            options={CLB_LEVELS.map((c) => ({ value: c.id, label: c.label }))}
+          />
         </div>
         <div className="tool-v2-field">
           <label htmlFor="crs-clb2">لغتك الرسمية الثانية (إن وُجدت)</label>
-          <select id="crs-clb2" value={secondLangClbId} onChange={(e) => setSecondLangClbId(e.target.value)}>
-            {CLB_LEVELS.map((c) => <option key={c.id} value={c.id}>{c.label}</option>)}
-          </select>
+          <PremiumSelect
+            id="crs-clb2"
+            value={secondLangClbId}
+            onChange={setSecondLangClbId}
+            options={CLB_LEVELS.map((c) => ({ value: c.id, label: c.label }))}
+          />
         </div>
       </div>
 
       <div className="tool-v2-field-row-pair">
         <div className="tool-v2-field">
           <label htmlFor="crs-ca-work">سنوات خبرة عمل في كندا</label>
-          <select id="crs-ca-work" value={caWorkYears} onChange={(e) => setCaWorkYears(e.target.value)}>
-            {[0, 1, 2, 3, 4, 5].map((y) => <option key={y} value={y}>{y === 5 ? '5 سنوات فأكثر' : `${y} سنة`}</option>)}
-          </select>
+          <PremiumSelect
+            id="crs-ca-work"
+            value={caWorkYears}
+            onChange={setCaWorkYears}
+            options={[0, 1, 2, 3, 4, 5].map((y) => ({ value: y, label: y === 5 ? '5 سنوات فأكثر' : `${y} سنة` }))}
+          />
         </div>
         <div className="tool-v2-field">
           <label htmlFor="crs-foreign-work">سنوات خبرة عمل خارج كندا</label>
-          <select id="crs-foreign-work" value={foreignWorkYears} onChange={(e) => setForeignWorkYears(e.target.value)}>
-            {[0, 1, 2, 3].map((y) => <option key={y} value={y}>{y === 3 ? '3 سنوات فأكثر' : `${y} سنة`}</option>)}
-          </select>
+          <PremiumSelect
+            id="crs-foreign-work"
+            value={foreignWorkYears}
+            onChange={setForeignWorkYears}
+            options={[0, 1, 2, 3].map((y) => ({ value: y, label: y === 3 ? '3 سنوات فأكثر' : `${y} سنة` }))}
+          />
         </div>
       </div>
 
@@ -227,34 +243,48 @@ export default function CanadaCrsCalculator() {
         <div className="tool-v2-field-row-pair">
           <div className="tool-v2-field">
             <label htmlFor="crs-spouse-edu">تعليم الزوج/الزوجة</label>
-            <select id="crs-spouse-edu" value={spouseEducationId} onChange={(e) => setSpouseEducationId(e.target.value)}>
-              {EDUCATION_LEVELS.map((e) => <option key={e.id} value={e.id}>{e.label}</option>)}
-            </select>
+            <PremiumSelect
+              id="crs-spouse-edu"
+              value={spouseEducationId}
+              onChange={setSpouseEducationId}
+              options={EDUCATION_LEVELS.map((e) => ({ value: e.id, label: e.label }))}
+            />
           </div>
           <div className="tool-v2-field">
             <label htmlFor="crs-spouse-clb">لغة الزوج/الزوجة الرسمية</label>
-            <select id="crs-spouse-clb" value={spouseClbId} onChange={(e) => setSpouseClbId(e.target.value)}>
-              {CLB_LEVELS.map((c) => <option key={c.id} value={c.id}>{c.label}</option>)}
-            </select>
+            <PremiumSelect
+              id="crs-spouse-clb"
+              value={spouseClbId}
+              onChange={setSpouseClbId}
+              options={CLB_LEVELS.map((c) => ({ value: c.id, label: c.label }))}
+            />
           </div>
         </div>
       ) : null}
       {hasSpouse ? (
         <div className="tool-v2-field">
           <label htmlFor="crs-spouse-ca-work">سنوات خبرة عمل الزوج/الزوجة في كندا</label>
-          <select id="crs-spouse-ca-work" value={spouseCaWorkYears} onChange={(e) => setSpouseCaWorkYears(e.target.value)}>
-            {[0, 1, 2].map((y) => <option key={y} value={y}>{y === 2 ? 'سنتان فأكثر' : `${y} سنة`}</option>)}
-          </select>
+          <PremiumSelect
+            id="crs-spouse-ca-work"
+            value={spouseCaWorkYears}
+            onChange={setSpouseCaWorkYears}
+            options={[0, 1, 2].map((y) => ({ value: y, label: y === 2 ? 'سنتان فأكثر' : `${y} سنة` }))}
+          />
         </div>
       ) : null}
 
       <div className="tool-v2-field">
         <label htmlFor="crs-canadian-edu">هل درست في كندا؟</label>
-        <select id="crs-canadian-edu" value={canadianEducationLevel} onChange={(e) => setCanadianEducationLevel(e.target.value)}>
-          <option value="none">لا</option>
-          <option value="one-two-year">دبلوم كندي سنة أو سنتين</option>
-          <option value="three-plus-year">شهادة كندية 3 سنوات فأكثر (بكالوريوس/ماجستير/دكتوراه)</option>
-        </select>
+        <PremiumSelect
+          id="crs-canadian-edu"
+          value={canadianEducationLevel}
+          onChange={setCanadianEducationLevel}
+          options={[
+            { value: 'none', label: 'لا' },
+            { value: 'one-two-year', label: 'دبلوم كندي سنة أو سنتين' },
+            { value: 'three-plus-year', label: 'شهادة كندية 3 سنوات فأكثر (بكالوريوس/ماجستير/دكتوراه)' },
+          ]}
+        />
       </div>
 
       <div className="tool-v2-chip-options" role="group" aria-label="نقاط إضافية">

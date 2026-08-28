@@ -9607,10 +9607,17 @@ main:not(.calc-hub-page) .calc-room-add {
    Native select — universal premium styling (calc-native-select)
    ============================================================================= */
 
+/* Owner, 2026-08-28: "improve all designs for the select boxes... sitewide" — despite the
+   "universal premium styling" name, this was still `appearance:auto`, i.e. the raw native OS
+   dropdown arrow sitting inside an otherwise custom-bordered/backgrounded box — same fix as
+   `.tool-v2-field > select` (tools-v2.css): `appearance:none` + a plain inline chevron (two
+   theme variants, since a data-URI SVG can't read a CSS custom property), positioned physical-
+   left to match where a native RTL select's own arrow already sat. */
 .calc-native-select {
   width: 100%;
   min-height: 2.75rem;
   padding: 0 var(--space-3);
+  padding-inline-end: 2.25rem;
   border: 1.5px solid var(--border-default);
   border-radius: var(--radius-md);
   background: var(--bg-surface-2);
@@ -9619,10 +9626,19 @@ main:not(.calc-hub-page) .calc-room-add {
   font-family: inherit;
   font-weight: var(--font-medium);
   cursor: pointer;
-  appearance: auto;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-repeat: no-repeat;
+  background-position: left 0.85rem center;
+  background-size: 13px 13px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M4 6l4 4 4-4' stroke='%237A88A4' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
   direction: rtl;
   outline: none;
   transition: border-color 0.15s, background 0.15s;
+}
+.light .calc-native-select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M4 6l4 4 4-4' stroke='%23445060' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
 }
 .calc-native-select:hover {
   border-color: color-mix(in srgb, var(--accent) 50%, var(--border-default));

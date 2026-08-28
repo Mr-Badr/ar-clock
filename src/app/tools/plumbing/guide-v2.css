@@ -487,7 +487,7 @@
 }
 .guide-v2-checker-chip {
   padding: var(--space-2-5) var(--space-4);
-  border-radius: var(--radius-full);
+  border-radius: 10px;
   border: 1px solid var(--border);
   background: var(--bg-surface-1);
   color: var(--text-2);

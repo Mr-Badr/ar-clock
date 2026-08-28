@@ -1,6 +1,7 @@
 'use client';
 import React, { useState, useMemo, useCallback } from 'react';
 import { Plus, X, Clock, ChevronLeft, ChevronRight, Briefcase, Moon } from 'lucide-react';
+import PremiumSelect from '@/components/tools-v2/PremiumSelect.client';
 
 // ── City presets ──────────────────────────────────────────────────────────────
 const ALL_CITIES = [
@@ -289,16 +290,14 @@ export default function TimezoneConverterTool() {
         <div className="tz-controls__ref">
           <Clock size={16} />
           <span>توقيت</span>
-          <select
+          <PremiumSelect
+            variant="inline"
             className="tz-controls__ref-select"
             value={refId}
-            onChange={(e) => setRefId(e.target.value)}
-            aria-label="المدينة المرجعية"
-          >
-            {selectedCities.map((c) => (
-              <option key={c.id} value={c.id}>{c.nameAr}</option>
-            ))}
-          </select>
+            onChange={setRefId}
+            ariaLabel="المدينة المرجعية"
+            options={selectedCities.map((c) => ({ value: c.id, label: c.nameAr }))}
+          />
         </div>
 
         <div className="tz-controls__stepper">

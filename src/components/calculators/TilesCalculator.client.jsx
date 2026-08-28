@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Buildings, Info, Plus, Share as ShareIcon, Sparkle, Trash, Warning, Wrench } from '@phosphor-icons/react';
 import { toast } from 'sonner';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import PremiumSelect from '@/components/tools-v2/PremiumSelect.client';
 import { TILE_PATTERNS, TILE_SIZES, calcTiles, fmt } from '@/lib/calculators/building/constants';
 
 // Human-language description + icon/color per pattern — TILE_PATTERNS (building/constants.js)
@@ -135,11 +136,12 @@ export default function TilesCalculator() {
 
       <div className="tool-v2-field">
         <label htmlFor="tile-size">مقاس البلاطة</label>
-        <select id="tile-size" value={tileSizeIndex} onChange={(e) => setTileSizeIndex(Number(e.target.value))}>
-          {TILE_SIZES.map((s, i) => (
-            <option key={s.label} value={i}>{s.label} سم</option>
-          ))}
-        </select>
+        <PremiumSelect
+          id="tile-size"
+          value={tileSizeIndex}
+          onChange={(v) => setTileSizeIndex(Number(v))}
+          options={TILE_SIZES.map((s, i) => ({ value: i, label: `${s.label} سم` }))}
+        />
       </div>
 
       <div className="tool-v2-field">

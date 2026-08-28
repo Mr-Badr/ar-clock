@@ -404,14 +404,20 @@ html {
 .tool-v2-field {
   margin-bottom: var(--space-4);
 }
+/* Owner, 2026-08-28: "titles look exactly like normal text, so the user does not understand
+   that this is a title not just a text" — this label was 0.8rem in the dim `--text-secondary`
+   tone, which combined with a plain sans-serif weight read as a caption, not a field title. The
+   older `.calc-label` (calculators.css) already gets this right for the same job (full-strength
+   `--text-primary`, slightly larger) — bringing this in line with that proven pattern instead of
+   inventing a new one, so both calculator systems now agree on what a field title looks like. */
 .tool-v2-field > label {
   display: flex;
   align-items: center;
   gap: 6px;
-  font-size: 0.8rem;
+  font-size: 0.86rem;
   font-weight: 700;
-  color: var(--text-secondary);
-  margin-bottom: 7px;
+  color: var(--text-primary);
+  margin-bottom: 8px;
 }
 .tool-v2-field-hint-btn {
   display: inline-flex;
@@ -480,7 +486,7 @@ html {
   align-items: center;
   gap: var(--space-1-5, 6px);
   padding: var(--space-2-5) var(--space-4);
-  border-radius: var(--radius-full, 999px);
+  border-radius: 10px;
   border: 1px solid var(--border-default);
   background: var(--bg-surface-1);
   color: var(--text-secondary);
@@ -534,11 +540,85 @@ html {
   font-weight: 600;
   transition: border-color 0.15s, background 0.15s, box-shadow 0.15s;
 }
+/* Owner, 2026-08-28: "the design of this select box is so bad, please we want to improve all
+   designs for the select boxes and drop box... modern and super clean like a premium app" — this
+   box was already custom-bordered/backgrounded above, but the DROPDOWN ARROW itself was still the
+   browser's raw native chrome (no `appearance:none` was ever set), which looks inconsistent and
+   dated sitting inside an otherwise custom-styled box — that mismatch is what actually read as
+   "bad." `appearance:none` removes the native arrow entirely; the replacement is a plain inline
+   chevron (not an icon font/library, just two colors of the same small stroked path — dark/light
+   variants below, since a CSS custom property can't be read inside a data-URI's own SVG markup)
+   positioned on the physical left, matching where a native RTL select's arrow already sits. This
+   is the SHARED select rule for every `.tool-v2-field` calculator sitewide, so fixing it here
+   fixes every tool-v2 calculator's select at once, not just this one page. */
 .tool-v2-field > select {
   cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  padding-inline-end: 2.25rem;
+  background-repeat: no-repeat;
+  background-position: left 0.85rem center;
+  background-size: 13px 13px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M4 6l4 4 4-4' stroke='%237A88A4' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+.light .tool-v2-field > select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M4 6l4 4 4-4' stroke='%23445060' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
 }
 .tool-v2-field > input:focus,
 .tool-v2-field > select:focus {
+  outline: none;
+  background: var(--bg-surface-1);
+  border-color: var(--green);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--green) 20%, transparent);
+}
+
+/* PremiumSelect (src/components/tools-v2/PremiumSelect.client.jsx) — a real custom-rendered
+   dropdown (Radix Select) replacing the native `<select>` popup a browser won't let CSS touch.
+   The trigger button is styled to look IDENTICAL to the plain input/select box above (same
+   height/border/radius/background) so a form mixing both never looks inconsistent — only the
+   OPEN popup itself is different (fully custom: rounded, elevated surface, checkmark, animated),
+   which is the actual fix for "list of items inside a rectangle, not special." Overrides
+   src/components/ui/select.tsx's own default trigger classes (w-fit, different radius token).
+   A self-contained class on the component itself, not a `.tool-v2-field > [data-slot=...]`
+   parent-selector — calculators nest a select inside several different wrapper divs
+   (`.tool-v2-field`, `.tool-v2-addon-inputs`, ...), and a parent-scoped rule would silently miss
+   any wrapper it wasn't written for; a class on the trigger works everywhere it's used. */
+.tool-v2-select-trigger-box {
+  /* Owner, 2026-08-28 (real-device report): "when i select item i see a weird design and arrow
+     behind it in left, it is like mixing different designs and other content moves." This is a
+     real Safari/WebKit button-chrome quirk, not something Chrome/Puppeteer reproduces (both
+     tested clean at mobile and desktop widths): Safari renders its OWN native `<button>` chrome
+     (rounded corners, its own default min-height/padding) much more aggressively underneath
+     custom CSS than Chrome does, unless `appearance:none` is explicitly reset on the button
+     itself — this component's Radix trigger IS a real `<button>`, and neither the base component
+     nor this override ever reset it. That native chrome bleeding through under the custom
+     chevron/box is exactly "mixing different designs," and Safari's own native minimum button
+     height not matching this box's intended 44px explains "other content moves" (adjacent
+     fields shifting to a height Safari silently overrode). Same root cause as this session's
+     earlier `<select>` fix, just on the button element this time instead of `<select>`. */
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  margin: 0;
+  width: 100%;
+  height: 44px;
+  padding-inline: 14px;
+  border: 1.5px solid var(--border-subtle);
+  border-radius: 10px;
+  background: var(--bg-surface-2);
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: normal;
+  transition: border-color 0.15s, background 0.15s, box-shadow 0.15s;
+}
+.tool-v2-select-trigger-box:hover {
+  border-color: color-mix(in srgb, var(--green) 40%, var(--border-subtle));
+}
+.tool-v2-select-trigger-box[data-state="open"],
+.tool-v2-select-trigger-box:focus-visible {
   outline: none;
   background: var(--bg-surface-1);
   border-color: var(--green);
@@ -723,7 +803,7 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 .tool-v2-chip {
   padding: 8px 14px;
-  border-radius: var(--radius-full, 999px);
+  border-radius: 10px;
   border: 1.5px solid var(--border-subtle);
   background: var(--bg-surface-2);
   color: var(--text-secondary);

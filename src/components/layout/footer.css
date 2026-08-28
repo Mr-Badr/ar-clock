@@ -129,6 +129,20 @@
   color: #0b1120;
 }
 
+/* Real, un-spaced brand name for crawlers / assistive tech — the visible <span> is the
+   decorative spaced-tatweel lockup, which is a different string from "ميقاتنا". */
+.footer-brand-name-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 .footer-brand-desc {
   margin: 0;
   max-width: 30ch;

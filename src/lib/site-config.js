@@ -6,6 +6,49 @@ export const SITE_BRAND_EN = 'Miqatona';
 export const SITE_CONTACT_EMAIL = 'contact@miqatona.com';
 export const SITE_LEGACY_BRANDS = ['ميقاتنا', 'Miqatona'];
 export const SITE_PRIMARY_DOMAIN = 'https://miqatona.com';
+
+// Every name a real person might type or a scraper might record for this brand. Fed into
+// Organization.alternateName / WebSite.alternateName (SiteWideSchemas.jsx) so Google can tie
+// all of these strings to the same entity — the goal is that "miqatona", "ميقاتنا", "موقع
+// ميقاتنا", and the common mis-transliterations all resolve to this site as the top result.
+// "ميقاتنا" is deliberately close to the Islamic term ميقات, which is the main thing we're
+// disambiguating against in the Arabic SERP.
+export const SITE_BRAND_ALT_NAMES = [
+  'ميقاتنا',
+  'Miqatona',
+  'miqatona',
+  'موقع ميقاتنا',
+  'منصة ميقاتنا',
+  'ميقاتنا دوت كوم',
+  'miqatona.com',
+  'Miqatuna',
+  'Mikatona',
+  'Meqatona',
+  'Miqatna',
+];
+
+export const SITE_SLOGAN =
+  'كل ما يهمّك يوميًا: أدوات وحاسبات عربية، ومواعيد المناسبات، والوقت والتاريخ.';
+
+// Official brand profiles on third-party platforms — fed into Organization.sameAs and used to
+// build the brand's entity graph / Knowledge Panel. sameAs is the single biggest off-page lever
+// for owning a branded SERP: Google trusts a brand name far more once the same name is
+// corroborated across independent, verified profiles.
+//
+// ACTION REQUIRED (owner): create these accounts as "ميقاتنا / Miqatona", link each one's bio
+// back to https://miqatona.com, then paste the real profile URLs here. Also worth adding once
+// they exist: a Google Business Profile, a Wikidata item, and a LinkedIn/Crunchbase company
+// page. Until a URL is real, leave it out — a sameAs pointing at a 404 or a non-brand account
+// hurts more than an empty list.
+export const SITE_SOCIAL_PROFILES = [
+  // 'https://x.com/miqatona',
+  // 'https://www.facebook.com/miqatona',
+  // 'https://www.instagram.com/miqatona',
+  // 'https://www.youtube.com/@miqatona',
+  // 'https://www.linkedin.com/company/miqatona',
+  // 'https://www.tiktok.com/@miqatona',
+  // 'https://www.wikidata.org/wiki/QXXXXXXX',
+];
 // Lead with tools + holidays (owner directive, 2026-08-13: "we like to focus on tools and
 // holidays as the main things") — /tools is the site's largest and deepest content investment
 // (130+ real tools across 20+ professional/household categories, every one research-first per

@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { Info, Printer, Warning } from '@phosphor-icons/react';
 import CountryFlag from '@/components/shared/CountryFlag';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import PremiumSelect from '@/components/tools-v2/PremiumSelect.client';
 import { CONTRACT_COUNTRIES, WORK_TYPES } from '@/lib/calculators/domestic-worker-contract-engine';
 
 function FieldHint({ text }) {
@@ -120,10 +121,13 @@ export default function DomesticWorkerContractGenerator() {
       </div>
 
       <div className="tool-v2-field">
-        <label>نوع العمل</label>
-        <select value={workType} onChange={(e) => setWorkType(e.target.value)}>
-          {WORK_TYPES.map((t) => (<option key={t} value={t}>{t}</option>))}
-        </select>
+        <label htmlFor="dwc-work-type">نوع العمل</label>
+        <PremiumSelect
+          id="dwc-work-type"
+          value={workType}
+          onChange={setWorkType}
+          options={WORK_TYPES.map((t) => ({ value: t, label: t }))}
+        />
       </div>
 
       <div className="tool-v2-field">

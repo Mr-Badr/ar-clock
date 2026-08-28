@@ -4,6 +4,7 @@ import { useMemo, useState } from 'react';
 import { CalendarBlank, Info, Moon, ShareNetwork } from '@phosphor-icons/react';
 import { toast } from 'sonner';
 
+import PremiumSelect from '@/components/tools-v2/PremiumSelect.client';
 import { computeDateShift } from '@/lib/calculators/date-add-subtract';
 import { ISLAMIC_MONTH_NAMES_AR } from '@/lib/date-adapter';
 
@@ -111,9 +112,12 @@ export default function DateAddSubtractCalculator() {
           </div>
           <div className="tool-v2-field">
             <label htmlFor="date-shift-hijri-month">الشهر</label>
-            <select id="date-shift-hijri-month" value={hijriMonth} onChange={(event) => setHijriMonth(event.target.value)}>
-              {ISLAMIC_MONTH_NAMES_AR.map((name, idx) => (<option key={name} value={String(idx + 1)}>{name}</option>))}
-            </select>
+            <PremiumSelect
+              id="date-shift-hijri-month"
+              value={hijriMonth}
+              onChange={setHijriMonth}
+              options={ISLAMIC_MONTH_NAMES_AR.map((name, idx) => ({ value: String(idx + 1), label: name }))}
+            />
           </div>
           <div className="tool-v2-field">
             <label htmlFor="date-shift-hijri-year">السنة الهجرية</label>
@@ -141,9 +145,12 @@ export default function DateAddSubtractCalculator() {
         </div>
         <div className="tool-v2-field">
           <label htmlFor="date-shift-unit">الوحدة</label>
-          <select id="date-shift-unit" value={unit} onChange={(event) => setUnit(event.target.value)}>
-            {UNIT_OPTIONS.map((opt) => (<option key={opt.value} value={opt.value}>{opt.label}</option>))}
-          </select>
+          <PremiumSelect
+            id="date-shift-unit"
+            value={unit}
+            onChange={setUnit}
+            options={UNIT_OPTIONS.map((opt) => ({ value: opt.value, label: opt.label }))}
+          />
         </div>
       </div>
 

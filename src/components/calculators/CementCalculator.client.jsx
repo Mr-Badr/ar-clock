@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Drop, Info, Mountains, Share as ShareIcon, Warning, Waves } from '@phosphor-icons/react';
 import { toast } from 'sonner';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import PremiumSelect from '@/components/tools-v2/PremiumSelect.client';
 import { MIX_GRADES, calcConcrete, fmt } from '@/lib/calculators/building/constants';
 
 const GRADE_META = {
@@ -126,10 +127,15 @@ export default function CementCalculator() {
       <div className="tool-v2-field-row-pair">
         <div className="tool-v2-field">
           <label htmlFor="cement-bag">وزن الكيس (كجم)</label>
-          <select id="cement-bag" value={bagWeight} onChange={(e) => setBagWeight(Number(e.target.value))}>
-            <option value={50}>50 كجم (قياسي)</option>
-            <option value={42.5}>42.5 كجم</option>
-          </select>
+          <PremiumSelect
+            id="cement-bag"
+            value={bagWeight}
+            onChange={(v) => setBagWeight(Number(v))}
+            options={[
+              { value: 50, label: '50 كجم (قياسي)' },
+              { value: 42.5, label: '42.5 كجم' },
+            ]}
+          />
         </div>
         <div className="tool-v2-field">
           <label htmlFor="cement-waste">

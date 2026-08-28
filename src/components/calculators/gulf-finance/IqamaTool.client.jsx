@@ -5,6 +5,7 @@ import { CalendarBlank, Clock, Coins, IdentificationCard, ShareNetwork, Warning 
 import { toast } from 'sonner';
 import { AnimatedCircularProgressBar } from '@/components/ui/animated-circular-progress-bar';
 import CountryFlag from '@/components/shared/CountryFlag';
+import PremiumSelect from '@/components/tools-v2/PremiumSelect.client';
 import { VISA_TYPES, calculateIqamaExpiry, getStatusMeta } from '@/lib/calculators/iqama';
 import { getTodayIso } from '@/lib/calculators/age';
 
@@ -107,9 +108,12 @@ export default function IqamaTool() {
 
       <div className="tool-v2-field">
         <label htmlFor="iqama-visa-type">نوع الإقامة / التأشيرة</label>
-        <select id="iqama-visa-type" value={visaTypeId} onChange={(e) => setVisaTypeId(e.target.value)}>
-          {visaOptions.map((v) => (<option key={v.id} value={v.id}>{v.label}</option>))}
-        </select>
+        <PremiumSelect
+          id="iqama-visa-type"
+          value={visaTypeId}
+          onChange={setVisaTypeId}
+          options={visaOptions.map((v) => ({ value: v.id, label: v.label }))}
+        />
         {VISA_TYPES[visaTypeId]?.hint ? <p className="tool-v2-field-hint">{VISA_TYPES[visaTypeId].hint}</p> : null}
       </div>
 

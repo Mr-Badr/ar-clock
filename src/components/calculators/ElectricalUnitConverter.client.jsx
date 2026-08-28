@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from 'react';
 import { ArrowsLeftRight } from '@phosphor-icons/react';
+import PremiumSelect from '@/components/tools-v2/PremiumSelect.client';
 
 // Standard, textbook conversion factors — all expressed "to Watts" so any pair converts through
 // one common base. HP here is mechanical horsepower (745.7 W), the figure used in electrical
@@ -99,15 +100,21 @@ export default function ElectricalUnitConverter() {
       <div className="tool-v2-field-row-pair">
         <div className="tool-v2-field">
           <label htmlFor="power-from">من</label>
-          <select id="power-from" value={fromUnit} onChange={(e) => setFromUnit(e.target.value)}>
-            {POWER_UNITS.map((u) => <option key={u.id} value={u.id}>{u.label}</option>)}
-          </select>
+          <PremiumSelect
+            id="power-from"
+            value={fromUnit}
+            onChange={setFromUnit}
+            options={POWER_UNITS.map((u) => ({ value: u.id, label: u.label }))}
+          />
         </div>
         <div className="tool-v2-field">
           <label htmlFor="power-to">إلى</label>
-          <select id="power-to" value={toUnit} onChange={(e) => setToUnit(e.target.value)}>
-            {POWER_UNITS.map((u) => <option key={u.id} value={u.id}>{u.label}</option>)}
-          </select>
+          <PremiumSelect
+            id="power-to"
+            value={toUnit}
+            onChange={setToUnit}
+            options={POWER_UNITS.map((u) => ({ value: u.id, label: u.label }))}
+          />
         </div>
       </div>
 
@@ -166,9 +173,12 @@ export default function ElectricalUnitConverter() {
       <div className="tool-v2-field-row-pair">
         <div className="tool-v2-field">
           <label htmlFor="voltage-select">جهد الدائرة</label>
-          <select id="voltage-select" value={voltageId} onChange={(e) => setVoltageId(e.target.value)}>
-            {VOLTAGE_OPTIONS.map((v) => <option key={v.id} value={v.id}>{v.label}</option>)}
-          </select>
+          <PremiumSelect
+            id="voltage-select"
+            value={voltageId}
+            onChange={setVoltageId}
+            options={VOLTAGE_OPTIONS.map((v) => ({ value: v.id, label: v.label }))}
+          />
         </div>
         <div className="tool-v2-field">
           <label htmlFor="pf-value">معامل القدرة</label>
