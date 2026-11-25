@@ -1,5 +1,6 @@
 // src/app/date/layout.tsx
 import type { Metadata } from 'next';
+import { Suspense } from 'react';
 import AdMultiplex from '@/components/ads/AdMultiplex';
 import { buildDateKeywords } from '@/lib/seo/section-search-intent';
 
@@ -30,7 +31,9 @@ export default function DateLayout({ children }: { children: React.ReactNode }) 
     // The root layout already sets dir="rtl" and RTL body globally
     <div className="date-feature-root">
       {children}
-      <AdMultiplex slotId="end-date-section" slotKey="multiplexDate" className="content-col" />
+      <Suspense fallback={null}>
+        <AdMultiplex slotId="end-date-section" slotKey="multiplexDate" className="content-col" />
+      </Suspense>
     </div>
   );
 }
