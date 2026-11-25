@@ -34,3 +34,6 @@ jobs:
       # 6. Build المشروع
       - name: Build Next.js app
         run: npm run build
+
+      - name: Smoke-test date routes do not persist per-date output
+        run: bash scripts/smoke-date-runtime-cache.sh

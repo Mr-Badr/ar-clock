@@ -191,6 +191,17 @@ function buildInvalidCalendarResult(segments: DateRouteSegments, reason: Invalid
   };
 }
 
+/**
+ * Date detail pages are intentionally limited to a rolling 10-calendar-year
+ * window on either side of the current UTC year. This is a product boundary,
+ * not a cache strategy: the routes must still render on demand without
+ * persisting one response per requested date.
+ */
+export function isWithinSupportedDateYearRange(year: number, now: Date = new Date()): boolean {
+  const currentYear = now.getUTCFullYear();
+  return year >= currentYear - 10 && year <= currentYear + 10;
+}
+
 export function validateGregorianDateRouteSegments(segments: DateRouteSegments): CalendarRouteValidationResult {
   if (hasDynamicRouteToken(segments.year) || hasDynamicRouteToken(segments.month) || hasDynamicRouteToken(segments.day)) {
     return buildInvalidCalendarResult(segments, 'dynamic-token');

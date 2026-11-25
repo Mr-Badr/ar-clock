@@ -30,6 +30,7 @@ import { buildDateKeywords } from '@/lib/seo/section-search-intent';
 import { isSeoIndexableHijriDate } from '@/lib/seo/date-indexing';
 import {
   validateHijriDateRouteSegments,
+  isWithinSupportedDateYearRange,
 } from '@/lib/route-param-validation';
 
 // NOTE: Static folder 'hijri' takes priority over dynamic '[year]' at the same level.
@@ -99,21 +100,6 @@ function buildHijriDecisionRows(
   ];
 }
 
-export async function generateStaticParams() {
-  const now = new Date();
-  const isoDate = [
-    String(now.getUTCFullYear()),
-    String(now.getUTCMonth() + 1).padStart(2, '0'),
-    String(now.getUTCDate()).padStart(2, '0'),
-  ].join('-');
-  const hijri = convertDate({ date: isoDate, toCalendar: 'hijri', method: 'umalqura' });
-
-  return [{
-    year: String(hijri.year),
-    month: String(hijri.month).padStart(2, '0'),
-    day: String(hijri.day).padStart(2, '0'),
-  }];
-}
 
 export async function generateMetadata({
   params,
@@ -129,11 +115,10 @@ export async function generateMetadata({
   const hYear = routeDate.year;
   const hMonth = routeDate.month;
   const hDay = routeDate.day;
-  if (hYear < 1343 || hYear > 1500) {
+  const gregorian = convertDate({ date: routeDate.isoDate, toCalendar: 'gregorian', method: 'umalqura' });
+  if (!isWithinSupportedDateYearRange(gregorian.year)) {
     notFound();
   }
-
-  const gregorian = convertDate({ date: routeDate.isoDate, toCalendar: 'gregorian', method: 'umalqura' });
 
   const monthAr = ISLAMIC_MONTH_NAMES_AR[hMonth - 1];
   const hijriLabel = `${hDay} ${monthAr} ${hYear} هجري`;
@@ -205,11 +190,10 @@ export default async function ProgrammaticHijriDatePage({
   const hY = routeDate.year;
   const hM = routeDate.month;
   const hD = routeDate.day;
-  if (hY < 1343 || hY > 1500) notFound();
-
   const isoHijri = routeDate.isoDate;
 
   const gregorian = convertDate({ date: isoHijri, toCalendar: 'gregorian', method: 'umalqura' });
+  if (!isWithinSupportedDateYearRange(gregorian.year)) notFound();
 
   const islamicEvents = getIslamicEventsForHijriDate(hY, hM, hD);
   const monthNameAr = ISLAMIC_MONTH_NAMES_AR[hM - 1];
@@ -217,8 +201,9 @@ export default async function ProgrammaticHijriDatePage({
   // Prev/next Hijri day navigation
   const daysInMonth = getHijriMonthDays(hY, hM);
   const daysLeftInHijriMonth = daysInMonth - hD;
-  const hasPreviousDate = !(hY === 1343 && hM === 1 && hD === 1);
-  const hasNextDate = !(hY === 1500 && hM === 12 && hD === daysInMonth);
+  const currentGregorianYear = new Date().getUTCFullYear();
+  const hasPreviousDate = !(gregorian.year === currentGregorianYear - 10 && gregorian.month === 1 && gregorian.day === 1);
+  const hasNextDate = !(gregorian.year === currentGregorianYear + 10 && gregorian.month === 12 && gregorian.day === 31);
   const prevHY = hasPreviousDate && hD === 1 && hM === 1 ? hY - 1 : hY;
   const prevHMAdj = hasPreviousDate && hD === 1 ? (hM === 1 ? 12 : hM - 1) : hM;
   const prevHDAdj = hasPreviousDate
@@ -286,7 +271,7 @@ export default async function ProgrammaticHijriDatePage({
     },
     {
       question: 'ما نطاق التواريخ الهجرية المدعوم هنا؟',
-      answer: 'هذه الصفحة تدعم النطاق العملي الحديث من 1343 إلى 1500 هجري تقريباً. التواريخ الأقدم تحتاج مراجع تاريخية متخصصة لأن إثبات الشهور كان يعتمد على سياقات محلية ومصادر مختلفة.',
+      answer: 'هذه الصفحة تدعم التواريخ التي تقع ضمن عشر سنوات قبل السنة الميلادية الحالية وعشر سنوات بعدها. التواريخ خارج هذا النطاق غير متاحة في صفحات التاريخ التفصيلية.',
     },
   ];
 
