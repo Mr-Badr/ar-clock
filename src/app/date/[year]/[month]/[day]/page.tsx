@@ -40,6 +40,7 @@ import { buildDateKeywords } from '@/lib/seo/section-search-intent';
 import { isSeoIndexableGregorianDate } from '@/lib/seo/date-indexing';
 import {
   validateGregorianDateRouteSegments,
+  isWithinSupportedDateYearRange,
 } from '@/lib/route-param-validation';
 
 const BASE_URL = getSiteUrl();
@@ -55,7 +56,7 @@ export async function generateMetadata({
   if (!routeDate.valid) {
     notFound();
   }
-  if (routeDate.year < 1924 || routeDate.year > 2077) {
+  if (!isWithinSupportedDateYearRange(routeDate.year)) {
     notFound();
   }
 
@@ -195,7 +196,7 @@ export default async function ProgrammaticDatePage({
   const y = routeDate.year;
   const m = routeDate.month;
   const d = routeDate.day;
-  if (y < 1924 || y > 2077) notFound();
+  if (!isWithinSupportedDateYearRange(y)) notFound();
 
   const isoDate = routeDate.isoDate;
   const umalqura = convertDate({ date: isoDate, toCalendar: 'hijri', method: 'umalqura' });
@@ -204,8 +205,9 @@ export default async function ProgrammaticDatePage({
 
   const hijri = umalqura;
   const islamicEvents = getIslamicEventsForHijriDate(hijri.year, hijri.month, hijri.day);
-  const hasPreviousDate = !(y === 1924 && m === 1 && d === 1);
-  const hasNextDate = !(y === 2077 && m === 12 && d === 31);
+  const currentYear = new Date().getUTCFullYear();
+  const hasPreviousDate = !(y === currentYear - 10 && m === 1 && d === 1);
+  const hasNextDate = !(y === currentYear + 10 && m === 12 && d === 31);
   const prevDate = hasPreviousDate ? new Date(Date.UTC(y, m - 1, d - 1)) : null;
   const nextDate = hasNextDate ? new Date(Date.UTC(y, m - 1, d + 1)) : null;
   const fmtNav = (dt: Date) => `/date/${dt.getUTCFullYear()}/${String(dt.getUTCMonth() + 1).padStart(2, '0')}/${String(dt.getUTCDate()).padStart(2, '0')}`;
@@ -272,7 +274,7 @@ export default async function ProgrammaticDatePage({
     },
     {
       question: 'هل يمكن استخدام هذه الصفحة لتوثيق موعد قديم أو مستقبلي؟',
-      answer: 'نعم، الصفحة مناسبة لمراجعة تاريخ محدد ضمن النطاق المدعوم من 1924 إلى 2077، مع مسارات اليوم السابق والتالي ومحوّل التاريخ. للاستخدام القانوني أو الديني الرسمي راجع الجهة المعتمدة في بلدك.',
+      answer: 'نعم، الصفحة مناسبة لمراجعة تاريخ محدد ضمن النطاق المدعوم الذي يمتد عشر سنوات قبل السنة الحالية وعشر سنوات بعدها، مع مسارات اليوم السابق والتالي ومحوّل التاريخ. للاستخدام القانوني أو الديني الرسمي راجع الجهة المعتمدة في بلدك.',
     },
     {
       question: 'ماذا أفعل إذا اختلفت النتيجة يوماً واحداً في مصدر آخر؟',
