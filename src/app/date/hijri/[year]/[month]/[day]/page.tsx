@@ -99,21 +99,6 @@ function buildHijriDecisionRows(
   ];
 }
 
-export async function generateStaticParams() {
-  const now = new Date();
-  const isoDate = [
-    String(now.getUTCFullYear()),
-    String(now.getUTCMonth() + 1).padStart(2, '0'),
-    String(now.getUTCDate()).padStart(2, '0'),
-  ].join('-');
-  const hijri = convertDate({ date: isoDate, toCalendar: 'hijri', method: 'umalqura' });
-
-  return [{
-    year: String(hijri.year),
-    month: String(hijri.month).padStart(2, '0'),
-    day: String(hijri.day).padStart(2, '0'),
-  }];
-}
 
 export async function generateMetadata({
   params,
