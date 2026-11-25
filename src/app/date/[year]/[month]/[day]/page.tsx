@@ -44,15 +44,6 @@ import {
 
 const BASE_URL = getSiteUrl();
 
-export async function generateStaticParams() {
-  const now = new Date();
-
-  return [{
-    year: String(now.getUTCFullYear()),
-    month: String(now.getUTCMonth() + 1).padStart(2, '0'),
-    day: String(now.getUTCDate()).padStart(2, '0'),
-  }];
-}
 
 export async function generateMetadata({
   params,
