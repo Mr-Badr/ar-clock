@@ -39,8 +39,8 @@ fi
 # Capture the built date-route output before visiting previously unrequested params.
 find .next/server/app -type f -path '*/date/*' -print 2>/dev/null | sort > "${BEFORE_FILE}"
 
-curl --fail --silent --show-error --max-time 90 "${BASE_URL}/date/2077/12/31" -o /tmp/miqatona-gregorian-date-smoke.html
-curl --fail --silent --show-error --max-time 90 "${BASE_URL}/date/hijri/1445/01/01" -o /tmp/miqatona-hijri-date-smoke.html
+curl --fail --silent --show-error --max-time 90 "${BASE_URL}/date/2036/12/31" -o /tmp/miqatona-gregorian-date-smoke.html
+curl --fail --silent --show-error --max-time 90 "${BASE_URL}/date/hijri/1448/01/01" -o /tmp/miqatona-hijri-date-smoke.html
 
 grep -qi '<title' /tmp/miqatona-gregorian-date-smoke.html
 grep -qi '<title' /tmp/miqatona-hijri-date-smoke.html
